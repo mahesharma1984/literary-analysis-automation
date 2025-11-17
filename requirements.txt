@@ -1,0 +1,15 @@
+# Kernel Creation Automation - Python Dependencies
+
+# Claude API
+anthropic>=0.40.0
+
+# PDF processing
+PyPDF2>=3.0.0
+
+# JSON handling (built-in, listed for reference)
+# json
+
+# File handling (built-in)
+# pathlib
+# os
+# sys
