@@ -15,6 +15,364 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+# CHANGELOG
+
+All notable changes to the Literary Analysis Automation System will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [5.0.0] - 2025-11-18
+
+### Major Release: 5-Week Progression with Device Taxonomy Mapping
+
+This release fundamentally restructures the pedagogical progression from 4 weeks to 5 weeks and replaces fragile keyword-based device categorization with an explicit taxonomy mapping system.
+
+### ⚠️ BREAKING CHANGES
+
+#### Function Signature Changes
+
+**`categorize_device()` in `run_stage1a.py`:**
+- **Old:** `categorize_device(device) -> str`
+  - Returns: `category` (string: "exposition", "structure", "voice", or "devices_general")
+- **New:** `categorize_device(device_name: str, classification: str) -> tuple`
+  - Returns: `(week_key, week_label)` tuple
+  - Example: `('week_2_literary_devices', 'Week 2: Literary Devices')`
+
+**Impact:** All code calling `categorize_device()` must be updated to:
+1. Pass two arguments instead of one
+2. Unpack two return values instead of one
+3. Use `week_key` instead of `category`
+
+#### Data Structure Changes
+
+**Week Structure:**
+- **Old:** 4 weeks
+  - Week 1: Foundation/Devices General
+  - Week 2: Exposition
+  - Week 3: Structure
+  - Week 4: Voice
+- **New:** 5 weeks
+  - Week 1: Exposition
+  - Week 2: Literary Devices
+  - Week 3: Structure
+  - Week 4: Narrative Voice
+  - Week 5: Rhetorical Voice
+
+**Week Keys:**
+- **Old:** `devices_general`, `exposition`, `structure`, `voice`
+- **New:** `week_1_exposition`, `week_2_literary_devices`, `week_3_structure`, `week_4_narrative_voice`, `week_5_rhetorical_voice`
+
+**Loop Ranges:**
+- **Old:** `range(1, 5)` for 4 weeks
+- **New:** `range(1, 6)` for 5 weeks
+
+#### Device Data Fields
+
+**Removed:**
+- `executes_macro` (replaced by `week_label`)
+
+**Added:**
+- `week_label` - Human-readable week label (e.g., "Week 2: Literary Devices")
+
+### ✨ Added
+
+#### New Files
+
+1. **`device_taxonomy_mapping.json`** - Core mapping file
+   - Explicit device-to-week categorization for 50+ devices
+   - Classification codes (Layer|Function|Engagement) for each device
+   - Rationale statements explaining categorization decisions
+   - Fallback heuristics for unmapped devices
+   - Week definitions with pedagogical focus
+
+2. **`test_mapping.py`** - Device mapping validation script
+   - Tests device categorization against kernels
+   - Reports device distribution across weeks
+   - Identifies unmapped devices
+   - Provides summary statistics
+
+3. **`test_full_pipeline.py`** - Full pipeline integration test
+   - Runs Stage 1A → 1B → 2 on a kernel
+   - Validates JSON structure at each stage
+   - Checks for 5 weeks in all outputs
+   - Reports pass/fail for each stage
+
+4. **`DEVELOPER_GUIDE.md`** - Developer documentation
+   - Architecture overview
+   - Dependency mapping
+   - Change assessment framework
+   - Testing protocols
+   - Communication guidelines
+   - Lessons learned from migration
+
+5. **`DEVICE_MAPPING_USAGE_GUIDE.md`** - Mapping system documentation
+   - 5-week structure explanation
+   - How to use the mapping file
+   - Integration instructions
+   - Ambiguous case resolutions
+   - Maintenance procedures
+
+6. **`DEVICE_MAPPING_TEST_RESULTS.md`** - Test validation report
+   - Results from The Giver (20/20 devices mapped)
+   - Results from The Old Man and the Sea (15/15 devices mapped)
+   - Edge case analysis
+   - Production readiness assessment
+
+#### New Pedagogical Week
+
+**Week 5: Rhetorical Voice**
+- **Macro Element:** Irony, persuasion, and interpretive control
+- **Teaching Goal:** Understanding rhetorical strategies
+- **Scaffolding:** Low - Independent application
+- **Devices:** Dramatic Irony, Situational Irony, Verbal Irony, Euphemism, Understatement, Juxtaposition, Repetition, Tone, Diction, Rhetorical Question, Sarcasm
+
+#### New Macro Elements
+
+**Added to `extract_macro_elements()`:**
+- `literary_devices` - Foundational figurative language (Week 2)
+- `narrative_voice` - POV and consciousness (Week 4, renamed from `voice`)
+- `rhetorical_voice` - Irony and persuasion (Week 5)
+
+### 🔄 Changed
+
+#### Stage 1A (`run_stage1a.py`)
+
+**Device Categorization:**
+- Replaced keyword-based heuristics with explicit mapping lookup
+- Added `fallback_categorization()` function for unmapped devices
+- Changed categorization to return both `week_key` and `week_label`
+
+**Device Mapping Initialization:**
+```python
+# Old
+device_mapping = {
+    'devices_general': [],
+    'exposition': [],
+    'structure': [],
+    'voice': []
+}
+
+# New
+device_mapping = {
+    'week_1_exposition': [],
+    'week_2_literary_devices': [],
+    'week_3_structure': [],
+    'week_4_narrative_voice': [],
+    'week_5_rhetorical_voice': []
+}
+```
+
+**Macro-Micro Packages:**
+- Changed from 4 packages to 5 packages
+- Updated package keys to match new week structure
+- Added scaffolding levels to each package
+
+**Print Statements:**
+- Updated to show 5 weeks with new labels
+- Changed device count reporting to match new week keys
+
+#### Stage 1B (`run_stage1b.py`)
+
+**Week Processing:**
+- Changed loop from `range(1, 5)` to `range(1, 6)`
+- Updated week key lookup to handle 5 weeks
+- Added Week 5 to all dictionaries
+
+**Scaffolding Levels:**
+```python
+scaffolding_levels = {
+    1: "High - Teacher models everything",
+    2: "Medium-High - Co-construction with students",
+    3: "Medium - Students lead with support",
+    4: "Medium-Low - Independent work with feedback",
+    5: "Low - Independent application"  # NEW
+}
+```
+
+**Teaching Sequences:**
+- Added Week 5 teaching sequence
+- Updated Week 2-4 sequences to reflect new progression
+
+**Teaching Approaches:**
+```python
+teaching_approaches = {
+    1: "Here are devices. Let's identify them.",
+    2: "Literary devices create meaning through figurative language.",  # CHANGED
+    3: "Structure UNFOLDS through devices that create pacing.",
+    4: "Narrative voice OPERATES through perspective devices.",  # CHANGED
+    5: "Rhetorical voice CONTROLS interpretation through irony and persuasion."  # NEW
+}
+```
+
+**Progression Summary:**
+- Changed `total_weeks` from 4 to 5
+- Updated skill progression to 5 steps
+- Updated TVODE evolution to 5 weeks
+- Added Week 5 scaffolding level
+
+**Markdown Output:**
+- Changed header from "4-Week" to "5-Week"
+- Updated curriculum overview table to 5 rows
+- Added Week 5 section with full details
+- Updated progression summary for 5 weeks
+
+#### Device Field Names
+
+**In device data objects:**
+- Replaced `executes_macro` with `week_label`
+- Updated all references in Stage 1B packaging
+- Updated teaching notes to use `week_label`
+
+### 🐛 Fixed
+
+#### Path Handling
+- Fixed kernel paths to use relative paths instead of absolute `/mnt/project/`
+- Updated test scripts to handle Mac filesystem paths
+- Fixed file name format: `v3.3` instead of `v3_3`
+
+#### Device Categorization Errors
+- Fixed Interior Monologue incorrectly categorized to Week 1 (now Week 4)
+- Fixed Repetition incorrectly categorized to Week 2 (now Week 5)
+- Fixed Third-Person Limited confusion with structure devices (now Week 4)
+- Fixed Direct Dialogue ambiguity (Week 1 for exposition, not Week 4 for voice)
+
+#### Week Distribution Issues
+- Fixed unbalanced device distribution (now 1-6 devices per week)
+- Fixed missing Week 5 in output documents
+- Fixed inconsistent week labeling across stages
+
+### 🗑️ Removed
+
+**Deprecated Functions:**
+- Old keyword-based categorization logic in `run_stage1a.py`
+
+**Deprecated Dictionary Keys:**
+- `devices_general` (replaced by `week_2_literary_devices`)
+- Old week keys: `exposition`, `structure`, `voice`
+
+**Deprecated Variables:**
+- `category` variable (replaced by `week_key`)
+- `executes_macro` field (replaced by `week_label`)
+
+### 📊 Testing
+
+#### Validated Against Kernels
+- ✅ The Giver (20 devices) - 100% mapped
+- ✅ The Old Man and the Sea (15 devices) - 100% mapped
+- ⏭️ To Kill a Mockingbird - Pending
+
+#### Integration Tests
+- ✅ Stage 1A produces valid 5-week JSON
+- ✅ Stage 1B consumes Stage 1A and produces 5-week progression
+- ✅ Stage 2 generates worksheets for all 5 weeks
+- ✅ Full pipeline runs without errors
+
+### 📝 Documentation
+
+**New Documentation:**
+- DEVELOPER_GUIDE.md - How to modify the system safely
+- DEVICE_MAPPING_USAGE_GUIDE.md - How to use the mapping system
+- DEVICE_MAPPING_TEST_RESULTS.md - Validation results
+- CHANGELOG.md - This file
+
+**Updated Documentation:**
+- README.md - Updated to reflect 5-week structure (if exists)
+- REBUILD_INSTRUCTIONS.md - Updated for new mapping system (if exists)
+
+### 🔧 Migration Guide
+
+#### For Existing Kernels
+
+1. No kernel changes required - kernels are unchanged
+2. Re-run Stage 1A with new mapping: `python3 run_stage1a.py kernels/your_kernel.json`
+3. Re-run Stage 1B: `python3 run_stage1b.py outputs/your_stage1a.json`
+4. Validate 5 weeks are present in output
+
+#### For Custom Code
+
+If you have custom scripts calling `categorize_device()`:
+
+**Before:**
+```python
+category = categorize_device(device)
+if category == "exposition":
+    # ...
+```
+
+**After:**
+```python
+week_key, week_label = categorize_device(device['name'], device.get('classification', ''))
+if week_key == "week_1_exposition":
+    # ...
+```
+
+#### For Week References
+
+**Before:**
+```python
+for week_num in range(1, 5):  # 4 weeks
+    # ...
+```
+
+**After:**
+```python
+for week_num in range(1, 6):  # 5 weeks
+    # ...
+```
+
+### 🎯 Future Work
+
+**Planned Enhancements:**
+- Test against TKAM kernel (larger device set)
+- Add more narrative voice variations to mapping
+- Expand Week 3 with temporal manipulation devices
+- Add metafictional devices for advanced texts
+- Create review interface for manual categorization approval
+- Add versioning system for mapping file changes
+
+**Known Limitations:**
+- Fallback heuristics still use keyword matching (should be rarely needed)
+- Macro variables often empty in kernels (depends on kernel creation)
+- Stage 2 may need updates for Week 5 worksheet templates
+
+### 👥 Contributors
+
+- System design: Original curriculum framework
+- 5.0 Implementation: Migration to 5-week structure with mapping system
+- Testing: Validation against The Giver and The Old Man and the Sea
+
+---
+
+## [4.x] - Previous Versions
+
+### [4.1] - 2025-11-XX
+- 4-week structure with keyword-based categorization
+- Stage 1A, 1B, 2 pipeline established
+- TVODE construction templates
+
+### [4.0] - 2025-XX-XX
+- Initial macro-micro curriculum design
+- Kernel format v3.3
+- Device taxonomy framework
+
+---
+
+## Version Numbering
+
+**Format:** MAJOR.MINOR.PATCH
+
+- **MAJOR:** Breaking changes to data structures or APIs
+- **MINOR:** New features, backward compatible
+- **PATCH:** Bug fixes, documentation updates
+
+**Current Version:** 5.0.0
+- Major version bump due to breaking changes in function signatures and data structures
+- Introduces 5-week structure (breaking change)
+- New mapping system (new feature)
+
 ## Stage Implementations
 
 ### [Stage 2 v4.1] - 2025-11-15
