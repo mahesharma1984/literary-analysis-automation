@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-STAGE 1A AUTOMATION
+STAGE 1A AUTOMATION - FIXED FOR MULTIPLE KERNEL FORMATS
 Extract macro-micro packages from kernel JSON
+
+Handles both kernel formats:
+- Format A: text_metadata + devices (OMATS, Giver)
+- Format B: metadata + micro_devices (TKAM)
 
 Usage:
     python3 run_stage1a.py kernels/Book_kernel_v3.3.json
@@ -16,12 +20,79 @@ from datetime import datetime
 with open('device_taxonomy_mapping.json', 'r') as f:
     DEVICE_MAPPING = json.load(f)
 
+
+# ============================================================================
+# KERNEL NORMALIZATION HELPERS
+# ============================================================================
+
+def get_kernel_metadata(kernel):
+    """Extract metadata from kernel regardless of format"""
+    # Try Format A (text_metadata at top level)
+    if 'text_metadata' in kernel:
+        meta = kernel['text_metadata']
+        return {
+            'title': meta.get('title', 'Unknown'),
+            'author': meta.get('author', 'Unknown'),
+            'edition': meta.get('edition', '')
+        }
+    
+    # Try Format B (metadata at top level)
+    if 'metadata' in kernel:
+        meta = kernel['metadata']
+        return {
+            'title': meta.get('title', 'Unknown'),
+            'author': meta.get('author', 'Unknown'),
+            'edition': meta.get('edition', '')
+        }
+    
+    # Fallback
+    return {'title': 'Unknown', 'author': 'Unknown', 'edition': ''}
+
+
+def get_kernel_devices(kernel):
+    """Extract device array from kernel regardless of format"""
+    # Try Format A (devices)
+    if 'devices' in kernel:
+        return kernel['devices']
+    
+    # Try Format B (micro_devices)
+    if 'micro_devices' in kernel:
+        return kernel['micro_devices']
+    
+    # Fallback
+    return []
+
+
+def get_kernel_narrative_data(kernel):
+    """Extract narrative/voice data from kernel regardless of format"""
+    # Try Format A (narrative.voice)
+    if 'narrative' in kernel:
+        narrative = kernel['narrative']
+        voice = narrative.get('voice', {})
+        structure = narrative.get('structure', {})
+        return {
+            'voice': voice,
+            'structure': structure
+        }
+    
+    # Try Format B (macro_variables or empty)
+    # TKAM kernels may not have this data
+    return {
+        'voice': {},
+        'structure': {}
+    }
+
+
+# ============================================================================
+# MACRO EXTRACTION
+# ============================================================================
+
 def extract_macro_elements(kernel):
     """Extract macro alignment elements from kernel"""
     
-    narrative = kernel.get("narrative", {})
-    voice = narrative.get("voice", {})
-    structure = narrative.get("structure", {})
+    narrative_data = get_kernel_narrative_data(kernel)
+    voice = narrative_data['voice']
+    structure = narrative_data['structure']
     
     return {
         "exposition": {
@@ -65,6 +136,10 @@ def extract_macro_elements(kernel):
         }
     }
 
+
+# ============================================================================
+# DEVICE CATEGORIZATION
+# ============================================================================
 
 def fallback_categorization(device_name: str, classification: str) -> str:
     """Fallback heuristic categorization if device not in mapping"""
@@ -149,7 +224,10 @@ def categorize_devices(kernel):
         'week_5_rhetorical_voice': []
     }
     
-    for device in kernel.get("devices", []):
+    # Get devices using normalized helper
+    devices_list = get_kernel_devices(kernel)
+    
+    for device in devices_list:
         week_key, week_label = categorize_device(
             device['name'], 
             device.get('classification', '')
@@ -159,6 +237,7 @@ def categorize_devices(kernel):
             "name": device.get("name", ""),
             "layer": device.get("layer", ""),
             "function": device.get("function", ""),
+            "classification": device.get("classification", ""),
             "definition": device.get("definition", device.get("student_facing_definition", "")),
             "examples": device.get("examples", []),
             "week_label": week_label,
@@ -169,6 +248,10 @@ def categorize_devices(kernel):
     
     return device_mapping
 
+
+# ============================================================================
+# PACKAGE CREATION
+# ============================================================================
 
 def create_macro_micro_packages(macro_elements, device_mapping):
     """Create 5-week macro-micro packages"""
@@ -227,6 +310,10 @@ def create_macro_micro_packages(macro_elements, device_mapping):
     }
 
 
+# ============================================================================
+# MAIN PROCESSING
+# ============================================================================
+
 def run_stage1a(kernel_path):
     """Main Stage 1A processing"""
     
@@ -239,8 +326,12 @@ def run_stage1a(kernel_path):
     with open(kernel_path, 'r', encoding='utf-8') as f:
         kernel = json.load(f)
     
-    title = kernel.get("metadata", {}).get("title", "Unknown")
-    print(f"  ✓ Loaded: {title}")
+    # Extract metadata using normalized helper
+    metadata = get_kernel_metadata(kernel)
+    title = metadata['title']
+    author = metadata['author']
+    
+    print(f"  ✓ Loaded: {title} by {author}")
     
     # Extract macro elements
     print("\n🔍 Extracting macro elements...")
@@ -265,7 +356,7 @@ def run_stage1a(kernel_path):
     output = {
         "metadata": {
             "text_title": title,
-            "author": kernel.get("metadata", {}).get("author", "Unknown"),
+            "author": author,
             "extraction_version": "5.0",
             "extraction_date": datetime.now().isoformat(),
             "source_kernel": str(kernel_path)
