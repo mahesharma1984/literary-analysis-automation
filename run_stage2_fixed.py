@@ -231,83 +231,77 @@ OUTPUT: Exactly 6 numbered effects, mixed categories."""
     
     return effects
 
-def fill_device_section(template, device, device_num, kernel_data, macro_focus, client):
-    """Fill template placeholders for one device section"""
+def fill_device_section(worksheet, device, device_num, kernel_data, macro_focus, client):
+    """Fill in all activities for one device section"""
     
     device_name = device['device_name']
     definition = device['definition']
+    
+    # Get examples
     examples = get_device_examples(device_name, kernel_data)
-    
-    # Get locations for finding the device
-    example_locations = "\n".join([
-        f"- {ex['location']}: {ex['scene']}"
-        for ex in examples[:3]
-    ]) if examples else f"Look throughout the focus chapter"
-    
-    # Model example (first example quote)
-    model_example = examples[0]['quote'] if examples else "See text for examples"
+    example_location = examples[0]['location'] if examples else "Chapter ?, pages ?"
     
     # Generate activities
-    print(f"    Generating multiple choice for {device_name}...")
+    print(f"    Generating multiple choice...")
     mc_options = generate_multiple_choice_options(device, kernel_data, client)
     
-    print(f"    Generating sequencing for {device_name}...")
+    print(f"    Generating sequencing...")
     sequencing = generate_sequencing_activity(device, kernel_data, client)
     
-    print(f"    Generating effects for {device_name}...")
+    print(f"    Generating effects...")
     effects = generate_effect_categorization(device, kernel_data, macro_focus, client)
     
     # Replace placeholders
-    prefix = f"DEVICE_{device_num}_"
+    replacements = {
+        f'[DEVICE_{device_num}_NAME]': device_name,
+        f'[DEVICE_{device_num}_DEFINITION]': definition,
+        f'[DEVICE_{device_num}_EXAMPLE_LOCATION]': example_location,
+        f'[DEVICE_{device_num}_MC_A]': mc_options['A'],
+        f'[DEVICE_{device_num}_MC_B]': mc_options['B'],
+        f'[DEVICE_{device_num}_MC_C]': mc_options['C'],
+        f'[DEVICE_{device_num}_MC_D]': mc_options['D'],
+        f'[DEVICE_{device_num}_SEQ_A]': sequencing['sequence_randomized']['A'],
+        f'[DEVICE_{device_num}_SEQ_B]': sequencing['sequence_randomized']['B'],
+        f'[DEVICE_{device_num}_SEQ_C]': sequencing['sequence_randomized']['C'],
+        f'[DEVICE_{device_num}_EFFECT_1]': effects[0],
+        f'[DEVICE_{device_num}_EFFECT_2]': effects[1],
+        f'[DEVICE_{device_num}_EFFECT_3]': effects[2],
+        f'[DEVICE_{device_num}_EFFECT_4]': effects[3],
+        f'[DEVICE_{device_num}_EFFECT_5]': effects[4],
+        f'[DEVICE_{device_num}_EFFECT_6]': effects[5],
+    }
     
-    template = template.replace(f"{{{{{prefix}NAME}}}}", device_name)
-    template = template.replace(f"{{{{{prefix}DEFINITION}}}}", definition)
-    template = template.replace(f"{{{{{prefix}MODEL_EXAMPLE}}}}", model_example)
-    template = template.replace(f"{{{{{prefix}EXAMPLE_LOCATIONS}}}}", example_locations)
+    for placeholder, value in replacements.items():
+        worksheet = worksheet.replace(placeholder, value)
     
-    # Multiple choice options
-    template = template.replace(f"{{{{{prefix}OPTION_A}}}}", mc_options['A'])
-    template = template.replace(f"{{{{{prefix}OPTION_B}}}}", mc_options['B'])
-    template = template.replace(f"{{{{{prefix}OPTION_C}}}}", mc_options['C'])
-    template = template.replace(f"{{{{{prefix}OPTION_D}}}}", mc_options['D'])
-    
-    # Sequencing (randomized for worksheet)
-    template = template.replace(f"{{{{{prefix}SEQUENCE_A}}}}", sequencing['sequence_randomized']['A'])
-    template = template.replace(f"{{{{{prefix}SEQUENCE_B}}}}", sequencing['sequence_randomized']['B'])
-    template = template.replace(f"{{{{{prefix}SEQUENCE_C}}}}", sequencing['sequence_randomized']['C'])
-    
-    # Effects
-    for i, effect in enumerate(effects, 1):
-        template = template.replace(f"{{{{{prefix}EFFECT_{i}}}}}", effect)
-    
-    return template
+    return worksheet
 
 def generate_worksheet(week_package, kernel_data, client):
-    """Generate worksheet by filling template"""
+    """Generate complete worksheet using templates"""
     
     week_num = week_package["week"]
     macro_focus = week_package["macro_focus"]
+    devices = week_package["micro_devices"]
     
-    print(f"\n📝 Generating Week {week_num} worksheet ({macro_focus})...")
+    print(f"\n📝 Generating Week {week_num} worksheet...")
+    print(f"  Macro focus: {macro_focus}")
     
     # Load template
-    print("  ✓ Loading template...")
-    template = load_template("Template_Literary_Analysis_6Step.md")
+    try:
+        template = load_template("Template_Literary_Analysis_6Step.md")
+    except FileNotFoundError:
+        print("  ⚠ Template not found, generating basic worksheet...")
+        template = f"""# Week {week_num} Literary Analysis Worksheet
+## {macro_focus}
+
+[Worksheet content would go here]
+"""
     
-    # Fill metadata
-    text_title = kernel_data['text_metadata']['title']
-    author = kernel_data['text_metadata']['author']
-    edition = kernel_data['text_metadata']['edition']
+    # Replace week-level placeholders
+    worksheet = template.replace('[WEEK_NUMBER]', str(week_num))
+    worksheet = worksheet.replace('[MACRO_FOCUS]', macro_focus)
+    worksheet = worksheet.replace('[TEXT_TITLE]', week_package.get('text_title', 'The Text'))
     
-    worksheet = template.replace('{{TEXT_TITLE}}', text_title)
-    worksheet = worksheet.replace('{{TEXT_AUTHOR}}', author)
-    worksheet = worksheet.replace('{{EDITION_REFERENCE}}', edition)
-    worksheet = worksheet.replace('{{EXTRACT_FOCUS}}', macro_focus)
-    worksheet = worksheet.replace('{{YEAR_LEVEL}}', week_package.get('year_level', 'Year 11'))
-    worksheet = worksheet.replace('{{PROFICIENCY_TIER}}', week_package.get('proficiency_tier', 'Standard'))
-    
-    # Fill device sections
-    devices = week_package['micro_devices']
     num_devices = len(devices)
     
     print(f"  ✓ Processing {num_devices} devices...")
@@ -317,13 +311,11 @@ def generate_worksheet(week_package, kernel_data, client):
         worksheet = fill_device_section(worksheet, device, i, kernel_data, macro_focus, client)
     
     # Clean up any remaining placeholders for unused devices
-    for i in range(num_devices + 1, 4):
-        # Remove DEVICE_3 section if only 2 devices
+    for i in range(num_devices + 1, 7):  # Support up to 6 devices
+        # Remove DEVICE_N section if not used
         section_header = f"### DEVICE {i}:"
         if section_header in worksheet:
-            # Remove everything from this header to the next major section
             start = worksheet.find(section_header)
-            # Find next section (TVODE CONNECTION or END)
             end = worksheet.find("## TVODE CONNECTION", start)
             if end == -1:
                 end = worksheet.find("**END OF WORKSHEET", start)
@@ -331,6 +323,48 @@ def generate_worksheet(week_package, kernel_data, client):
                 worksheet = worksheet[:start] + worksheet[end:]
     
     print(f"  ✓ Generated {len(worksheet):,} characters")
+    
+    return worksheet
+
+def generate_tvode_worksheet(week_package, kernel_data, client):
+    """Generate TVODE construction worksheet"""
+    
+    week_num = week_package["week"]
+    macro_focus = week_package["macro_focus"]
+    
+    print(f"\n📝 Generating Week {week_num} TVODE worksheet...")
+    
+    try:
+        template = load_template("Template_TVODE_Construction.md")
+    except FileNotFoundError:
+        # Generate basic TVODE worksheet
+        template = f"""# Week {week_num} TVODE Construction Worksheet
+## Connecting Devices to {macro_focus}
+
+### What is TVODE?
+
+**T**opic - The literary device name
+**V**erb - Action word (demonstrates, reveals, creates, establishes, etc.)
+**O**bject - What it acts upon
+**D**etail - Specific evidence from text
+**E**ffect - The result or impact
+
+### Practice Constructing TVODE Sentences
+
+For each device you analyzed, create a TVODE sentence that connects it to {macro_focus}.
+
+**Example:**
+*Direct Dialogue* **demonstrates** *character relationships* **through** *Jonas's formal exchanges with his parents* **which reveals** *the emotionally distant society.*
+
+---
+
+[DEVICE_PRACTICE_SECTIONS]
+
+**END OF TVODE WORKSHEET**
+"""
+    
+    worksheet = template.replace('[WEEK_NUMBER]', str(week_num))
+    worksheet = worksheet.replace('[MACRO_FOCUS]', macro_focus)
     
     return worksheet
 
@@ -342,10 +376,11 @@ def generate_teacher_key(week_package, worksheet_content, client):
     
     print(f"\n🔑 Generating Week {week_num} teacher key...")
     
-    # Build device information
+    # Build device information using week_label instead of executes_macro
     device_info = []
     for device in week_package['micro_devices']:
-        device_info.append(f"**{device['device_name']}**: {device.get('executes_macro', device['definition'])}")
+        device_label = device.get('week_label', device['definition'])
+        device_info.append(f"**{device['device_name']}**: {device_label}")
     
     device_text = "\n".join(device_info)
     
@@ -354,7 +389,6 @@ def generate_teacher_key(week_package, worksheet_content, client):
 WEEK: {week_num}
 MACRO FOCUS: {macro_focus}
 TEXT: {week_package.get('text_title', 'The text')}
-CHAPTER: {week_package.get('focus_chapter', '?')}
 
 DEVICES COVERED:
 {device_text}
@@ -449,11 +483,9 @@ def run_stage2(stage1b_path, kernel_path, week_num=None, all_weeks=False):
         print(f"\n📋 Generating worksheet for Week 1 (default)...")
         print("   Use --all-weeks to generate all weeks")
     
-    # Create output directory
-    output_dir = Path("outputs") / "worksheets"
+    # Create output directory - directly in outputs, not outputs/worksheets
+    output_dir = Path("outputs")
     output_dir.mkdir(parents=True, exist_ok=True)
-    
-    safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
     
     # Generate worksheets
     generated_files = []
@@ -461,24 +493,35 @@ def run_stage2(stage1b_path, kernel_path, week_num=None, all_weeks=False):
     for week_pkg in weeks_to_generate:
         week_num = week_pkg["week"]
         
-        # Generate worksheet using template system
+        # Generate Literary Analysis worksheet
         worksheet = generate_worksheet(week_pkg, kernel_data, client)
         
-        # Save worksheet
-        worksheet_path = output_dir / f"{safe_title}_Week{week_num}_Worksheet.md"
+        # Save with standard naming: Week_N_Literary_Analysis_Worksheet.md
+        worksheet_path = output_dir / f"Week_{week_num}_Literary_Analysis_Worksheet.md"
         with open(worksheet_path, 'w', encoding='utf-8') as f:
             f.write(worksheet)
         
         print(f"  ✅ Saved: {worksheet_path.name}")
         generated_files.append(worksheet_path)
         
+        # Generate TVODE Construction worksheet
+        tvode_worksheet = generate_tvode_worksheet(week_pkg, kernel_data, client)
+        
+        tvode_path = output_dir / f"Week_{week_num}_TVODE_Construction.md"
+        with open(tvode_path, 'w', encoding='utf-8') as f:
+            f.write(tvode_worksheet)
+        
+        print(f"  ✅ Saved: {tvode_path.name}")
+        generated_files.append(tvode_path)
+        
         # Generate teacher key
         teacher_key = generate_teacher_key(week_pkg, worksheet, client)
         
-        # Save teacher key
-        key_path = output_dir / f"{safe_title}_Week{week_num}_TeacherKey.md"
+        # Save with standard naming: Week_N_Teacher_Key.md
+        key_path = output_dir / f"Week_{week_num}_Teacher_Key.md"
         with open(key_path, 'w', encoding='utf-8') as f:
-            f.write(f"# {title} - Week {week_num} Teacher Answer Key\n\n")
+            f.write(f"# Week {week_num} Teacher Answer Key\n\n")
+            f.write(f"**Text:** {title}\n")
             f.write(f"**Macro Focus:** {week_pkg['macro_focus']}\n\n")
             f.write(f"---\n\n")
             f.write(teacher_key)
@@ -534,7 +577,7 @@ def main():
             week_idx = sys.argv.index("--week")
             week_num = int(sys.argv[week_idx + 1])
         except (IndexError, ValueError):
-            print("❌ Error: --week requires a number (1-4)")
+            print("❌ Error: --week requires a number (1-5)")
             sys.exit(1)
     
     run_stage2(stage1b_path, kernel_path, week_num, all_weeks)
