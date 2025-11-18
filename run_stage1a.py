@@ -239,7 +239,7 @@ def run_stage1a(kernel_path):
     with open(kernel_path, 'r', encoding='utf-8') as f:
         kernel = json.load(f)
     
-    title = kernel.get("text_metadata", {}).get("title", "Unknown")
+    title = kernel.get("metadata", {}).get("title", "Unknown")
     print(f"  ✓ Loaded: {title}")
     
     # Extract macro elements
@@ -265,7 +265,7 @@ def run_stage1a(kernel_path):
     output = {
         "metadata": {
             "text_title": title,
-            "author": kernel.get("text_metadata", {}).get("author", "Unknown"),
+            "author": kernel.get("metadata", {}).get("author", "Unknown"),
             "extraction_version": "5.0",
             "extraction_date": datetime.now().isoformat(),
             "source_kernel": str(kernel_path)

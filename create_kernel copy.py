@@ -171,30 +171,30 @@ class KernelCreator:
                 print("Invalid response. Please enter y/n/save/quit")
     
     def stage1_extract_freytag(self):
-        """Extract 5 FOCUSED passages (500-800 words each) that capture the MOST 
-IMPORTANT narrative moments in each Freytag section. Prioritize narrative 
-density over section length."""
+        """Stage 1: Extract 5 Freytag sections"""
         print("\n" + "="*80)
         print("STAGE 1: FREYTAG EXTRACT SELECTION")
         print("="*80)
         
         prompt = f"""You are performing Stage 1 of the Kernel Validation Protocol v3.3.
 
-TASK: Extract 5 FOCUSED passages (500-800 words each) from the book that map to Freytag's dramatic structure. For each section, identify and extract the MOST IMPORTANT narrative moment - prioritize narrative density over length.
-
-SECTIONS TO EXTRACT:
-1. Exposition (beginning) - Key character/setting introduction moment
-2. Rising Action (conflict development) - Pivotal conflict escalation
-3. Climax (turning point) - The most intense/decisive moment
-4. Falling Action (aftermath) - Immediate consequences
-5. Resolution (ending) - Final resolution moment
-
-CRITICAL: Each extract should be 500-800 words. Choose the most narratively dense passage from each section, not just any passage.
+TASK: Extract 5 key sections from the book that map to Freytag's dramatic structure:
+1. Exposition (beginning)
+2. Rising Action (conflict development)
+3. Climax (turning point)
+4. Falling Action (aftermath)
+5. Resolution (ending)
 
 BOOK METADATA:
 - Title: {self.title}
 - Author: {self.author}
 - Edition: {self.edition}
+
+PROTOCOL TO FOLLOW:
+{self.protocols['kernel_validation']}
+
+ADDITIONAL CONTEXT:
+{self.protocols['lem']}
 
 BOOK TEXT (full):
 {self.book_text}
@@ -270,6 +270,9 @@ TASK: Analyze the 5 Freytag extracts and tag all 84 macro alignment variables:
 BOOK METADATA:
 - Title: {self.title}
 - Author: {self.author}
+
+PROTOCOL TO FOLLOW:
+{self.protocols['kernel_validation']}
 
 TAGGING PROTOCOL:
 {self.protocols['artifact_2']}
