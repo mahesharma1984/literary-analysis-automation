@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 STAGE 1B AUTOMATION
-Package macro-micro extracts into 4-week teaching progression
+Package macro-micro extracts into 5-week teaching progression
 
 Usage:
     python3 run_stage1b.py outputs/Book_stage1a_v5.0.json
@@ -19,7 +19,8 @@ def create_week_package(week_data, week_num):
         1: "High - Teacher models everything",
         2: "Medium-High - Co-construction with students",
         3: "Medium - Students lead with support",
-        4: "Medium-Low - Independent work with feedback"
+        4: "Medium-Low - Independent work with feedback",
+        5: "Low - Independent application"
     }
     
     teaching_sequences = {
@@ -32,24 +33,31 @@ def create_week_package(week_data, week_num):
         ],
         2: [
             "Review Week 1 foundation devices",
-            "Introduce macro concept: Exposition",
-            "Show how devices BUILD exposition",
-            "Analyze device-macro connection in text",
-            "Practice macro-micro TVODE construction"
+            "Introduce macro concept: Literary Devices",
+            "Show how figurative language creates meaning",
+            "Analyze device function in text",
+            "Practice device identification TVODE"
         ],
         3: [
-            "Review exposition and foundation concepts",
+            "Review exposition and literary devices",
             "Introduce macro concept: Structure",
             "Analyze how devices create plot structure",
             "Trace structural patterns across chapters",
             "Build complex structural TVODE"
         ],
         4: [
+            "Synthesize previous concepts",
+            "Introduce macro concept: Narrative Voice",
+            "Analyze perspective and consciousness through devices",
+            "Compare voice techniques across texts",
+            "Create voice analysis TVODE"
+        ],
+        5: [
             "Synthesize all previous concepts",
-            "Introduce macro concept: Voice",
-            "Analyze perspective and distance through devices",
-            "Compare macro-micro relationships across weeks",
-            "Create independent analysis TVODE"
+            "Introduce macro concept: Rhetorical Voice",
+            "Analyze irony and persuasive techniques",
+            "Compare rhetorical strategies",
+            "Create independent rhetorical analysis TVODE"
         ]
     }
     
@@ -78,11 +86,11 @@ def create_week_package(week_data, week_num):
             "layer": device.get("layer", ""),
             "function": device.get("function", ""),
             "definition": device.get("definition", ""),
-            "executes_macro": device.get("executes_macro", ""),
+            "week_label": device.get("week_label", ""),
             "tvode_components": device.get("tvode_components", {}),
             "examples": device.get("examples", []),
             "teaching_notes": {
-                "introduce_as": device.get("executes_macro", ""),
+                "introduce_as": device.get("week_label", ""),
                 "macro_connection": f"This device is one way {package['macro_focus']} works",
                 "student_task": f"Find and analyze this device in the text",
                 "common_confusion": "Watch for surface-level readings",
@@ -98,18 +106,18 @@ def create_progression_summary(week_packages):
     """Create progression summary document"""
     
     return {
-        "total_weeks": 4,
+        "total_weeks": 5,
         "pedagogical_approach": "Macro-through-micro instruction with scaffolding withdrawal",
         "progression": [
             {
                 "week": 1,
-                "focus": "Foundation - What are literary devices?",
+                "focus": "Exposition - How characters/setting are introduced",
                 "skill": "Device recognition and identification"
             },
             {
                 "week": 2,
-                "focus": "Exposition - How characters/setting are introduced",
-                "skill": "Connecting devices to macro exposition concept"
+                "focus": "Literary Devices - Foundational figurative language",
+                "skill": "Recognizing and analyzing figurative devices"
             },
             {
                 "week": 3,
@@ -118,15 +126,21 @@ def create_progression_summary(week_packages):
             },
             {
                 "week": 4,
-                "focus": "Voice - Narrative perspective",
-                "skill": "Synthesizing macro-micro relationships"
+                "focus": "Narrative Voice - Perspective and consciousness",
+                "skill": "Understanding point of view techniques"
+            },
+            {
+                "week": 5,
+                "focus": "Rhetorical Voice - Irony and persuasion",
+                "skill": "Synthesizing rhetorical strategies"
             }
         ],
         "scaffolding_withdrawal": {
             "week1": "High - Teacher-led modeling",
-            "week2": "Medium-High - Guided practice",
+            "week2": "Medium-High - Co-construction",
             "week3": "Medium - Supported independence",
-            "week4": "Medium-Low - Independent analysis"
+            "week4": "Medium-Low - Independent with feedback",
+            "week5": "Low - Independent application"
         }
     }
 
@@ -134,7 +148,7 @@ def generate_progression_document(title, author, week_packages):
     """Generate human-readable progression document"""
     
     doc = f"""# {title.upper()} INTEGRATED MACRO-MICRO PROGRESSION
-## 4-Week Literary Analysis Curriculum
+## 5-Week Literary Analysis Curriculum
 
 **Text:** {title} by {author}  
 **Version:** 5.0 (Macro-Micro Integration)  
@@ -147,11 +161,11 @@ def generate_progression_document(title, author, week_packages):
 
 ### Pedagogical Approach
 
-This curriculum teaches **macro alignment elements** (Exposition, Structure, Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
+This curriculum teaches **macro alignment elements** (Exposition, Literary Devices, Structure, Narrative Voice, Rhetorical Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
 
-**Core Principle:** Literary concepts like "exposition" are not abstract ideas—they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
+**Core Principle:** Literary concepts are not abstract ideas—they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
 
-### 4-Week Progression
+### 5-Week Progression
 
 | Week | Macro Focus | Teaching Approach | Devices | Scaffolding |
 |------|-------------|-------------------|---------|-------------|
@@ -190,7 +204,8 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
         # Devices
         doc += f"**Devices ({len(pkg['micro_devices'])}):**\n"
         for device in pkg['micro_devices']:
-            doc += f"- **{device['name']}**: {device['executes_macro']}\n"
+            week_label = device.get('week_label', '')
+            doc += f"- **{device['name']}**: {week_label}\n"
         doc += "\n"
         
         # Macro variables if present
@@ -213,18 +228,20 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
     doc += "### Skill Building\n"
     skills = [
         "1. Device recognition (Week 1)",
-        "2. Macro-micro connection (Week 2)",
+        "2. Figurative analysis (Week 2)",
         "3. Structural analysis (Week 3)",
-        "4. Complex perspective synthesis (Week 4)"
+        "4. Voice perspective (Week 4)",
+        "5. Rhetorical synthesis (Week 5)"
     ]
     doc += " → ".join(skills) + "\n\n"
     
     doc += "### TVODE Evolution\n"
     tvode_progression = [
         "Week 1: Simple device TVODE",
-        "Week 2: Macro-micro connection TVODE",
+        "Week 2: Figurative device TVODE",
         "Week 3: Structural function TVODE",
-        "Week 4: Complex voice TVODE"
+        "Week 4: Voice analysis TVODE",
+        "Week 5: Rhetorical strategy TVODE"
     ]
     for item in tvode_progression:
         doc += f"- {item}\n"
@@ -256,19 +273,30 @@ def run_stage1b(stage1a_path):
     print("\n📦 Creating weekly packages...")
     week_packages = []
     
-    for week_num in range(1, 5):
-        week_key = [k for k in packages.keys() if f"week{week_num}" in k][0]
+    # Define teaching approaches for all 5 weeks
+    teaching_approaches = {
+        1: "Here are devices. Let's identify them.",
+        2: "Literary devices create meaning through figurative language.",
+        3: "Structure UNFOLDS through devices that create pacing.",
+        4: "Narrative voice OPERATES through perspective devices.",
+        5: "Rhetorical voice CONTROLS interpretation through irony and persuasion."
+    }
+    
+    for week_num in range(1, 6):
+        # Find the matching week key
+        week_key = None
+        for k in packages.keys():
+            if f"week{week_num}" in k:
+                week_key = k
+                break
+        
+        if not week_key:
+            print(f"  ⚠ Warning: Week {week_num} not found in packages")
+            continue
+        
         week_data = packages[week_key]
         week_data["text_title"] = title
         week_data["text_author"] = author
-        
-        # Add teaching approach
-        teaching_approaches = {
-            1: "Here are devices. Let's identify them.",
-            2: "Exposition is BUILT through devices working together.",
-            3: "Structure UNFOLDS through devices that create pacing.",
-            4: "Voice OPERATES through devices that create perspective."
-        }
         week_data["teaching_approach"] = teaching_approaches.get(week_num, "")
         
         package = create_week_package(week_data, week_num)
@@ -296,7 +324,7 @@ def run_stage1b(stage1a_path):
             "package_version": "5.0",
             "package_date": datetime.now().isoformat(),
             "structure_type": "macro-micro week packages with pedagogical scaffolding",
-            "total_weeks": 4,
+            "total_weeks": 5,
             "source_file": str(stage1a_path)
         },
         "progression_summary": progression,
