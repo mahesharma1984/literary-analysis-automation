@@ -4,3 +4,4 @@ outputs/*.json
 outputs/worksheets/
 .env
 books/*.pdf
+outputs/

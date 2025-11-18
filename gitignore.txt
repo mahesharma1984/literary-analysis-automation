@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# API Keys
+.env
+config.json
+
+# Output files (optional - you may want to track these)
+outputs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Books (large files - use Git LFS if tracking)
+books/*.pdf
+books/*.txt
+
+# Kernels (you probably want to track these)
+# kernels/

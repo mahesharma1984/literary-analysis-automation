@@ -1,0 +1,385 @@
+{
+  "version": "1.0",
+  "description": "Device categorization mapping for Stage 1A pedagogical progression",
+  "taxonomy_basis": "Artifact 1 - Device Taxonomy by Alignment Function",
+  "pedagogical_framework": "5-week progressive difficulty model",
+  
+  "week_definitions": {
+    "week_1_exposition": {
+      "label": "Week 1: Exposition Elements",
+      "macro_element": "Narrative Foundation",
+      "focus": "Transparent narrative devices that establish story world, characters, and basic information",
+      "characteristics": "Primarily N|Re|T - Narrative layer, Reinforcing function, Transparent engagement"
+    },
+    "week_2_literary_devices": {
+      "label": "Week 2: Literary Devices",
+      "macro_element": "Figurative Language & Foundations",
+      "focus": "Foundational figurative language and descriptive devices students should recognize",
+      "characteristics": "Primarily B|Me|V - Bridge layer, Mediating function, Visible engagement"
+    },
+    "week_3_structure": {
+      "label": "Week 3: Structural Devices",
+      "macro_element": "Dramatic Progression",
+      "focus": "Devices that organize plot architecture and create dramatic arc",
+      "characteristics": "Mixed classifications - devices that shape story structure and pacing"
+    },
+    "week_4_narrative_voice": {
+      "label": "Week 4: Narrative Voice",
+      "macro_element": "Perspective & Consciousness",
+      "focus": "Devices that control point of view, focalization, and character consciousness",
+      "characteristics": "Primarily N|Me|T or N|Re|T - Narrative layer voice devices"
+    },
+    "week_5_rhetorical_voice": {
+      "label": "Week 5: Rhetorical Voice",
+      "macro_element": "Persuasion & Meaning",
+      "focus": "Devices that shape interpretation, create irony, and control reader understanding",
+      "characteristics": "Primarily R or B with Te function - Rhetorical layer or tensioning devices"
+    }
+  },
+  
+  "device_mappings": {
+    "week_1_exposition": [
+      {
+        "device_name": "Direct Characterization",
+        "classification": "N|Re|T",
+        "rationale": "Transparent narrative device that introduces character traits explicitly",
+        "student_facing_type": "Characterization Device"
+      },
+      {
+        "device_name": "Scene",
+        "classification": "N|Re|T",
+        "rationale": "Fundamental pacing device showing moments in real-time detail",
+        "student_facing_type": "Pacing Device"
+      },
+      {
+        "device_name": "Direct Dialogue",
+        "classification": "N|Re|T",
+        "rationale": "Transparent device where characters speak directly, revealing information",
+        "student_facing_type": "Dialogue Device"
+      },
+      {
+        "device_name": "Indirect Characterization",
+        "classification": "N|Re|T",
+        "rationale": "Shows character through actions and words rather than direct statement",
+        "student_facing_type": "Characterization Device"
+      },
+      {
+        "device_name": "Setting Description",
+        "classification": "N|Re|T",
+        "rationale": "Establishes physical and temporal context for the narrative",
+        "student_facing_type": "Descriptive Device"
+      },
+      {
+        "device_name": "Exposition",
+        "classification": "N|Re|T",
+        "rationale": "Provides necessary background information to understand the story",
+        "student_facing_type": "Narrative Device"
+      }
+    ],
+    
+    "week_2_literary_devices": [
+      {
+        "device_name": "Metaphor",
+        "classification": "B|Me|V",
+        "rationale": "Foundational figurative device comparing two unlike things",
+        "student_facing_type": "Figurative Language"
+      },
+      {
+        "device_name": "Simile",
+        "classification": "B|Me|V",
+        "rationale": "Explicit comparison using 'like' or 'as'",
+        "student_facing_type": "Figurative Language"
+      },
+      {
+        "device_name": "Personification",
+        "classification": "B|Me|V",
+        "rationale": "Gives human qualities to non-human entities",
+        "student_facing_type": "Figurative Language"
+      },
+      {
+        "device_name": "Imagery",
+        "classification": "B|Me|V",
+        "rationale": "Descriptive language that appeals to senses",
+        "student_facing_type": "Descriptive Device"
+      },
+      {
+        "device_name": "Alliteration",
+        "classification": "R|Re|T",
+        "rationale": "Repetition of initial consonant sounds",
+        "student_facing_type": "Sound Device"
+      },
+      {
+        "device_name": "Symbolism",
+        "classification": "B|Me|V",
+        "rationale": "Object/action representing abstract meaning",
+        "student_facing_type": "Symbolic Device"
+      },
+      {
+        "device_name": "Onomatopoeia",
+        "classification": "R|Re|V",
+        "rationale": "Words that imitate sounds they describe",
+        "student_facing_type": "Sound Device"
+      },
+      {
+        "device_name": "Hyperbole",
+        "classification": "R|Re|V",
+        "rationale": "Extreme exaggeration for emphasis",
+        "student_facing_type": "Figurative Language"
+      }
+    ],
+    
+    "week_3_structure": [
+      {
+        "device_name": "Foreshadowing",
+        "classification": "B|Re|T",
+        "rationale": "Hints at future events, builds dramatic structure",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Climactic Structure",
+        "classification": "N|Re|T",
+        "rationale": "Organization following rising action to climax pattern",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Circular Structure",
+        "classification": "B|Re|V",
+        "rationale": "Narrative returns to starting point or repeats pattern",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Motif",
+        "classification": "B|Re|T",
+        "rationale": "Recurring element that develops theme through repetition",
+        "student_facing_type": "Thematic Device"
+      },
+      {
+        "device_name": "Flashback",
+        "classification": "N|Me|V",
+        "rationale": "Interruption to show past events, shapes structure",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Flashforward",
+        "classification": "N|Te|V",
+        "rationale": "Jump to future events",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "In Medias Res",
+        "classification": "N|Te|V",
+        "rationale": "Beginning in middle of action",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Parallel Plot",
+        "classification": "N|Re|V",
+        "rationale": "Multiple storylines running simultaneously",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Conflict",
+        "classification": "N|Re|T",
+        "rationale": "Central struggle driving the plot",
+        "student_facing_type": "Structural Device"
+      },
+      {
+        "device_name": "Resolution",
+        "classification": "N|Re|T",
+        "rationale": "Conclusion where conflicts are resolved",
+        "student_facing_type": "Structural Device"
+      }
+    ],
+    
+    "week_4_narrative_voice": [
+      {
+        "device_name": "Third-Person Limited",
+        "classification": "N|Me|T",
+        "rationale": "Narration limited to one character's perspective",
+        "student_facing_type": "Narrative Voice Device"
+      },
+      {
+        "device_name": "Third-Person Omniscient",
+        "classification": "N|Re|T",
+        "rationale": "All-knowing narrator with access to all minds",
+        "student_facing_type": "Narrative Voice Device"
+      },
+      {
+        "device_name": "First-Person",
+        "classification": "N|Re|T",
+        "rationale": "Narrator is character using 'I'",
+        "student_facing_type": "Narrative Voice Device"
+      },
+      {
+        "device_name": "Interior Monologue",
+        "classification": "N|Re|T",
+        "rationale": "Character's inner thoughts presented directly",
+        "student_facing_type": "Voice Device"
+      },
+      {
+        "device_name": "Free Indirect Discourse",
+        "classification": "B|Me|T",
+        "rationale": "Third-person narration blended with character voice",
+        "student_facing_type": "Voice Device"
+      },
+      {
+        "device_name": "Stream of Consciousness",
+        "classification": "N|Re|V",
+        "rationale": "Unfiltered flow of character thoughts",
+        "student_facing_type": "Voice Device"
+      },
+      {
+        "device_name": "Unreliable Narrator",
+        "classification": "B|Te|V",
+        "rationale": "Narrator whose credibility is compromised",
+        "student_facing_type": "Narrative Voice Device"
+      }
+    ],
+    
+    "week_5_rhetorical_voice": [
+      {
+        "device_name": "Dramatic Irony",
+        "classification": "B|Te|V",
+        "rationale": "Reader knows more than characters",
+        "student_facing_type": "Irony Device"
+      },
+      {
+        "device_name": "Situational Irony",
+        "classification": "B|Te|V",
+        "rationale": "Outcome opposite of expectation",
+        "student_facing_type": "Irony Device"
+      },
+      {
+        "device_name": "Verbal Irony",
+        "classification": "R|Te|V",
+        "rationale": "Saying opposite of what is meant",
+        "student_facing_type": "Irony Device"
+      },
+      {
+        "device_name": "Euphemism",
+        "classification": "R|Te|V",
+        "rationale": "Mild expression replacing harsh reality",
+        "student_facing_type": "Language Device"
+      },
+      {
+        "device_name": "Understatement",
+        "classification": "R|Te|V",
+        "rationale": "Deliberately minimizing significance",
+        "student_facing_type": "Language Device"
+      },
+      {
+        "device_name": "Juxtaposition",
+        "classification": "B|Te|V",
+        "rationale": "Placing contrasting elements side by side",
+        "student_facing_type": "Contrast Device"
+      },
+      {
+        "device_name": "Repetition",
+        "classification": "R|Re|V",
+        "rationale": "Repeated words/phrases for rhetorical emphasis",
+        "student_facing_type": "Sound Device"
+      },
+      {
+        "device_name": "Tone",
+        "classification": "R|Re|T",
+        "rationale": "Author's attitude toward subject",
+        "student_facing_type": "Voice Device"
+      },
+      {
+        "device_name": "Diction",
+        "classification": "R|Re|T",
+        "rationale": "Author's word choice creating effect",
+        "student_facing_type": "Language Device"
+      },
+      {
+        "device_name": "Rhetorical Question",
+        "classification": "R|Re|V",
+        "rationale": "Question asked for effect not answer",
+        "student_facing_type": "Rhetorical Device"
+      },
+      {
+        "device_name": "Sarcasm",
+        "classification": "R|Te|V",
+        "rationale": "Harsh form of verbal irony",
+        "student_facing_type": "Irony Device"
+      }
+    ]
+  },
+  
+  "categorization_rules": {
+    "priority_order": [
+      "Check explicit mapping first",
+      "If not found, use layer-function heuristics",
+      "Default to week_2 for figurative language",
+      "Default to week_3 for structural keywords",
+      "Default to week_4 for voice/perspective keywords",
+      "Default to week_5 for irony/rhetorical keywords"
+    ],
+    "fallback_heuristics": {
+      "week_1": {
+        "layer_patterns": ["N"],
+        "function_patterns": ["Re"],
+        "engagement_patterns": ["T"],
+        "keyword_patterns": ["character", "dialogue", "scene", "exposition"]
+      },
+      "week_2": {
+        "layer_patterns": ["B"],
+        "function_patterns": ["Me"],
+        "engagement_patterns": ["V"],
+        "keyword_patterns": ["metaphor", "simile", "imagery", "symbol", "personification", "alliteration", "figurative"]
+      },
+      "week_3": {
+        "layer_patterns": ["N", "B"],
+        "function_patterns": ["Re", "Te"],
+        "engagement_patterns": ["T", "V"],
+        "keyword_patterns": ["structure", "foreshadow", "climax", "motif", "flashback", "conflict", "resolution", "pacing"]
+      },
+      "week_4": {
+        "layer_patterns": ["N"],
+        "function_patterns": ["Me", "Re"],
+        "engagement_patterns": ["T"],
+        "keyword_patterns": ["person", "narrator", "perspective", "voice", "monologue", "consciousness", "pov"]
+      },
+      "week_5": {
+        "layer_patterns": ["R", "B"],
+        "function_patterns": ["Te", "Re"],
+        "engagement_patterns": ["V"],
+        "keyword_patterns": ["irony", "euphemism", "understatement", "juxtaposition", "rhetorical", "tone", "diction", "sarcasm"]
+      }
+    }
+  },
+  
+  "ambiguous_devices": {
+    "notes": [
+      {
+        "device_name": "Dialogue",
+        "ambiguity": "Could be Week 1 (Direct Dialogue as exposition) or Week 4 (as voice device)",
+        "resolution": "Use 'Direct Dialogue' for Week 1, 'Dialogue Tag' or 'Interior Dialogue' for Week 4"
+      },
+      {
+        "device_name": "Repetition",
+        "ambiguity": "Could be Week 2 (literary device) or Week 5 (rhetorical device)",
+        "resolution": "Week 5 - functions as rhetorical emphasis, not just figurative language"
+      },
+      {
+        "device_name": "Tone",
+        "ambiguity": "Could be Week 4 (narrative voice) or Week 5 (rhetorical voice)",
+        "resolution": "Week 5 - tone is rhetorical positioning rather than narrative perspective"
+      }
+    ]
+  },
+  
+  "validation_notes": {
+    "tested_against": "The Giver kernel v3.3",
+    "edge_cases_identified": [
+      "Devices with B|Te|V should generally map to Week 5 (rhetorical tension)",
+      "Devices with N|Re|T should generally map to Week 1 or Week 3 depending on whether they're foundational or structural",
+      "Sound devices (alliteration, onomatopoeia) map to Week 2 unless they serve rhetorical function (Week 5)"
+    ],
+    "future_enhancements": [
+      "Add more narrative voice variations",
+      "Expand Week 3 with more temporal manipulation devices",
+      "Add metafictional devices for advanced texts"
+    ]
+  }
+}

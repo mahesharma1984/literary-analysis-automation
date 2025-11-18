@@ -340,7 +340,7 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         return False
     
     def stage2b_tag_devices(self):
-        """Stage 2B: Tag 15-20+ micro devices with examples"""
+        """Stage 2B: Tag 8-12 micro devices with examples"""
         print("\n" + "="*80)
         print("STAGE 2B: MICRO DEVICE INVENTORY")
         print("="*80)
@@ -355,7 +355,7 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         
         prompt = f"""You are performing Stage 2B of the Kernel Protocol Enhancement v3.3.
 
-TASK: Identify 15-20+ micro literary devices in the text with quoted examples.
+TASK: Identify 8-12 micro literary devices in the text with quoted examples.
 
 REQUIREMENTS:
 - Minimum 15 devices (target: 20+)
@@ -427,7 +427,7 @@ CRITICAL:
         
         # Validate minimum requirements
         device_count = len(devices_json)
-        if device_count < 15:
+        if device_count < 8:
             print(f"\n⚠️  Warning: Only {device_count} devices found (minimum 15 required)")
         
         # Review
@@ -500,6 +500,41 @@ CRITICAL:
         print(f"\n✅ Kernel saved to: {output_path}")
         print(f"   Size: {output_path.stat().st_size:,} bytes")
         return True
+
+    def save_reasoning_document(self, output_path: Optional[Path] = None):
+        """Generate narrative reasoning document"""
+        if not self.kernel:
+            print("❌ Error: No kernel to save reasoning for")
+            return False
+    
+        if not output_path:
+            safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
+            safe_title = safe_title.replace(' ', '_')
+            filename = f"{safe_title}_ReasoningDoc_v3.3.md"
+            output_path = Config.KERNELS_DIR / filename
+    
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+    
+        # Generate reasoning doc
+        prompt = f"""Create a narrative reasoning document explaining the literary analysis decisions for "{self.title}" by {self.author}.
+
+    STRUCTURE:
+    1. Overview of text and alignment pattern
+    2. Justification for macro variable selections (Stage 2A)
+    3. Explanation of device selections and their alignment functions (Stage 2B)
+    4. Summary of how devices mediate the macro alignment
+    
+    Be clear and pedagogical - explain WHY these analytical choices were made."""
+    
+        system_prompt = "You are documenting literary analysis decisions."
+        result = self._call_claude(prompt, system_prompt)
+    
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(result)
+    
+        print(f"\n✅ Reasoning document saved: {output_path}")
+        print(f"   Size: {output_path.stat().st_size:,} bytes")
+        return True
     
     def run(self):
         """Run the complete kernel creation pipeline"""
@@ -533,6 +568,35 @@ CRITICAL:
         # Save
         if not self.save_kernel():
             print("\n❌ Pipeline failed at save")
+            return False
+
+        def save_reasoning_document(self, output_path: Optional[Path] = None):
+            """Generate narrative reasoning document"""
+            if not output_path:
+                safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
+                filename = f"{safe_title}_ReasoningDoc_v3.3.md"
+                output_path = Config.KERNELS_DIR / filename
+    
+            # Generate reasoning doc explaining tagging decisions
+            prompt = f"""Create a narrative reasoning document explaining the literary analysis decisions made for {self.title}.
+
+        STRUCTURE:
+        1. Overview of text and alignment pattern
+        2. Justification for macro variable selections (Stage 2A)
+        3. Explanation of device selections and their alignment functions (Stage 2B)
+        4. Summary of how devices mediate the macro alignment
+
+        Be clear and pedagogical - this document explains WHY these tags were chosen."""
+    
+            result = self._call_claude(prompt, "You are documenting literary analysis decisions.")
+    
+            with open(output_path, 'w') as f:
+                f.write(result)
+    
+            print(f"✓ Reasoning document saved: {output_path}")
+
+        if not self.save_reasoning_document():
+            print("\nâŒ Pipeline failed at reasoning document")
             return False
         
         print("\n" + "="*80)

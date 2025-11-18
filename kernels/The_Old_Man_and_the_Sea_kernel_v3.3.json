@@ -1,0 +1,480 @@
+{
+  "text_metadata": {
+    "title": "The Old Man and the Sea",
+    "author": "Ernest Hemingway",
+    "edition": "Scribner 2020",
+    "analysis_date": "2025-11-18T11:56:13.433479",
+    "protocol_version": "Kernel Validation Protocol v3.3",
+    "enhancement_version": "Kernel Protocol Enhancement v3.3"
+  },
+  "extracts": {
+    "exposition": {
+      "chapter_range": "1",
+      "page_range": "1-15",
+      "text": "He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a fish. In the first forty days a boy had been with him. But after forty days without a fish the boy's parents had told him that the old man was now definitely and finally salao, which is the worst form of unlucky, and the boy had gone at their orders in another boat which caught three good fish the first week. It made the boy sad to see the old man come in each day with his skiff empty and he always went down to help him carry either the coiled lines or the gaff and harpoon and the sail that was furled around the mast. The sail was patched with flour sacks and, furled, it looked like the flag of permanent defeat.\n\nThe old man was thin and gaunt with deep wrinkles in the back of his neck. The brown blotches of the benevolent skin cancer the sun brings from its reflection on the tropic sea were on his cheeks. The blotches ran well down the sides of his face and his hands had the deep-creased scars from handling heavy fish on the cords. But none of these scars were fresh. They were as old as erosions in a fishless desert.\n\nEverything about him was old except his eyes and they were the same color as the sea and were cheerful and undefeated.",
+      "rationale": "Establishes the protagonist Santiago, his situation (84 days without catching a fish), his relationship with the boy Manolin, and the setting. Introduces the central conflict of the old man's struggle against his unlucky streak and sets up his determination despite adversity."
+    },
+    "rising_action": {
+      "chapter_range": "1",
+      "page_range": "16-45",
+      "text": "Before it was really light he had his baits out and was drifting with the current. One bait was down forty fathoms. The second was at seventy-five and the third and fourth were down in the blue water at one hundred and one hundred and twenty-five fathoms. Each bait hung head down with the shank of the hook inside the bait fish, tied and sewed solid and all the projecting part of the hook, the curve and the point, was covered with fresh sardines.\n\n\"What a fish,\" he said. \"He has it sideways in his mouth now and he is moving off with it.\"\n\nThen he will turn and swallow it, he thought. He did not say that because he knew that if you said a good thing it might not happen. He knew what a huge fish this was and he thought of him moving away in the darkness with the tuna held crosswise in his mouth. At that moment he felt him stop moving but the weight was still there. Then the weight increased and he gave more line. He tightened the pressure of his thumb and finger for a moment and the weight increased and was going straight down.\n\n\"He's taken it,\" he said. \"Now I'll let him eat it well.\"\n\nNothing happened. The fish just moved away slowly and the old man could not raise him an inch. His line was strong and made for heavy fish and he held it against his back until it was so taut that beads of water were jumping from it. Then it began to make a slow hissing sound in the water and he still held it, bracing himself against the thwart and leaning back against the pull. The boat began to move slowly off toward the north-west.",
+      "rationale": "Santiago hooks the great marlin and begins the epic struggle. The tension builds as the fish proves to be enormous and powerful, towing the boat out to sea. This section develops the central conflict between man and fish, showing Santiago's skill and the fish's strength."
+    },
+    "climax": {
+      "chapter_range": "1",
+      "page_range": "75-85",
+      "text": "The old man dropped the line and put his foot on it and lifted the harpoon as high as he could and drove it down with all his strength, and more strength he had just summoned, into the fish's side just behind the great chest fin that rose high in the air to the altitude of the man's chest. He felt the iron go in and he leaned on it and drove it further and then pushed all his weight after it.\n\nThen the fish came alive, with his death in him, and rose high out of the water showing all his great length and width and all his power and his beauty. He seemed to hang in the air above the old man in the skiff. Then he fell into the water with a crash that sent spray over the old man and over all of the skiff.\n\nThe old man felt faint and sick and he could not see well. But he cleared the harpoon line and let it run slowly through his raw hands and, when he could see, he saw the fish was on his back with his silver belly up. The shaft of the harpoon was projecting at an angle from the fish's shoulder and the sea was discolouring with the red of the blood from his heart. First it was dark as a shoal in the blue water that was more than a mile deep. Then it spread like a cloud. The fish was silvery and still and floated with the waves.",
+      "rationale": "The turning point where Santiago finally kills the marlin after their long battle. This represents the peak of the conflict and Santiago's greatest triumph, but also marks the beginning of his tragic loss as the fish's blood will attract sharks."
+    },
+    "falling_action": {
+      "chapter_range": "1",
+      "page_range": "85-110",
+      "text": "It was an hour before the first shark hit him.\n\nThe shark was not an accident. He had come up from deep down in the water as the dark cloud of blood had settled and dispersed in the mile deep sea. He had come up so fast and absolutely without caution that he broke the surface of the blue water and was in the sun. Then he fell back into the sea and picked up the scent and started swimming on the course the skiff and the fish had taken.\n\n\"Ay,\" he said aloud. There is no translation for this word and perhaps it is just a noise such as a man might make, involuntarily, feeling the nail go through his hands and into the wood.\n\n\"Galanos,\" he said aloud. He had seen the second fin now coming up behind the first and had identified them as shovel-nosed sharks by the brown, triangular fin and the sweeping movements of the tail. They had the scent and were excited and in the stupidity of their great hunger they were losing and finding the scent in their excitement. But they were closing all the time.\n\nBut by midnight he fought and this time he knew the fight was useless. They came in a pack and he could only see the lines in the water that their fins made and their phosphorescence as they threw themselves on the fish. He clubbed at heads and heard the jaws chop and the shaking of the skiff as they took hold below.",
+      "rationale": "The aftermath of Santiago's victory becomes a series of defeats as sharks attack the marlin. Santiago fights valiantly but cannot save his prize. This section shows the destruction of his achievement and his growing exhaustion and despair."
+    },
+    "resolution": {
+      "chapter_range": "1",
+      "page_range": "110-127",
+      "text": "Finally the old man woke.\n\n\"Don't sit up,\" the boy said. \"Drink this.\" He poured some of the coffee in a glass.\n\nThe old man took it and drank it.\n\n\"They beat me, Manolin,\" he said. \"They truly beat me.\"\n\n\"He didn't beat you. Not the fish.\"\n\n\"No. Truly. It was afterwards.\"\n\n\"Now we fish together again.\"\n\n\"No. I am not lucky. I am not lucky anymore.\"\n\n\"The hell with luck,\" the boy said. \"I'll bring the luck with me.\"\n\n\"What will your family say?\"\n\n\"I do not care. I caught two yesterday. But we will fish together now for I still have much to learn.\"\n\nUp the road, in his shack, the old man was sleeping again. He was still sleeping on his face and the boy was sitting by him watching him. The old man was dreaming about the lions.\n\nThat afternoon there was a party of tourists at the Terrace and looking down in the water among the empty beer cans and dead barracudas a woman saw a great long white spine with a huge tail at the end that lifted and swung with the tide while the east wind blew a heavy steady sea outside the entrance to the harbour.\n\n\"What's that?\" she asked a waiter and pointed to the long backbone of the great fish that was now just garbage waiting to go out with the tide.\n\n\"Tiburon,\" the waiter said. \"Eshark.\" He was meaning to explain what had happened.\n\n\"I didn't know sharks had such handsome, beautifully formed tails.\"",
+      "rationale": "Santiago returns home defeated but not destroyed. The boy's loyalty is reaffirmed and they plan to fish together again. The tourists' misunderstanding of the marlin skeleton provides ironic commentary on the magnitude of Santiago's achievement that went unrecognized. Santiago's final dream of lions suggests his undefeated spirit."
+    }
+  },
+  "narrative": {},
+  "rhetoric": {},
+  "device_mediation": {},
+  "devices": [
+    {
+      "name": "Metaphor",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Implicit comparison between unlike things to reveal deeper meaning",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates vivid imagery and connects concrete objects to abstract themes",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Description of Santiago's sail",
+          "chapter": 1,
+          "page_range": "9",
+          "quote_snippet": "looked like the flag of permanent defeat"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Description of Santiago's scars",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "as old as erosions in a fishless desert"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Blood spreading in water",
+          "chapter": 1,
+          "page_range": "103",
+          "quote_snippet": "Then it spread like a cloud"
+        }
+      ]
+    },
+    {
+      "name": "Simile",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Explicit comparison using 'like' or 'as' to create vivid imagery",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Makes abstract concepts concrete and accessible to readers",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's eyes described",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "the same color as the sea"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Blood in water",
+          "chapter": 1,
+          "page_range": "103",
+          "quote_snippet": "dark as a shoal in the blue water"
+        }
+      ]
+    },
+    {
+      "name": "Personification",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Giving human qualities to non-human things",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Makes nature and abstract concepts relatable and alive",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Fish's death throes",
+          "chapter": 1,
+          "page_range": "94",
+          "quote_snippet": "the fish came alive, with his death in him"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Shark attack description",
+          "chapter": 1,
+          "page_range": "108",
+          "quote_snippet": "the stupidity of their great hunger"
+        }
+      ]
+    },
+    {
+      "name": "Symbolism",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "T",
+      "classification": "B|Me|T",
+      "definition": "Objects or images that represent deeper meanings beyond their literal sense",
+      "student_facing_type": "Literary Symbol",
+      "pedagogical_function": "Adds layers of meaning and connects to universal themes",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's eyes",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "cheerful and undefeated"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Santiago dreaming",
+          "chapter": 1,
+          "page_range": "127",
+          "quote_snippet": "dreaming about the lions"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Fish skeleton at dock",
+          "chapter": 1,
+          "page_range": "127",
+          "quote_snippet": "great long white spine with a huge tail"
+        }
+      ]
+    },
+    {
+      "name": "Dramatic Irony",
+      "layer": "B",
+      "function": "Te",
+      "engagement": "V",
+      "classification": "B|Te|V",
+      "definition": "When readers know more than characters about the situation",
+      "student_facing_type": "Irony Device",
+      "pedagogical_function": "Creates tension and emotional engagement with the story",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Santiago's hopeful thoughts",
+          "chapter": 1,
+          "page_range": "44",
+          "quote_snippet": "Now I'll let him eat it well"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Tourist's misunderstanding",
+          "chapter": 1,
+          "page_range": "127",
+          "quote_snippet": "I didn't know sharks had such handsome tails"
+        }
+      ]
+    },
+    {
+      "name": "Situational Irony",
+      "layer": "B",
+      "function": "Te",
+      "engagement": "V",
+      "classification": "B|Te|V",
+      "definition": "When the outcome is opposite to what is expected",
+      "student_facing_type": "Irony Device",
+      "pedagogical_function": "Highlights life's unpredictability and tragic elements",
+      "position_code": "CLUST-END",
+      "examples": [
+        {
+          "freytag_section": "falling_action",
+          "scene": "Sharks destroying the fish",
+          "chapter": 1,
+          "page_range": "108",
+          "quote_snippet": "this time he knew the fight was useless"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Fish reduced to skeleton",
+          "chapter": 1,
+          "page_range": "127",
+          "quote_snippet": "now just garbage waiting to go out"
+        }
+      ]
+    },
+    {
+      "name": "Repetition",
+      "layer": "R",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "R|Re|V",
+      "definition": "Repeated words or phrases for emphasis",
+      "student_facing_type": "Sound Device",
+      "pedagogical_function": "Creates rhythm and emphasizes important ideas or emotions",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Santiago talking to fish",
+          "chapter": 1,
+          "page_range": "44",
+          "quote_snippet": "he knew... he knew... he thought"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Santiago's defeat admission",
+          "chapter": 1,
+          "page_range": "124",
+          "quote_snippet": "They beat me... They truly beat me"
+        }
+      ]
+    },
+    {
+      "name": "Direct Dialogue",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Characters speaking directly in quotation marks",
+      "student_facing_type": "Dialogue Device",
+      "pedagogical_function": "Reveals character personality and advances plot naturally",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Santiago talking to himself",
+          "chapter": 1,
+          "page_range": "42",
+          "quote_snippet": "What a fish... He's taken it"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Conversation with Manolin",
+          "chapter": 1,
+          "page_range": "124",
+          "quote_snippet": "Don't sit up... Drink this"
+        }
+      ]
+    },
+    {
+      "name": "Interior Monologue",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Character's unspoken thoughts revealed to reader",
+      "student_facing_type": "Narrative Voice",
+      "pedagogical_function": "Provides insight into character's inner life and motivations",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Santiago's fishing strategy",
+          "chapter": 1,
+          "page_range": "42",
+          "quote_snippet": "Then he will turn and swallow it, he thought"
+        },
+        {
+          "freytag_section": "rising_action",
+          "scene": "Superstitious thoughts",
+          "chapter": 1,
+          "page_range": "42",
+          "quote_snippet": "if you said a good thing it might not happen"
+        }
+      ]
+    },
+    {
+      "name": "Third-Person Limited",
+      "layer": "N",
+      "function": "Me",
+      "engagement": "T",
+      "classification": "N|Me|T",
+      "definition": "Narration focused through one character's perspective",
+      "student_facing_type": "Narrative Voice",
+      "pedagogical_function": "Creates intimacy while maintaining objective distance",
+      "position_code": "CONT",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's description",
+          "chapter": 1,
+          "page_range": "9",
+          "quote_snippet": "He was an old man who fished alone"
+        },
+        {
+          "freytag_section": "climax",
+          "scene": "Harpooning the fish",
+          "chapter": 1,
+          "page_range": "94",
+          "quote_snippet": "He felt the iron go in"
+        }
+      ]
+    },
+    {
+      "name": "Imagery",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "B|Re|V",
+      "definition": "Vivid descriptive language that appeals to the senses",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates mental pictures and emotional atmosphere",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's weathered appearance",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "deep wrinkles... brown blotches... deep-creased scars"
+        },
+        {
+          "freytag_section": "climax",
+          "scene": "Fish leaping from water",
+          "chapter": 1,
+          "page_range": "94",
+          "quote_snippet": "rose high out of the water showing all his great length"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Blood in the water",
+          "chapter": 1,
+          "page_range": "103",
+          "quote_snippet": "discolouring with the red of the blood"
+        }
+      ]
+    },
+    {
+      "name": "Foreshadowing",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "B|Re|T",
+      "definition": "Hints about future events in the story",
+      "student_facing_type": "Narrative Structure",
+      "pedagogical_function": "Builds suspense and creates narrative unity",
+      "position_code": "CLUST-BEG",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Sail description",
+          "chapter": 1,
+          "page_range": "9",
+          "quote_snippet": "flag of permanent defeat"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago called unlucky",
+          "chapter": 1,
+          "page_range": "9",
+          "quote_snippet": "definitely and finally salao"
+        }
+      ]
+    },
+    {
+      "name": "Direct Characterization",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Narrator directly states character traits",
+      "student_facing_type": "Characterization",
+      "pedagogical_function": "Provides clear information about character qualities",
+      "position_code": "CLUST-BEG",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's physical description",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "thin and gaunt with deep wrinkles"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's eyes",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "cheerful and undefeated"
+        }
+      ]
+    },
+    {
+      "name": "Scene",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Detailed, moment-by-moment narration",
+      "student_facing_type": "Narrative Pacing",
+      "pedagogical_function": "Slows down time to emphasize important moments",
+      "position_code": "CLUST-CENT",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Harpooning sequence",
+          "chapter": 1,
+          "page_range": "94",
+          "quote_snippet": "lifted the harpoon as high as he could and drove it down"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "First shark attack",
+          "chapter": 1,
+          "page_range": "107",
+          "quote_snippet": "broke the surface of the blue water and was in the sun"
+        }
+      ]
+    },
+    {
+      "name": "Juxtaposition",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Placing contrasting elements side by side for effect",
+      "student_facing_type": "Literary Contrast",
+      "pedagogical_function": "Highlights differences and creates deeper meaning through comparison",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Santiago's age vs. spirit",
+          "chapter": 1,
+          "page_range": "10",
+          "quote_snippet": "Everything about him was old except his eyes"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Tourist vs. reality",
+          "chapter": 1,
+          "page_range": "127",
+          "quote_snippet": "handsome tails vs. just garbage"
+        }
+      ]
+    }
+  ],
+  "validation_metadata": {
+    "total_devices": 15,
+    "examples_provided": true,
+    "examples_format": "v3.3 (freytag_section, scene, chapter, page_range, quote_snippet)",
+    "education_vertical_ready": true,
+    "model_used": "claude-sonnet-4-20250514"
+  }
+}
