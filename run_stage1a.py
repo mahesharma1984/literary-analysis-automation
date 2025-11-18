@@ -12,6 +12,10 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+# Load device mapping
+with open('device_taxonomy_mapping.json', 'r') as f:
+    DEVICE_MAPPING = json.load(f)
+
 def extract_macro_elements(kernel):
     """Extract macro alignment elements from kernel"""
     
@@ -29,6 +33,11 @@ def extract_macro_elements(kernel):
                 "mode_description": voice.get("mode_dominance_description", "")
             }
         },
+        "literary_devices": {
+            "element_type": "Literary Devices",
+            "description": "Foundational figurative language and descriptive devices",
+            "variables": {}
+        },
         "structure": {
             "element_type": "Structure",
             "description": "How plot is organized and paced",
@@ -39,47 +48,67 @@ def extract_macro_elements(kernel):
                 "pacing_dominance": structure.get("pacing_dominance", "")
             }
         },
-        "voice": {
-            "element_type": "Voice",
-            "description": "Narrative perspective and narration",
+        "narrative_voice": {
+            "element_type": "Narrative Voice",
+            "description": "Point of view, focalization, and character consciousness",
             "variables": {
                 "pov": voice.get("pov", ""),
                 "focalization": voice.get("focalization", ""),
                 "reliability": voice.get("reliability", ""),
                 "temporal_distance": voice.get("temporal_distance", "")
             }
+        },
+        "rhetorical_voice": {
+            "element_type": "Rhetorical Voice",
+            "description": "Irony, persuasion, and interpretive control",
+            "variables": {}
         }
     }
 
 
-def categorize_device(device):
-    """Determine which macro element this device executes"""
+def fallback_categorization(device_name: str, classification: str) -> str:
+    """Fallback heuristic categorization if device not in mapping"""
     
-    layer = device.get("layer", "")
-    function = device.get("function", "")
-    name = device.get("name", "").lower()
+    name_lower = device_name.lower()
     
-    # Week 2: Foundation devices (clear examples for teaching)
-    if any(term in name for term in ["symbol", "metaphor", "foreshadow"]):
-        return "devices_general", "Foundation device for teaching device recognition"
+    # Week 1: Exposition keywords
+    if any(kw in name_lower for kw in ['character', 'dialogue', 'scene', 'exposition', 'setting']):
+        return 'week_1_exposition'
     
-    # Week 1: Exposition devices
-    if "characterization" in name or "imagery" in name or "dialect" in name:
-        return "exposition", "Builds exposition through descriptive technique"
+    # Week 2: Literary devices keywords
+    if any(kw in name_lower for kw in ['metaphor', 'simile', 'imagery', 'symbol', 'personification', 'alliteration', 'figurative']):
+        return 'week_2_literary_devices'
     
-    if layer == "N" and function in ["Re"]:
-        return "exposition", "Establishes character/setting through narrative technique"
+    # Week 3: Structure keywords
+    if any(kw in name_lower for kw in ['structure', 'foreshadow', 'climax', 'motif', 'flashback', 'conflict', 'resolution', 'pacing']):
+        return 'week_3_structure'
     
-    # Week 4: Voice devices  
-    if any(term in name for term in ["irony", "perspective", "narration", "pov", "voice", "focalization", "temporal", "distance", "reliability"]):
-        return "voice", "Creates perspective gaps or narrative distance"
+    # Week 4: Narrative voice keywords
+    if any(kw in name_lower for kw in ['person', 'narrator', 'perspective', 'voice', 'monologue', 'consciousness', 'pov']):
+        return 'week_4_narrative_voice'
     
-    # Week 3: Structure devices (Freytag-related: conflict, climax, resolution, pacing)
-    if any(term in name for term in ["conflict", "climax", "resolution", "pacing", "scene", "summary", "tension", "suspense"]):
-        return "structure", "Builds plot structure and pacing"
+    # Week 5: Rhetorical voice keywords
+    if any(kw in name_lower for kw in ['irony', 'euphemism', 'understatement', 'juxtaposition', 'rhetorical', 'tone', 'diction', 'sarcasm']):
+        return 'week_5_rhetorical_voice'
     
-    # Default to structure for remaining
-    return "structure", "Builds plot structure"
+    # Default to week 2 if no match
+    return 'week_2_literary_devices'
+
+
+def categorize_device(device_name: str, classification: str) -> tuple:
+    """Categorize device using mapping file, returns (week_key, week_label)"""
+    
+    # Check explicit mapping
+    for week_key, devices in DEVICE_MAPPING['device_mappings'].items():
+        for mapped_device in devices:
+            if mapped_device['device_name'] == device_name:
+                week_label = DEVICE_MAPPING['week_definitions'][week_key]['label']
+                return week_key, week_label
+    
+    # Fallback to heuristics if needed
+    week_key = fallback_categorization(device_name, classification)
+    week_label = DEVICE_MAPPING['week_definitions'][week_key]['label']
+    return week_key, week_label
 
 
 def extract_tvode_components(device):
@@ -108,18 +137,23 @@ def extract_tvode_components(device):
         "effect": "to create meaning and effect"
     }
 
+
 def categorize_devices(kernel):
-    """Group devices by which macro element they execute"""
+    """Group devices by pedagogical week"""
     
     device_mapping = {
-        "devices_general": [],
-        "exposition": [],
-        "structure": [],
-        "voice": []
+        'week_1_exposition': [],
+        'week_2_literary_devices': [],
+        'week_3_structure': [],
+        'week_4_narrative_voice': [],
+        'week_5_rhetorical_voice': []
     }
     
     for device in kernel.get("devices", []):
-        category, executes_macro = categorize_device(device)
+        week_key, week_label = categorize_device(
+            device['name'], 
+            device.get('classification', '')
+        )
         
         device_data = {
             "name": device.get("name", ""),
@@ -127,56 +161,71 @@ def categorize_devices(kernel):
             "function": device.get("function", ""),
             "definition": device.get("definition", device.get("student_facing_definition", "")),
             "examples": device.get("examples", []),
-            "executes_macro": executes_macro,
+            "week_label": week_label,
             "tvode_components": extract_tvode_components(device)
         }
         
-        device_mapping[category].append(device_data)
+        device_mapping[week_key].append(device_data)
     
     return device_mapping
 
 
 def create_macro_micro_packages(macro_elements, device_mapping):
-    """Create 4-week macro-micro packages"""
+    """Create 5-week macro-micro packages"""
     
     return {
-    "week1_exposition": {
-        "week": 1,
-        "macro_element": "Exposition",
-        "macro_type": macro_elements["exposition"]["element_type"],
-        "macro_description": macro_elements["exposition"]["description"],
-        "macro_variables": macro_elements["exposition"]["variables"],
-        "teaching_goal": "Understanding how exposition is built through devices",
-        "micro_devices": device_mapping["exposition"][:4]
-    },
-    "week2_devices": {
-        "week": 2,
-        "macro_element": "Literary Devices",
-        "macro_type": "Foundation Concept",
-        "macro_description": "What literary devices are and how to identify them",
-        "teaching_goal": "Device recognition and identification",
-        "micro_devices": device_mapping["devices_general"][:3]
-    },
-    "week3_structure": {
-        "week": 3,
-        "macro_element": "Structure",
-        
+        "week1_exposition": {
+            "week": 1,
+            "macro_element": "Exposition",
+            "macro_type": macro_elements["exposition"]["element_type"],
+            "macro_description": macro_elements["exposition"]["description"],
+            "macro_variables": macro_elements["exposition"]["variables"],
+            "teaching_goal": "Understanding how exposition is built through devices",
+            "scaffolding": "High - Teacher models everything",
+            "micro_devices": device_mapping["week_1_exposition"]
+        },
+        "week2_literary_devices": {
+            "week": 2,
+            "macro_element": "Literary Devices",
+            "macro_type": macro_elements["literary_devices"]["element_type"],
+            "macro_description": macro_elements["literary_devices"]["description"],
+            "macro_variables": macro_elements["literary_devices"]["variables"],
+            "teaching_goal": "Device recognition and identification",
+            "scaffolding": "Medium-High - Co-construction with students",
+            "micro_devices": device_mapping["week_2_literary_devices"]
+        },
+        "week3_structure": {
+            "week": 3,
+            "macro_element": "Structure",
             "macro_type": macro_elements["structure"]["element_type"],
             "macro_description": macro_elements["structure"]["description"],
             "macro_variables": macro_elements["structure"]["variables"],
             "teaching_goal": "Understanding how structure unfolds through devices",
-            "micro_devices": device_mapping["structure"][:4]
-    },
-    "week4_voice": {
-        "week": 4,
-        "macro_element": "Voice",
-        "macro_type": macro_elements["voice"]["element_type"],
-        "macro_description": macro_elements["voice"]["description"],
-        "macro_variables": macro_elements["voice"]["variables"],
-        "teaching_goal": "Understanding how voice operates through devices",
-        "micro_devices": device_mapping["voice"][:4]
+            "scaffolding": "Medium - Students lead with support",
+            "micro_devices": device_mapping["week_3_structure"]
+        },
+        "week4_narrative_voice": {
+            "week": 4,
+            "macro_element": "Narrative Voice",
+            "macro_type": macro_elements["narrative_voice"]["element_type"],
+            "macro_description": macro_elements["narrative_voice"]["description"],
+            "macro_variables": macro_elements["narrative_voice"]["variables"],
+            "teaching_goal": "Understanding perspective and consciousness",
+            "scaffolding": "Medium-Low - Independent work with feedback",
+            "micro_devices": device_mapping["week_4_narrative_voice"]
+        },
+        "week5_rhetorical_voice": {
+            "week": 5,
+            "macro_element": "Rhetorical Voice",
+            "macro_type": macro_elements["rhetorical_voice"]["element_type"],
+            "macro_description": macro_elements["rhetorical_voice"]["description"],
+            "macro_variables": macro_elements["rhetorical_voice"]["variables"],
+            "teaching_goal": "Understanding irony and persuasive techniques",
+            "scaffolding": "Low - Independent application",
+            "micro_devices": device_mapping["week_5_rhetorical_voice"]
+        }
     }
-    }
+
 
 def run_stage1a(kernel_path):
     """Main Stage 1A processing"""
@@ -196,20 +245,21 @@ def run_stage1a(kernel_path):
     # Extract macro elements
     print("\n🔍 Extracting macro elements...")
     macro_elements = extract_macro_elements(kernel)
-    print(f"  ✓ Extracted: Exposition, Structure, Voice")
+    print(f"  ✓ Extracted: Exposition, Literary Devices, Structure, Narrative Voice, Rhetorical Voice")
     
     # Categorize devices
     print("\n🏷️  Categorizing devices...")
     device_mapping = categorize_devices(kernel)
-    print(f"  ✓ Foundation devices: {len(device_mapping['devices_general'])}")
-    print(f"  ✓ Exposition devices: {len(device_mapping['exposition'])}")
-    print(f"  ✓ Structure devices: {len(device_mapping['structure'])}")
-    print(f"  ✓ Voice devices: {len(device_mapping['voice'])}")
+    print(f"  ✓ Week 1 (Exposition): {len(device_mapping['week_1_exposition'])}")
+    print(f"  ✓ Week 2 (Literary Devices): {len(device_mapping['week_2_literary_devices'])}")
+    print(f"  ✓ Week 3 (Structure): {len(device_mapping['week_3_structure'])}")
+    print(f"  ✓ Week 4 (Narrative Voice): {len(device_mapping['week_4_narrative_voice'])}")
+    print(f"  ✓ Week 5 (Rhetorical Voice): {len(device_mapping['week_5_rhetorical_voice'])}")
     
     # Create packages
     print("\n📦 Creating macro-micro packages...")
     packages = create_macro_micro_packages(macro_elements, device_mapping)
-    print(f"  ✓ Created 4-week packages")
+    print(f"  ✓ Created 5-week packages")
     
     # Assemble output
     output = {
@@ -241,6 +291,7 @@ def run_stage1a(kernel_path):
     
     return output_path
 
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python3 run_stage1a.py kernels/Book_kernel_v3.3.json")
@@ -259,6 +310,7 @@ def main():
     print("="*80)
     print(f"python3 run_stage1b.py {output_path}")
     print("="*80)
+
 
 if __name__ == "__main__":
     main()
