@@ -5,7 +5,7 @@ Tests Stage 1A → Stage 1B → Stage 2 pipeline on a known kernel
 
 Usage:
     python3 test_full_pipeline.py
-    python3 test_full_pipeline.py --kernel kernels/The_Giver_kernel_v3.3.json
+    python3 test_full_pipeline.py --kernel kernels/To_Kill_a_Mockingbird_kernel_v3_3
 """
 
 import json
