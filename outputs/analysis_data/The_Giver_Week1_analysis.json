@@ -1,0 +1,79 @@
+{
+  "title": "The Giver - Week 1",
+  "weekFocus": "Week 1: Exposition",
+  "learningGoal": "This week, you'll explore how characters and setting are introduced. Notice how individual devices work together to serve the story's larger purpose.",
+  "passage": "It was almost December, and Jonas was beginning to be frightened. No. Wrong word, Jonas thought. Frightened meant that deep, sickening feeling of something terrible about to happen... Jonas was careful about language. Not like his friend, Asher, who talked too fast and mixed things up, scrambling words and phrases until they were barely recognizable and often very funny... He had waited a long time for this special December. Now that it was almost upon him, he wasn't frightened, but he was... eager, he decided. He was eager for it to come. And he was excited, certainly. All of the Elevens were excited about the event that would be coming so soon. But there was a little shudder of nervousness when he thought about it, about what might happen. Apprehensive, Jonas decided. That's what I am... 'Who wants to be the first tonight, for feelings?' Jonas's father asked, at the conclusion of their evening meal. It was one of the rituals, the evening telling of feelings.",
+  "extractSection": "exposition",
+  "annotations": [
+    {
+      "id": 1,
+      "device": "Direct Characterization",
+      "start": 184,
+      "end": 216,
+      "text": "Jonas was careful about language",
+      "detail": "Jonas was careful about language",
+      "object": "literary technique",
+      "effect": "creates meaning in text",
+      "analysis": "Direct characterization is evident in this passage through the direct statement that \"Jonas was careful about language,\" which explicitly tells readers about Jonas's personality trait rather than showing it through actions. This creates a clear understanding of Jonas's cautious nature and establishes his awareness of the power and importance of words in his controlled society.",
+      "inPrimaryPassage": true
+    },
+    {
+      "id": 2,
+      "device": "Direct Dialogue",
+      "start": 802,
+      "end": 850,
+      "text": "Who wants to be the first tonight, for feelings?",
+      "detail": "Who wants to be the first tonight, for feelings?",
+      "object": "literary technique",
+      "effect": "creates meaning in text",
+      "analysis": "Direct Dialogue is evident in this passage through the father's question \"Who wants to be the first tonight, for feelings?\", which presents the family's ritual conversation in their own words. This creates an immediate sense of the structured, controlled nature of family interactions in Jonas's society and reveals how even emotions are systematically processed rather than naturally expressed.",
+      "inPrimaryPassage": true
+    }
+  ],
+  "supplementaryPassages": [
+    {
+      "id": 3,
+      "section": "climax",
+      "chapter": 19,
+      "passage": "He took out a syringe and a small bottle.",
+      "annotation": {
+        "id": 3,
+        "device": "Scene",
+        "start": 0,
+        "end": 40,
+        "text": "He took out a syringe and a small bottle",
+        "detail": "He took out a syringe and a small bottle",
+        "object": "literary technique",
+        "effect": "creates meaning in text",
+        "analysis": "Scene is evident in this passage through the specific action \"He took out a syringe and a small bottle,\" which creates a dramatic moment of tension and realization. This establishes the horrifying truth about what \"release\" really means in Jonas's community, revealing the dark reality beneath their seemingly perfect society.",
+        "inPrimaryPassage": false
+      }
+    }
+  ],
+  "macroSynthesis": {
+    "title": "How These Devices Work Together",
+    "connections": [
+      {
+        "devices": [
+          "Direct Characterization",
+          "Direct Dialogue"
+        ],
+        "relationship": "Direct characterization establishes Jonas's curious nature while direct dialogue reveals how his questions about feelings and dreams make him stand out in his conformist community."
+      },
+      {
+        "devices": [
+          "Scene",
+          "POV"
+        ],
+        "relationship": "The detailed scenes of family rituals and community ceremonies are filtered through Jonas's limited perspective, allowing readers to gradually discover the strangeness of his world alongside him."
+      },
+      {
+        "devices": [
+          "All devices",
+          "Theme"
+        ],
+        "relationship": "These exposition devices work together to establish the contrast between surface-level community harmony and underlying individual awakening that will drive the novel's exploration of conformity versus personal truth."
+      }
+    ]
+  }
+}

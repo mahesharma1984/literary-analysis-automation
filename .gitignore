@@ -1,7 +1,38 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+cleanup_log_*.txt
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Output files (commit selectively)
 outputs/*.json
-outputs/worksheets/
-.env
-books/*.pdf
-outputs/
+outputs/books/*.md
+
+# Don't ignore critical files
+!device_taxonomy_mapping.json
+!run_stage1a.py
+!run_stage1b.py
+!run_stage2_fixed.py
+!VERSION.txt
