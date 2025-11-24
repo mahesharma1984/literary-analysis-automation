@@ -50,27 +50,27 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-## DEVICE 1: Direct Dialogue
+## DEVICE 1: Precision of Language
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Characters' exact spoken words presented in quotation marks
+**Definition:** Careful selection of words to convey exact meaning and establish world-building
 
-**Model Example:** "Are you saying that I—I mean we—could do it again?"
+**Model Example:** Jonas was careful about language
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Direct Dialogue
+**Correct Answer:** Precision of Language
 
 **Text Locations:**
 {{DEVICE_1_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-This is direct dialogue because it shows the character's exact words in quotation marks
+The author chooses exact words to show how strictly controlled language is in Jonas's society
 
-**Teaching Note:** Emphasize that direct dialogue must include quotation marks and represent the character's exact words, not a summary of what they said
+**Teaching Note:** Emphasize that precision of language serves dual purposes: character development and world-building exposition
 
 ---
 
@@ -81,8 +81,8 @@ This is direct dialogue because it shows the character's exact words in quotatio
 **Rationale:** {{DEVICE_1_OPTION_RATIONALE}}
 
 **Common Student Errors:**
-- Selecting Option Internal monologue shows thoughts, not spoken dialogue in quotation marks: Students may confuse function with effect
-- Selecting Option Indirect speech paraphrases what was said without using the exact words in quotes: Students may focus on literal content rather than device purpose
+- Selecting Option While the vocabulary may be sophisticated, the focus is not on showing intelligence but on establishing societal norms through careful word choice: Students may confuse function with effect
+- Selecting Option The device is not about repetition for rhythm, but about the deliberate selection of precise words to convey exact meaning and build the world: Students may focus on literal content rather than device purpose
 
 ---
 
@@ -90,7 +90,7 @@ This is direct dialogue because it shows the character's exact words in quotatio
 
 **Correct Answer:** A, B, C
 
-**Explanation:** First locate the dialogue markers, then identify the speaker, and finally examine the content's purpose in exposition
+**Explanation:** Students must first locate the precise language, then understand its social implications, and finally assess its role in world-building and exposition
 
 **Teaching Note:** If students struggle, guide them to look at the chronology of how the device unfolds in the text.
 
@@ -130,27 +130,27 @@ This is direct dialogue because it shows the character's exact words in quotatio
 
 ---
 
-## DEVICE 2: Scene
+## DEVICE 2: Characterization through Speech Patterns
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Detailed, real-time narration of important moments
+**Definition:** Revealing character traits through distinctive ways of speaking
 
-**Model Example:** Jonas sobbed and shouted and pounded the bed with his fists
+**Model Example:** Asher ran through the standard apology phrase rapidly, still catching his breath
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Scene
+**Correct Answer:** Characterization through Speech Patterns
 
 **Text Locations:**
 {{DEVICE_2_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-The author shows Jonas's emotional breakdown through specific actions like sobbing, shouting, and pounding, creating a scene that reveals his character in real-time
+Asher's rapid, scrambled speech shows he is nervous and impulsive
 
-**Teaching Note:** Help students distinguish between 'showing' through scene and 'telling' through summary by comparing dramatic moments with background information passages
+**Teaching Note:** Have students practice reading dialogue aloud to hear how speech patterns sound and what they suggest about character
 
 ---
 
@@ -161,8 +161,8 @@ The author shows Jonas's emotional breakdown through specific actions like sobbi
 **Rationale:** {{DEVICE_2_OPTION_RATIONALE}}
 
 **Common Student Errors:**
-- Selecting Option Option A describes summary narration, which tells rather than shows events in detail: {{DEVICE_2_ERROR_1}}
-- Selecting Option Option C describes exposition through background information, but scene shows events happening in real-time rather than providing context: {{DEVICE_2_ERROR_2}}
+- Selecting Option Option A focuses on setting exposition rather than character revelation through speech patterns: {{DEVICE_2_ERROR_1}}
+- Selecting Option Option C describes mood creation through mysterious dialogue, not character traits revealed through distinctive speech habits: {{DEVICE_2_ERROR_2}}
 
 ---
 
@@ -170,7 +170,7 @@ The author shows Jonas's emotional breakdown through specific actions like sobbi
 
 **Correct Answer:** A, B, C
 
-**Explanation:** First locate the scene being dramatized, then examine the concrete details used to show it, and finally analyze how this scene contributes to revealing character or advancing the story's exposition
+**Explanation:** Students must first notice the specific speech pattern, then interpret what it reveals about character, and finally understand how this character information serves the exposition's purpose of introducing key figures in the story
 
 ---
 
@@ -201,27 +201,27 @@ The author shows Jonas's emotional breakdown through specific actions like sobbi
 
 ---
 
-## DEVICE 3 (HIGH TIER ONLY): Indirect Characterization
+## DEVICE 3 (HIGH TIER ONLY): Internal Monologue
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Revealing character traits through actions, thoughts, and dialogue rather than direct description
+**Definition:** Character's private thoughts revealed to show internal state
 
-**Model Example:** Jonas thinking 'No. Wrong word, Jonas thought' shows his careful consideration of language and his developing awareness of precision in communication
+**Model Example:** he wasn't frightened, but he was... eager, he decided
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Indirect Characterization
+**Correct Answer:** Internal Monologue
 
 **Text Locations:**
 {{DEVICE_3_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-This shows Jonas is thoughtful and careful about choosing the right words
+This shows the character's private thoughts as he tries to identify his feelings about a situation
 
-**Teaching Note:** Have students create character trait charts where they list character actions/thoughts in one column and the traits these reveal in another column
+**Teaching Note:** Emphasize that internal monologue gives readers special access to thoughts that other characters cannot hear
 
 ---
 
@@ -237,7 +237,7 @@ This shows Jonas is thoughtful and careful about choosing the right words
 
 **Correct Answer:** A, B, C
 
-**Explanation:** You must first observe the character's behavior before you can analyze what it means, and only then can you understand how it fits into the story's development
+**Explanation:** This order moves from basic identification to deeper analysis, first establishing who is thinking, then what those thoughts reveal, and finally how they function in the larger narrative
 
 ---
 
@@ -267,16 +267,16 @@ This shows Jonas is thoughtful and careful about choosing the right words
 
 ### ACTIVITY 1: TOPIC STATEMENT
 
-**Device 1: Direct Dialogue**
-- **Correct Answer:** The author's use of Direct Dialogue
+**Device 1: Precision of Language**
+- **Correct Answer:** The author's use of Precision of Language
 - **Where to find:** {{DEVICE_1_LOCATION_PROMPT}}
 
-**Device 2: Scene**
-- **Correct Answer:** The author's use of Scene
+**Device 2: Characterization through Speech Patterns**
+- **Correct Answer:** The author's use of Characterization through Speech Patterns
 - **Where to find:** {{DEVICE_2_LOCATION_PROMPT}}
 
-**Device 3 (High Tier): Indirect Characterization**
-- **Correct Answer:** The author's use of Indirect Characterization
+**Device 3 (High Tier): Internal Monologue**
+- **Correct Answer:** The author's use of Internal Monologue
 - **Where to find:** {{DEVICE_3_LOCATION_PROMPT}}
 
 **Teaching Note:** Ensure all students complete topic frames before moving to Activity 2.
@@ -286,9 +286,9 @@ This shows Jonas is thoughtful and careful about choosing the right words
 ### ACTIVITY 2: MATCH OBJECTS
 
 **Correct Matches:**
-- **Device 1:** Direct Dialogue → **Object A:** {{DEVICE_1_OBJECT}}
-- **Device 2:** Scene → **Object B:** {{DEVICE_2_OBJECT}}
-- **Device 3 (High Tier):** Indirect Characterization → **Object C:** {{DEVICE_3_OBJECT}}
+- **Device 1:** Precision of Language → **Object A:** {{DEVICE_1_OBJECT}}
+- **Device 2:** Characterization through Speech Patterns → **Object B:** {{DEVICE_2_OBJECT}}
+- **Device 3 (High Tier):** Internal Monologue → **Object C:** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Objects describe WHAT the device does, not WHY (that's the effect).
 
@@ -298,11 +298,11 @@ This shows Jonas is thoughtful and careful about choosing the right words
 
 **Suggested Verbs (accept reasonable alternatives):**
 
-**Device 1:** The author's use of Direct Dialogue **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
+**Device 1:** The author's use of Precision of Language **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
 
-**Device 2:** The author's use of Scene **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
+**Device 2:** The author's use of Characterization through Speech Patterns **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
 
-**Device 3 (High Tier):** The author's use of Indirect Characterization **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
+**Device 3 (High Tier):** The author's use of Internal Monologue **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Accept multiple verbs as long as they accurately connect Topic to Object. Most common acceptable verbs: uses, demonstrates, reveals, creates, employs.
 
@@ -326,7 +326,7 @@ This shows Jonas is thoughtful and careful about choosing the right words
 
 **Device 1 Model Response:**
 
-The direct dialogue "Are you saying that I—I mean we—could do it again?" reveals the speaker's uncertainty and desire through the hesitation and self-correction in their speech. The stammering "I—I mean we" shows the character catching themselves being selfish, exposing both their personal wants and awareness of others. This dialogue technique allows readers to understand the character's internal conflict without explicit narrator explanation, demonstrating how direct speech serves as efficient exposition. The questioning tone and repetitive possibility of action suggests this character has experienced something significant before and yearns to recreate it.
+The author uses precision of language when stating 'Jonas was careful about language' to reveal that this society has strict rules about word choice, demonstrating through Jonas's cautious behavior that citizens must constantly monitor their speech, which establishes the controlled and regulated nature of this dystopian world early in the exposition.
 
 **Evaluation Criteria:**
 - ✓ Begins with T+V+O sentence
@@ -344,7 +344,7 @@ The direct dialogue "Are you saying that I—I mean we—could do it again?" rev
 
 **Device 2 Model Response:**
 
-The vivid scene where Jonas pounds the bed with emotional intensity operates as a dramatic moment that shows rather than tells his psychological state, directly revealing his character's breaking point and advancing the exposition about his internal struggle with the burden of memories.
+The author characterizes Asher as nervous and impulsive by describing how he 'ran through the standard apology phrase rapidly' and 'talked too fast and mixed things up, scrambling words and phrases,' which reveals his anxious personality and suggests he may struggle with the community's emphasis on precision, demonstrating how speech patterns efficiently introduce character traits during the story's exposition.
 
 **Evaluation Criteria:** Same as Device 1
 
@@ -352,7 +352,7 @@ The vivid scene where Jonas pounds the bed with emotional intensity operates as 
 
 **Device 3 Model Response (High Tier):**
 
-The technique of indirect characterization reveals Jonas as a thoughtful and precise individual when he thinks 'No. Wrong word, Jonas thought,' which occurs throughout his interactions in Chapter 2, demonstrating his careful consideration of language, and establishing his character as someone who values accuracy and is developing a heightened awareness of communication that will become crucial to his role as the Receiver.
+The internal monologue 'he wasn't frightened, but he was... eager, he decided' reveals the character's attempt to understand his own complex emotions through private self-reflection. The ellipsis and hesitant phrasing shows his uncertainty about his feelings. This technique allows readers direct access to his psychological state. The device functions as exposition by establishing his emotional readiness for upcoming events. Through this internal dialogue, the author builds anticipation while developing character depth.
 
 **Evaluation Criteria:** Same as Device 1
 
