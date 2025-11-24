@@ -273,13 +273,14 @@ python3 run_stage2.py outputs/To_Kill_a_Mockingbird_stage1b_v5.0.json --all-week
 
 - **[Stage Automation Guide](docs/STAGE_AUTOMATION_GUIDE.md)** - Complete workflow for Stages 1A/1B/2
 - **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - How to modify the codebase safely
+- **[Archive Versioning Guide](docs/ARCHIVE_VERSIONING_GUIDE.md)** - Properly label and track archived file versions
 - **[Changelog](docs/CHANGELOG.md)** - Version history and migration guides
 - **[Quick Start](QUICKSTART.md)** - Get running in 5 minutes
-- **[Version Info](VERSION.txt)** - Current system version (5.1)
+- **[Version Info](VERSION.txt)** - Current system version (5.1.2)
 
 ## System Version
 
-**Current Version:** 5.1 (November 2025)
+**Current Version:** 5.1.2 (November 2025)
 
 - 5-week pedagogical progression
 - Macro-micro integration
