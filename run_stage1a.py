@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-STAGE 1A AUTOMATION
-Extract macro-micro packages from kernel JSON
+STAGE 1A AUTOMATION - Location-Based Device Assignment
+Extract macro-micro packages from kernel JSON using narrative chapter ranges
 
 Usage:
     python3 run_stage1a.py kernels/Book_kernel_v3.3.json
@@ -12,107 +12,133 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
-# Load device mapping
-with open('device_taxonomy_mapping.json', 'r') as f:
-    DEVICE_MAPPING = json.load(f)
 
-def extract_macro_elements(kernel):
-    """Extract macro alignment elements from kernel"""
+def parse_chapter_range(range_str):
+    """Convert chapter range string to list of chapter numbers
     
-    narrative = kernel.get("narrative", {})
-    voice = narrative.get("voice", {})
-    structure = narrative.get("structure", {})
+    Examples:
+        "1-3" -> [1, 2, 3]
+        "4-14" -> [4, 5, 6, ..., 14]
+        "15" -> [15]
+    """
+    if not range_str or range_str == "":
+        return []
     
-    return {
-        "exposition": {
-            "element_type": "Exposition",
-            "description": "How characters and setting are introduced",
-            "variables": {
-                "characterization_method": voice.get("character_revelation", ""),
-                "mode_dominance": voice.get("mode_dominance", ""),
-                "mode_description": voice.get("mode_dominance_description", "")
-            }
-        },
-        "literary_devices": {
-            "element_type": "Literary Devices",
-            "description": "Foundational figurative language and descriptive devices",
-            "variables": {}
-        },
-        "structure": {
-            "element_type": "Structure",
-            "description": "How plot is organized and paced",
-            "variables": {
-                "plot_architecture": structure.get("plot_architecture", ""),
-                "chronology": structure.get("chronology", ""),
-                "causation": structure.get("causation", ""),
-                "pacing_dominance": structure.get("pacing_dominance", "")
-            }
-        },
-        "narrative_voice": {
-            "element_type": "Narrative Voice",
-            "description": "Point of view, focalization, and character consciousness",
-            "variables": {
-                "pov": voice.get("pov", ""),
-                "focalization": voice.get("focalization", ""),
-                "reliability": voice.get("reliability", ""),
-                "temporal_distance": voice.get("temporal_distance", "")
-            }
-        },
-        "rhetorical_voice": {
-            "element_type": "Rhetorical Voice",
-            "description": "Irony, persuasion, and interpretive control",
-            "variables": {}
-        }
+    range_str = str(range_str).strip()
+    
+    if '-' in range_str:
+        start, end = range_str.split('-')
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(range_str)]
+
+
+def find_device_chapters(device):
+    """Determine which chapters contain this device's examples
+    
+    Returns:
+        set of chapter numbers where device appears
+    """
+    chapters = set()
+    
+    for example in device.get("examples", []):
+        chapter = example.get("chapter")
+        if chapter:
+            chapters.add(int(chapter))
+    
+    return chapters
+
+
+def get_narrative_chapter_ranges(kernel):
+    """Extract chapter ranges for each Freytag section from kernel
+    
+    Returns:
+        dict mapping section names to chapter lists
+    """
+    extracts = kernel.get("extracts", {})
+    
+    ranges = {}
+    for section_name, section_data in extracts.items():
+        chapter_range = section_data.get("chapter_range", "")
+        ranges[section_name] = parse_chapter_range(chapter_range)
+    
+    return ranges
+
+
+def assign_devices_by_location(kernel):
+    """Assign devices to narrative sections
+
+    Strategy:
+    1. Use assigned_section field if present (new kernels from updated create_kernel.py)
+    2. Fall back to chapter-based matching for old kernels
+
+    Returns:
+        dict mapping section names to lists of devices
+    """
+    # Get chapter ranges for fallback matching
+    narrative_ranges = get_narrative_chapter_ranges(kernel)
+    
+    # Initialize output structure
+    device_assignment = {
+        "exposition": [],
+        "rising_action": [],
+        "climax": [],
+        "falling_action": [],
+        "resolution": []
     }
-
-
-def fallback_categorization(device_name: str, classification: str) -> str:
-    """Fallback heuristic categorization if device not in mapping"""
     
-    name_lower = device_name.lower()
+    # Process each device
+    for device in kernel.get("micro_devices", []):
+        
+        # METHOD 1: Use assigned_section if present (new kernels)
+        assigned_section = device.get("assigned_section")
+        
+        if assigned_section and assigned_section in device_assignment:
+            device_data = {
+                "name": device.get("name", ""),
+                "layer": device.get("layer", ""),
+                "function": device.get("function", ""),
+                "definition": device.get("definition", device.get("student_facing_definition", "")),
+                "examples": device.get("examples", []),
+                "appears_in_chapters": [ex.get("chapter") for ex in device.get("examples", []) if ex.get("chapter")],
+                "section_chapters": narrative_ranges.get(assigned_section, []),
+                "tvode_components": extract_tvode_components(device)
+            }
+            device_assignment[assigned_section].append(device_data)
+            continue  # Move to next device
+        
+        # METHOD 2: Fall back to chapter-based matching (old kernels)
+        device_chapters = find_device_chapters(device)
+        
+        if not device_chapters:
+            # No chapter info - skip this device
+            continue
+        
+        # Find which sections contain this device
+        for section_name, section_chapters in narrative_ranges.items():
+            if not section_chapters:
+                continue
+            
+            # Check if device appears in this section's chapters
+            if any(ch in section_chapters for ch in device_chapters):
+                device_data = {
+                    "name": device.get("name", ""),
+                    "layer": device.get("layer", ""),
+                    "function": device.get("function", ""),
+                    "definition": device.get("definition", device.get("student_facing_definition", "")),
+                    "examples": device.get("examples", []),
+                    "appears_in_chapters": sorted(list(device_chapters)),
+                    "section_chapters": section_chapters,
+                    "tvode_components": extract_tvode_components(device)
+                }
+                device_assignment[section_name].append(device_data)
+                break  # Assign to first matching section only
     
-    # Week 1: Exposition keywords
-    if any(kw in name_lower for kw in ['character', 'dialogue', 'scene', 'exposition', 'setting']):
-        return 'week_1_exposition'
-    
-    # Week 2: Literary devices keywords
-    if any(kw in name_lower for kw in ['metaphor', 'simile', 'imagery', 'symbol', 'personification', 'alliteration', 'figurative']):
-        return 'week_2_literary_devices'
-    
-    # Week 3: Structure keywords
-    if any(kw in name_lower for kw in ['structure', 'foreshadow', 'climax', 'motif', 'flashback', 'conflict', 'resolution', 'pacing']):
-        return 'week_3_structure'
-    
-    # Week 4: Narrative voice keywords
-    if any(kw in name_lower for kw in ['person', 'narrator', 'perspective', 'voice', 'monologue', 'consciousness', 'pov']):
-        return 'week_4_narrative_voice'
-    
-    # Week 5: Rhetorical voice keywords
-    if any(kw in name_lower for kw in ['irony', 'euphemism', 'understatement', 'juxtaposition', 'rhetorical', 'tone', 'diction', 'sarcasm']):
-        return 'week_5_rhetorical_voice'
-    
-    # Default to week 2 if no match
-    return 'week_2_literary_devices'
-
-
-def categorize_device(device_name: str, classification: str) -> tuple:
-    """Categorize device using mapping file, returns (week_key, week_label)"""
-    
-    # Check explicit mapping
-    for week_key, devices in DEVICE_MAPPING['device_mappings'].items():
-        for mapped_device in devices:
-            if mapped_device['device_name'] == device_name:
-                week_label = DEVICE_MAPPING['week_definitions'][week_key]['label']
-                return week_key, week_label
-    
-    # Fallback to heuristics if needed
-    week_key = fallback_categorization(device_name, classification)
-    week_label = DEVICE_MAPPING['week_definitions'][week_key]['label']
-    return week_key, week_label
+    return device_assignment
 
 
 def extract_tvode_components(device):
-    """Extract or generate TVODE components"""
+    """Extract or generate TVODE components from device data"""
     
     name = device.get("name", "Unknown Device")
     examples = device.get("examples", [])
@@ -138,71 +164,79 @@ def extract_tvode_components(device):
     }
 
 
-def get_chapter_info(kernel, section_name):
-    """Extract chapter info from kernel extracts section with fallback"""
-    extracts = kernel.get("extracts", {})
-    section_data = extracts.get(section_name, {})
+def extract_macro_elements(kernel):
+    """Extract macro alignment elements from kernel"""
     
-    # Get primary_chapter (with fallback to first chapter in range)
-    primary_chapter = section_data.get("primary_chapter")
-    if primary_chapter is None:
-        chapter_range = section_data.get("chapter_range", "1")
-        # Parse first number from range (e.g., "1-3" -> 1, "15" -> 15)
-        if "-" in str(chapter_range):
-            primary_chapter = int(str(chapter_range).split("-")[0])
-        else:
-            primary_chapter = int(chapter_range) if chapter_range else 1
+    # Fixed: kernel v3.3 uses "macro_variables" not "narrative"
+    macro_vars = kernel.get("macro_variables", {})
+    narrative = macro_vars.get("narrative", {})
+    voice = narrative.get("voice", {})
+    structure = narrative.get("structure", {})
     
-    # Get reading_range
-    reading_range = section_data.get("chapter_range", "TBD")
-    
-    return primary_chapter, reading_range
-
-
-def categorize_devices(kernel):
-    """Group devices by pedagogical week"""
-    
-    device_mapping = {
-        'week_1_exposition': [],
-        'week_2_literary_devices': [],
-        'week_3_structure': [],
-        'week_4_narrative_voice': [],
-        'week_5_rhetorical_voice': []
-    }
-    
-    # Check both 'devices' and 'micro_devices' for compatibility with different kernel versions
-    devices_list = kernel.get("devices", kernel.get("micro_devices", []))
-    
-    for device in devices_list:
-        week_key, week_label = categorize_device(
-            device['name'], 
-            device.get('classification', '')
-        )
-        
-        device_data = {
-            "name": device.get("name", ""),
-            "layer": device.get("layer", ""),
-            "function": device.get("function", ""),
-            "definition": device.get("definition", device.get("student_facing_definition", "")),
-            "examples": device.get("examples", []),
-            "week_label": week_label,
-            "tvode_components": extract_tvode_components(device)
+    return {
+        "exposition": {
+            "element_type": "Exposition",
+            "description": "How characters and setting are introduced",
+            "variables": {
+                "characterization_method": voice.get("character_revelation", ""),
+                "mode_dominance": voice.get("mode_dominance", ""),
+                "mode_description": voice.get("mode_dominance_description", "")
+            }
+        },
+        "structure": {
+            "element_type": "Structure",
+            "description": "How plot is organized and paced",
+            "variables": {
+                "plot_architecture": structure.get("plot_architecture", ""),
+                "chronology": structure.get("chronology", ""),
+                "causation": structure.get("causation", ""),
+                "pacing_dominance": structure.get("pacing_dominance", "")
+            }
+        },
+        "voice": {
+            "element_type": "Voice",
+            "description": "Narrative perspective and narration",
+            "variables": {
+                "pov": voice.get("pov", ""),
+                "focalization": voice.get("focalization", ""),
+                "reliability": voice.get("reliability", ""),
+                "temporal_distance": voice.get("temporal_distance", "")
+            }
         }
-        
-        device_mapping[week_key].append(device_data)
-    
-    return device_mapping
+    }
 
 
-def create_macro_micro_packages(kernel, macro_elements, device_mapping):
-    """Create 5-week macro-micro packages with chapter information"""
+def create_macro_micro_packages(kernel, macro_elements, device_assignment):
+    """Create 5-week macro-micro packages with chapter ranges
     
-    # Extract chapter info for each week
-    w1_activity, w1_reading = get_chapter_info(kernel, "exposition")
-    w2_activity, w2_reading = get_chapter_info(kernel, "rising_action")
-    w3_activity, w3_reading = get_chapter_info(kernel, "climax")
-    w4_activity, w4_reading = get_chapter_info(kernel, "falling_action")
-    w5_activity, w5_reading = get_chapter_info(kernel, "resolution")
+    Week 1: Exposition devices from exposition chapters
+    Week 2: Rising Action/Literary Devices from rising action chapters  
+    Week 3: Structure/Climax from climax chapters
+    Week 4: Voice/Falling Action from falling action chapters
+    Week 5: Resolution from resolution chapters
+    """
+    
+    # Get narrative ranges for chapter metadata
+    narrative_ranges = get_narrative_chapter_ranges(kernel)
+    extracts = kernel.get("extracts", {})
+    
+    # Helper function to get primary_chapter with fallback
+    def get_primary_chapter(section_name):
+        section_data = extracts.get(section_name, {})
+        # Try primary_chapter field first
+        if "primary_chapter" in section_data:
+            return section_data["primary_chapter"]
+        # Fallback: use first chapter in range
+        chapter_range = section_data.get("chapter_range", "")
+        if chapter_range:
+            chapters = parse_chapter_range(chapter_range)
+            return chapters[0] if chapters else 1
+        return 1
+    
+    # Add TVODE components to each device
+    for section_devices in device_assignment.values():
+        for device in section_devices:
+            device["tvode_components"] = extract_tvode_components(device)
     
     return {
         "week1_exposition": {
@@ -212,58 +246,61 @@ def create_macro_micro_packages(kernel, macro_elements, device_mapping):
             "macro_description": macro_elements["exposition"]["description"],
             "macro_variables": macro_elements["exposition"]["variables"],
             "teaching_goal": "Understanding how exposition is built through devices",
-            "scaffolding": "High - Teacher models everything",
-            "activity_chapter": w1_activity,
-            "reading_range": w1_reading,
-            "micro_devices": device_mapping["week_1_exposition"]
+            "activity_chapter": get_primary_chapter("exposition"),
+            "reading_range": extracts.get("exposition", {}).get("chapter_range", ""),
+            "chapter_range": narrative_ranges.get("exposition", []),
+            "chapter_range_str": extracts.get("exposition", {}).get("chapter_range", ""),
+            "micro_devices": device_assignment["exposition"][:4]
         },
-        "week2_literary_devices": {
+        "week2_rising_action": {
             "week": 2,
-            "macro_element": "Literary Devices",
-            "macro_type": macro_elements["literary_devices"]["element_type"],
-            "macro_description": macro_elements["literary_devices"]["description"],
-            "macro_variables": macro_elements["literary_devices"]["variables"],
-            "teaching_goal": "Device recognition and identification",
-            "scaffolding": "Medium-High - Co-construction with students",
-            "activity_chapter": w2_activity,
-            "reading_range": w2_reading,
-            "micro_devices": device_mapping["week_2_literary_devices"]
+            "macro_element": "Rising Action",
+            "macro_type": "Narrative Development",
+            "macro_description": "How conflict and tension develop through literary devices",
+            "teaching_goal": "Understanding rising action and device recognition",
+            "activity_chapter": get_primary_chapter("rising_action"),
+            "reading_range": extracts.get("rising_action", {}).get("chapter_range", ""),
+            "chapter_range": narrative_ranges.get("rising_action", []),
+            "chapter_range_str": extracts.get("rising_action", {}).get("chapter_range", ""),
+            "micro_devices": device_assignment["rising_action"][:4]
         },
-        "week3_structure": {
+        "week3_climax": {
             "week": 3,
-            "macro_element": "Structure",
+            "macro_element": "Structure/Climax",
             "macro_type": macro_elements["structure"]["element_type"],
             "macro_description": macro_elements["structure"]["description"],
             "macro_variables": macro_elements["structure"]["variables"],
-            "teaching_goal": "Understanding how structure unfolds through devices",
-            "scaffolding": "Medium - Students lead with support",
-            "activity_chapter": w3_activity,
-            "reading_range": w3_reading,
-            "micro_devices": device_mapping["week_3_structure"]
+            "teaching_goal": "Understanding how structure and climax work through devices",
+            "activity_chapter": get_primary_chapter("climax"),
+            "reading_range": extracts.get("climax", {}).get("chapter_range", ""),
+            "chapter_range": narrative_ranges.get("climax", []),
+            "chapter_range_str": extracts.get("climax", {}).get("chapter_range", ""),
+            "micro_devices": device_assignment["climax"][:4]
         },
-        "week4_narrative_voice": {
+        "week4_falling_action": {
             "week": 4,
-            "macro_element": "Narrative Voice",
-            "macro_type": macro_elements["narrative_voice"]["element_type"],
-            "macro_description": macro_elements["narrative_voice"]["description"],
-            "macro_variables": macro_elements["narrative_voice"]["variables"],
-            "teaching_goal": "Understanding perspective and consciousness",
-            "scaffolding": "Medium-Low - Independent work with feedback",
-            "activity_chapter": w4_activity,
-            "reading_range": w4_reading,
-            "micro_devices": device_mapping["week_4_narrative_voice"]
+            "macro_element": "Voice/Falling Action",
+            "macro_type": macro_elements["voice"]["element_type"],
+            "macro_description": macro_elements["voice"]["description"],
+            "macro_variables": macro_elements["voice"]["variables"],
+            "teaching_goal": "Understanding how narrative voice operates through devices",
+            "activity_chapter": get_primary_chapter("falling_action"),
+            "reading_range": extracts.get("falling_action", {}).get("chapter_range", ""),
+            "chapter_range": narrative_ranges.get("falling_action", []),
+            "chapter_range_str": extracts.get("falling_action", {}).get("chapter_range", ""),
+            "micro_devices": device_assignment["falling_action"][:4]
         },
-        "week5_rhetorical_voice": {
+        "week5_resolution": {
             "week": 5,
-            "macro_element": "Rhetorical Voice",
-            "macro_type": macro_elements["rhetorical_voice"]["element_type"],
-            "macro_description": macro_elements["rhetorical_voice"]["description"],
-            "macro_variables": macro_elements["rhetorical_voice"]["variables"],
-            "teaching_goal": "Understanding irony and persuasive techniques",
-            "scaffolding": "Low - Independent application",
-            "activity_chapter": w5_activity,
-            "reading_range": w5_reading,
-            "micro_devices": device_mapping["week_5_rhetorical_voice"]
+            "macro_element": "Resolution",
+            "macro_type": "Narrative Conclusion",
+            "macro_description": "How conflicts resolve and themes culminate",
+            "teaching_goal": "Understanding resolution and synthesizing all concepts",
+            "activity_chapter": get_primary_chapter("resolution"),
+            "reading_range": extracts.get("resolution", {}).get("chapter_range", ""),
+            "chapter_range": narrative_ranges.get("resolution", []),
+            "chapter_range_str": extracts.get("resolution", {}).get("chapter_range", ""),
+            "micro_devices": device_assignment["resolution"][:4]
         }
     }
 
@@ -272,35 +309,43 @@ def run_stage1a(kernel_path):
     """Main Stage 1A processing"""
     
     print("\n" + "="*80)
-    print("STAGE 1A: MACRO-MICRO EXTRACTION")
+    print("STAGE 1A: MACRO-MICRO EXTRACTION (Location-Based)")
     print("="*80)
     
     # Load kernel
-    print(f"\n📖 Loading kernel: {kernel_path}")
+    print(f"\nðŸ“– Loading kernel: {kernel_path}")
     with open(kernel_path, 'r', encoding='utf-8') as f:
         kernel = json.load(f)
     
+    # Fixed: kernel v3.3 uses "metadata" not "text_metadata"
     title = kernel.get("metadata", {}).get("title", "Unknown")
-    print(f"  ✓ Loaded: {title}")
+    print(f"  âœ“ Loaded: {title}")
+    
+    # Extract narrative chapter ranges
+    print("\nðŸ“ Extracting chapter ranges...")
+    narrative_ranges = get_narrative_chapter_ranges(kernel)
+    for section, chapters in narrative_ranges.items():
+        if chapters:
+            print(f"  âœ“ {section}: Chapters {min(chapters)}-{max(chapters)}")
     
     # Extract macro elements
-    print("\n🔍 Extracting macro elements...")
+    print("\nðŸ” Extracting macro elements...")
     macro_elements = extract_macro_elements(kernel)
-    print(f"  ✓ Extracted: Exposition, Literary Devices, Structure, Narrative Voice, Rhetorical Voice")
+    print(f"  âœ“ Extracted: Exposition, Structure, Voice")
     
-    # Categorize devices
-    print("\n🏷️  Categorizing devices...")
-    device_mapping = categorize_devices(kernel)
-    print(f"  ✓ Week 1 (Exposition): {len(device_mapping['week_1_exposition'])}")
-    print(f"  ✓ Week 2 (Literary Devices): {len(device_mapping['week_2_literary_devices'])}")
-    print(f"  ✓ Week 3 (Structure): {len(device_mapping['week_3_structure'])}")
-    print(f"  ✓ Week 4 (Narrative Voice): {len(device_mapping['week_4_narrative_voice'])}")
-    print(f"  ✓ Week 5 (Rhetorical Voice): {len(device_mapping['week_5_rhetorical_voice'])}")
+    # Assign devices by location
+    print("\nðŸ—ºï¸  Assigning devices by narrative location...")
+    device_assignment = assign_devices_by_location(kernel)
+    print(f"  âœ“ Exposition devices: {len(device_assignment['exposition'])}")
+    print(f"  âœ“ Rising action devices: {len(device_assignment['rising_action'])}")
+    print(f"  âœ“ Climax devices: {len(device_assignment['climax'])}")
+    print(f"  âœ“ Falling action devices: {len(device_assignment['falling_action'])}")
+    print(f"  âœ“ Resolution devices: {len(device_assignment['resolution'])}")
     
     # Create packages
-    print("\n📦 Creating macro-micro packages...")
-    packages = create_macro_micro_packages(kernel, macro_elements, device_mapping)
-    print(f"  ✓ Created 5-week packages")
+    print("\nðŸ“¦ Creating macro-micro packages...")
+    packages = create_macro_micro_packages(kernel, macro_elements, device_assignment)
+    print(f"  âœ“ Created 4-week packages with chapter ranges")
     
     # Assemble output
     output = {
@@ -311,8 +356,9 @@ def run_stage1a(kernel_path):
             "extraction_date": datetime.now().isoformat(),
             "source_kernel": str(kernel_path)
         },
+        "narrative_chapter_ranges": narrative_ranges,
         "macro_elements": macro_elements,
-        "device_mapping": device_mapping,
+        "device_assignment_by_location": device_assignment,
         "macro_micro_packages": packages
     }
     
@@ -326,7 +372,7 @@ def run_stage1a(kernel_path):
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
     
-    print(f"\n✅ Stage 1A complete!")
+    print(f"\nâœ… Stage 1A complete!")
     print(f"   Output: {output_path}")
     print(f"   Size: {output_path.stat().st_size:,} bytes")
     
@@ -341,7 +387,7 @@ def main():
     kernel_path = Path(sys.argv[1])
     
     if not kernel_path.exists():
-        print(f"❌ Error: Kernel file not found: {kernel_path}")
+        print(f"âŒ Error: Kernel file not found: {kernel_path}")
         sys.exit(1)
     
     output_path = run_stage1a(kernel_path)
