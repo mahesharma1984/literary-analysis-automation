@@ -11,6 +11,7 @@ Usage:
 import json
 import sys
 import subprocess
+import glob
 from pathlib import Path
 from datetime import datetime
 
@@ -187,25 +188,55 @@ def validate_stage1b_output(json_path, md_path):
     
     return True
 
-def validate_stage2_output(output_dir, week_num):
+def validate_stage2_output(output_dir, week_num, title_safe=None):
     """Validate Stage 2 worksheet outputs"""
     
-    expected_files = [
-        f"Week_{week_num}_Literary_Analysis_Worksheet.md",
-        f"Week_{week_num}_TVODE_Construction.md",
-        f"Week_{week_num}_Teacher_Key.md"
-    ]
+    # Template version outputs: {title}_Week{N}_Worksheet.md and {title}_Week{N}_TeacherKey.md
+    # If title_safe is provided, use it; otherwise check for any files matching the pattern
+    if title_safe:
+        expected_files = [
+            f"{title_safe}_Week{week_num}_Worksheet.md",
+            f"{title_safe}_Week{week_num}_TeacherKey.md"
+        ]
+    else:
+        # Fallback: look for any files with Week{N} pattern
+        expected_files = [
+            f"*_Week{week_num}_Worksheet.md",
+            f"*_Week{week_num}_TeacherKey.md"
+        ]
     
     print(f"\n{Colors.BLUE}Checking for Week {week_num} worksheets...{Colors.END}")
     
     all_found = True
-    for filename in expected_files:
-        file_path = output_dir / filename
-        if file_path.exists():
-            size = file_path.stat().st_size
-            print_success(f"Found {filename} ({size:,} bytes)")
+    worksheets_dir = output_dir / "worksheets"
+    
+    if title_safe:
+        for filename in expected_files:
+            file_path = worksheets_dir / filename
+            if file_path.exists():
+                size = file_path.stat().st_size
+                print_success(f"Found {filename} ({size:,} bytes)")
+            else:
+                print_error(f"Missing {filename}")
+                all_found = False
+    else:
+        # Pattern matching fallback
+        worksheet_pattern = str(worksheets_dir / f"*_Week{week_num}_Worksheet.md")
+        key_pattern = str(worksheets_dir / f"*_Week{week_num}_TeacherKey.md")
+        
+        worksheet_files = glob.glob(worksheet_pattern)
+        key_files = glob.glob(key_pattern)
+        
+        if worksheet_files:
+            print_success(f"Found worksheet: {Path(worksheet_files[0]).name}")
         else:
-            print_error(f"Missing {filename}")
+            print_error(f"Missing Week {week_num} worksheet")
+            all_found = False
+            
+        if key_files:
+            print_success(f"Found teacher key: {Path(key_files[0]).name}")
+        else:
+            print_error(f"Missing Week {week_num} teacher key")
             all_found = False
     
     return all_found
@@ -220,7 +251,13 @@ def test_full_pipeline(kernel_path):
     # Extract title for output file names
     with open(kernel_path, 'r') as f:
         kernel = json.load(f)
-    title = kernel.get("text_metadata", {}).get("title", "Unknown")
+    # Try different metadata formats
+    if "text_metadata" in kernel:
+        title = kernel["text_metadata"].get("title", "Unknown")
+    elif "metadata" in kernel:
+        title = kernel["metadata"].get("title", "Unknown")
+    else:
+        title = "Unknown"
     safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
     
     output_dir = Path("outputs")
@@ -287,7 +324,7 @@ def test_full_pipeline(kernel_path):
     
     if stage1b_json.exists():
         output = run_command(
-            ["python3", "run_stage2_fixed.py", str(stage1b_json), str(kernel_path), "--week", "1"],
+            ["python3", "run_stage2.py", str(stage1b_json), "--week", "1"],
             "Stage 2 worksheet generation"
         )
         
@@ -295,7 +332,7 @@ def test_full_pipeline(kernel_path):
             tests_failed += 1
             print_error("Stage 2 failed to run")
         else:
-            if validate_stage2_output(output_dir, 1):
+            if validate_stage2_output(output_dir, 1, safe_title):
                 tests_passed += 1
                 print_success("Stage 2 validation passed")
             else:

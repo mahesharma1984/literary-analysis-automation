@@ -1,268 +1,377 @@
 #!/usr/bin/env python3
 """
-STAGE 2 AUTOMATION
-Generate worksheets from weekly packages
+STAGE 2 AUTOMATION - HYBRID TEMPLATE APPROACH
+Generate worksheets by filling templates with data from Stage 1B + AI-generated content
 
 Usage:
-    python3 run_stage2.py outputs/Book_stage1b_v5.0.json
-    python3 run_stage2.py outputs/Book_stage1b_v5.0.json --week 1
-    python3 run_stage2.py outputs/Book_stage1b_v5.0.json --all-weeks
+    python3 run_stage2.py outputs/Book_stage1b_v5_0.json --week 1
+    python3 run_stage2.py outputs/Book_stage1b_v5_0.json --all-weeks
 """
 
-import anthropic
 import json
 import sys
 import os
 from pathlib import Path
 from datetime import datetime
+from anthropic import Anthropic
 
 # Configuration
 class Config:
-    API_KEY = os.getenv("ANTHROPIC_API_KEY")
+    API_KEY = os.environ.get("ANTHROPIC_API_KEY")
     MODEL = "claude-sonnet-4-20250514"
-    MAX_TOKENS = 8000
+    MAX_TOKENS = 4000
 
-def generate_worksheet(week_package, client):
-    """Generate literary analysis worksheet for a week"""
-    
-    week_num = week_package["week"]
-    macro_focus = week_package["macro_focus"]
-    devices = week_package["micro_devices"]
-    
-    print(f"\nðŸ¤– Generating Week {week_num} worksheet ({macro_focus})...")
-    
-    # Build device list
-    device_list = "\n".join([
-        f"- {d['name']}: {d['definition']}"
-        for d in devices
-    ])
-    
-    # Create prompt
-    prompt = f"""Create a literary analysis worksheet for high school students.
+def load_template(template_path):
+    """Load template file"""
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
 
-WEEK: {week_num}
+def generate_placeholder_data(device, macro_focus, chapter_num, client):
+    """Generate missing template data for one device using Claude API"""
+    
+    # Build examples text from device data
+    examples_text = ""
+    if device.get('examples'):
+        for i, ex in enumerate(device['examples'][:3], 1):
+            quote = ex.get('text', ex.get('quote_snippet', ''))
+            examples_text += f"\nExample {i}: \"{quote}\"\n"
+    
+    prompt = f"""Generate pedagogical content for a literary device worksheet.
+
+DEVICE: {device['name']}
+DEFINITION: {device['definition']}
 MACRO FOCUS: {macro_focus}
-TEACHING GOAL: {week_package['teaching_goal']}
-ACTIVITY CHAPTER: Chapter {week_package.get('activity_chapter', 'TBD')}
-READING ASSIGNMENT: Chapters {week_package.get('reading_range', 'TBD')}
+CHAPTER: {chapter_num}
 
-DEVICES TO TEACH:
-{device_list}
+TEXT EXAMPLES:
+{examples_text if examples_text else "No specific examples provided"}
 
-TEACHING APPROACH:
-{chr(10).join(f"{i+1}. {step}" for i, step in enumerate(week_package['teaching_sequence']))}
+Generate the following in JSON format:
 
-Create a worksheet with these sections:
+{{
+  "multiple_choice": {{
+    "option_a": "A plausible wrong answer about this device",
+    "option_b": "The correct identification of this device",
+    "option_c": "Another plausible wrong answer",
+    "option_d": "A third plausible wrong answer",
+    "correct": "B",
+    "distractor_1_explanation": "Why option A is incorrect",
+    "distractor_2_explanation": "Why option C is incorrect"
+  }},
+  "sequencing": {{
+    "item_a": "First step in analyzing this device",
+    "item_b": "Second step in analyzing this device", 
+    "item_c": "Third step in analyzing this device",
+    "correct_order": "A, B, C",
+    "explanation": "Why this order is correct"
+  }},
+  "effects": {{
+    "meaning": "How this device affects meaning in the text",
+    "reader": "How this device affects the reader's experience",
+    "theme": "How this device contributes to theme",
+    "character": "How this device reveals character",
+    "plot": "How this device advances plot",
+    "structure": "How this device affects narrative structure"
+  }},
+  "examples": {{
+    "model_example": "Complete quote from text showing this device",
+    "model_paragraph": "Full TVODE paragraph analyzing the device with T, V, O, D, E components clearly visible",
+    "sample_response": "Expected student answer for device identification",
+    "location_prompt": "Where to find this device (e.g., 'page 23, paragraph 2')"
+  }},
+  "teaching": {{
+    "teaching_note": "Pedagogical tip for teaching this device",
+    "common_error_1": "Common student misconception about this device",
+    "common_error_2": "Another common student error",
+    "scaffolding_tip": "How to support struggling students"
+  }}
+}}
 
-1. **Reading & Chapter Focus** - START WITH: "This week, you will complete your assigned reading through Chapter {week_package.get('reading_range', 'TBD').split('-')[-1]}. Our analysis activities will focus specifically on Chapter {week_package.get('activity_chapter', 'TBD')}"
+IMPORTANT: 
+- Keep all text student-appropriate for high school level
+- Multiple choice options should be plausible but clearly distinguishable
+- Model paragraph must be a complete TVODE sentence
+- All content should relate to the macro focus: {macro_focus}
 
-2. **Introduction** (2-3 sentences explaining the macro concept: {macro_focus})
+Output ONLY valid JSON, no other text."""
 
-3. **Device Definitions** (Define each device clearly for students)
+    try:
+        response = client.messages.create(
+            model=Config.MODEL,
+            max_tokens=Config.MAX_TOKENS,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        
+        result_text = response.content[0].text.strip()
+        # Remove markdown code blocks if present
+        if result_text.startswith("```"):
+            result_text = result_text.split("```")[1]
+            if result_text.startswith("json"):
+                result_text = result_text[4:]
+            result_text = result_text.strip()
+        
+        return json.loads(result_text)
+    except Exception as e:
+        print(f"  ⚠ Error generating data for {device['name']}: {e}")
+        return None
 
-4. **Text Analysis Activity** (6 analysis questions that guide students to analyze Chapter {week_package.get('activity_chapter', 'TBD')} specifically. EVERY question must reference "Chapter {week_package.get('activity_chapter', 'TBD')}" explicitly.)
-
-5. **TVODE Construction** (Template and example for students to write TVODE sentences)
-
-6. **Reflection** (2-3 questions for students to synthesize learning)
-
-OUTPUT FORMAT: Markdown with clear headers and formatting suitable for students.
-Keep language clear and age-appropriate for high school level.
-"""
-
-    print(f"DEBUG: activity_chapter = {week_package.get('activity_chapter')}")
-    print(f"DEBUG: reading_range = {week_package.get('reading_range')}")
+def fill_worksheet_template(template, week_package, enriched_devices):
+    """Fill worksheet template with all data"""
     
-    # Call Claude API
-    response = client.messages.create(
-        model=Config.MODEL,
-        max_tokens=Config.MAX_TOKENS,
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+    output = template
     
-    worksheet_content = response.content[0].text
-    print(f"  âœ“ Generated {len(worksheet_content):,} characters")
+    # Fill metadata
+    output = output.replace("{{TEXT_TITLE}}", week_package.get('text_title', 'Unknown'))
+    output = output.replace("{{TEXT_AUTHOR}}", week_package.get('text_author', 'Unknown'))
+    output = output.replace("{{EDITION_REFERENCE}}", "2003 edition")  # TODO: Get from kernel
+    output = output.replace("{{EXTRACT_FOCUS}}", week_package.get('macro_focus', ''))
+    output = output.replace("{{YEAR_LEVEL}}", "9-10")  # TODO: Make configurable
+    output = output.replace("{{PROFICIENCY_TIER}}", "Standard")  # TODO: Make configurable
+    activity_ch = week_package.get('activity_chapter', 'TBD')
+    reading_range = week_package.get('reading_range', 'TBD')
+    output = output.replace(
+    "1. Read the indicated chapters",
+    f"1. Read Chapters {reading_range} (focus on Chapter {activity_ch} for activities)"
+)
     
-    return worksheet_content
+    # Fill device data
+    for i, (device, enriched) in enumerate(zip(week_package['micro_devices'][:3], enriched_devices), 1):
+        if enriched is None:
+            continue
+            
+        # Basic device info
+        output = output.replace(f"{{{{DEVICE_{i}_NAME}}}}", device['name'])
+        output = output.replace(f"{{{{DEVICE_{i}_DEFINITION}}}}", device.get('definition', ''))
+        
+        # Multiple choice
+        if 'multiple_choice' in enriched:
+            mc = enriched['multiple_choice']
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
+        
+        # Sequencing
+        if 'sequencing' in enriched:
+            seq = enriched['sequencing']
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_A}}}}", seq.get('item_a', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_B}}}}", seq.get('item_b', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_C}}}}", seq.get('item_c', ''))
+        
+        # Effects
+        if 'effects' in enriched:
+            eff = enriched['effects']
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1}}}}", eff.get('meaning', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2}}}}", eff.get('reader', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3}}}}", eff.get('theme', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4}}}}", eff.get('character', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5}}}}", eff.get('plot', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6}}}}", eff.get('structure', ''))
+        
+        # Examples
+        if 'examples' in enriched:
+            ex = enriched['examples']
+            output = output.replace(f"{{{{DEVICE_{i}_MODEL_EXAMPLE}}}}", ex.get('model_example', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EXAMPLE_LOCATIONS}}}}", ex.get('location_prompt', ''))
+    
+    return output
 
-def generate_teacher_key(week_package, worksheet_content, client):
-    """Generate teacher answer key for the worksheet"""
+def fill_teacher_key_template(template, week_package, enriched_devices):
+    """Fill teacher key template with all data"""
     
-    week_num = week_package["week"]
-    macro_focus = week_package["macro_focus"]
+    output = template
     
-    print(f"\nðŸ”‘ Generating Week {week_num} teacher key...")
+    # Fill metadata (same as worksheet)
+    output = output.replace("{{TEXT_TITLE}}", week_package.get('text_title', 'Unknown'))
+    output = output.replace("{{TEXT_AUTHOR}}", week_package.get('text_author', 'Unknown'))
+    output = output.replace("{{WEEK_NUMBER}}", str(week_package.get('week', '')))
+    output = output.replace("{{WEEK_FOCUS}}", week_package.get('macro_focus', ''))
+    output = output.replace("{{EDITION_REFERENCE}}", "2003 edition")
+    output = output.replace("{{EXTRACT_FOCUS}}", week_package.get('macro_focus', ''))
+    output = output.replace("{{YEAR_LEVEL}}", "9-10")
+    output = output.replace("{{PROFICIENCY_TIER}}", "Standard")
     
-    prompt = f"""Create a teacher answer key for this literary analysis worksheet.
+    # Fill device data (includes answers and teaching notes)
+    for i, (device, enriched) in enumerate(zip(week_package['micro_devices'][:3], enriched_devices), 1):
+        if enriched is None:
+            continue
+            
+        # Basic info
+        output = output.replace(f"{{{{DEVICE_{i}_NAME}}}}", device['name'])
+        output = output.replace(f"{{{{DEVICE_{i}_DEFINITION}}}}", device.get('definition', ''))
+        
+        # Multiple choice with answers
+        if 'multiple_choice' in enriched:
+            mc = enriched['multiple_choice']
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_CORRECT_OPTION}}}}", mc.get('correct', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_1}}}}", mc.get('distractor_1_explanation', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_2}}}}", mc.get('distractor_2_explanation', ''))
+        
+        # Sequencing with answer
+        if 'sequencing' in enriched:
+            seq = enriched['sequencing']
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_A}}}}", seq.get('item_a', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_B}}}}", seq.get('item_b', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_C}}}}", seq.get('item_c', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_ANSWER}}}}", seq.get('correct_order', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_EXPLANATION}}}}", seq.get('explanation', ''))
+        
+        # Effects (same as worksheet)
+        if 'effects' in enriched:
+            eff = enriched['effects']
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1}}}}", eff.get('meaning', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2}}}}", eff.get('reader', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3}}}}", eff.get('theme', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4}}}}", eff.get('character', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5}}}}", eff.get('plot', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6}}}}", eff.get('structure', ''))
+        
+        # Examples and teaching
+        if 'examples' in enriched:
+            ex = enriched['examples']
+            output = output.replace(f"{{{{DEVICE_{i}_MODEL_EXAMPLE}}}}", ex.get('model_example', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_MODEL_PARAGRAPH}}}}", ex.get('model_paragraph', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SAMPLE_RESPONSE}}}}", ex.get('sample_response', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EXAMPLE_LOCATIONS}}}}", ex.get('location_prompt', ''))
+        
+        if 'teaching' in enriched:
+            teach = enriched['teaching']
+            output = output.replace(f"{{{{DEVICE_{i}_TEACHING_NOTE}}}}", teach.get('teaching_note', ''))
+    
+    return output
 
-WEEK: {week_num}
-MACRO FOCUS: {macro_focus}
-
-WORKSHEET CONTENT:
-{worksheet_content}
-
-DEVICES COVERED:
-{chr(10).join([f"- {d['name']}: {d.get('executes_macro', '')}" for d in week_package['micro_devices']])}
-
-Create an answer key with:
-
-1. **Teaching Notes** (How to introduce the macro concept and guide discussion)
-
-2. **Answer Guide** (Sample answers for each analysis question)
-
-3. **TVODE Examples** (3-4 strong example TVODE sentences)
-
-4. **Common Student Misconceptions** (What to watch for and how to address)
-
-5. **Extension Activities** (For advanced students)
-
-OUTPUT FORMAT: Markdown with clear headers. Provide specific, detailed answers that teachers can use as reference.
-"""
+def process_week(week_package, template_dir, output_dir, client):
+    """Process one week: generate data and fill templates"""
     
-    response = client.messages.create(
-        model=Config.MODEL,
-        max_tokens=Config.MAX_TOKENS,
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+    week_num = week_package['week']
+    macro_focus = week_package['macro_focus']
+    activity_chapter = week_package.get('activity_chapter', 'TBD')
     
-    key_content = response.content[0].text
-    print(f"  âœ“ Generated {len(key_content):,} characters")
+    print(f"\n📝 Processing Week {week_num}: {macro_focus}")
+    print(f"   Activity Chapter: {activity_chapter}")
+    print(f"   Devices: {len(week_package['micro_devices'])}")
     
-    return key_content
-
-def run_stage2(stage1b_path, week_num=None, all_weeks=False):
-    """Main Stage 2 processing"""
+    # Generate enriched data for each device
+    print(f"\n🤖 Generating pedagogical content...")
+    enriched_devices = []
     
-    print("\n" + "="*80)
-    print("STAGE 2: WORKSHEET GENERATION")
-    print("="*80)
+    for device in week_package['micro_devices'][:3]:  # Limit to 3 devices per worksheet
+        print(f"   - {device['name']}...", end='', flush=True)
+        enriched = generate_placeholder_data(device, macro_focus, activity_chapter, client)
+        enriched_devices.append(enriched)
+        print(" ✓")
     
-    # Check API key
-    if not Config.API_KEY:
-        print("\nâŒ Error: ANTHROPIC_API_KEY not set")
-        print("Set it with: export ANTHROPIC_API_KEY='your-key-here'")
-        sys.exit(1)
+    # Load templates
+    print(f"\n📄 Filling templates...")
+    worksheet_template = load_template(template_dir / "Template_Literary_Analysis_6Step.md")
+    teacher_key_template = load_template(template_dir / "Template_Teacher_Key.md")
     
-    # Initialize client
-    client = anthropic.Anthropic(api_key=Config.API_KEY)
+    # Fill templates
+    worksheet = fill_worksheet_template(worksheet_template, week_package, enriched_devices)
+    teacher_key = fill_teacher_key_template(teacher_key_template, week_package, enriched_devices)
     
-    # Load Stage 1B output
-    print(f"\nðŸ“– Loading Stage 1B output: {stage1b_path}")
-    with open(stage1b_path, 'r', encoding='utf-8') as f:
-        stage1b = json.load(f)
-    
-    title = stage1b.get("metadata", {}).get("text_title", "Unknown")
-    author = stage1b.get("metadata", {}).get("author", "Unknown")
-    print(f"  âœ“ Loaded: {title} by {author}")
-    
-    # Determine which weeks to generate
-    week_packages = stage1b.get("week_packages", [])
-    
-    if all_weeks:
-        weeks_to_generate = week_packages
-        print(f"\nðŸ“ Generating worksheets for all {len(week_packages)} weeks...")
-    elif week_num:
-        weeks_to_generate = [pkg for pkg in week_packages if pkg["week"] == week_num]
-        if not weeks_to_generate:
-            print(f"\nâŒ Error: Week {week_num} not found")
-            sys.exit(1)
-        print(f"\nðŸ“ Generating worksheet for Week {week_num}...")
-    else:
-        # Default: generate Week 1 only
-        weeks_to_generate = [pkg for pkg in week_packages if pkg["week"] == 1]
-        print(f"\nðŸ“ Generating worksheet for Week 1 (default)...")
-        print("   Use --all-weeks to generate all weeks")
-    
-    # Create output directory
-    output_dir = Path("outputs") / "worksheets"
+    # Save outputs
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
+    title = week_package.get('text_title', 'Book').replace(' ', '_')
     
-    # Generate worksheets
-    generated_files = []
+    worksheet_path = output_dir / f"{title}_Week{week_num}_Worksheet.md"
+    teacher_key_path = output_dir / f"{title}_Week{week_num}_TeacherKey.md"
     
-    for week_pkg in weeks_to_generate:
-        week_num = week_pkg["week"]
-        
-        # Generate worksheet
-        worksheet = generate_worksheet(week_pkg, client)
-        
-        # Save worksheet
-        worksheet_path = output_dir / f"{safe_title}_Week{week_num}_Worksheet.md"
-        with open(worksheet_path, 'w', encoding='utf-8') as f:
-            f.write(f"# {title} - Week {week_num} Literary Analysis Worksheet\n\n")
-            f.write(f"**Macro Focus:** {week_pkg['macro_focus']}\n\n")
-            f.write(f"---\n\n")
-            f.write(worksheet)
-        
-        print(f"  âœ“ Saved: {worksheet_path.name}")
-        generated_files.append(worksheet_path)
-        
-        # Generate teacher key
-        teacher_key = generate_teacher_key(week_pkg, worksheet, client)
-        
-        # Save teacher key
-        key_path = output_dir / f"{safe_title}_Week{week_num}_TeacherKey.md"
-        with open(key_path, 'w', encoding='utf-8') as f:
-            f.write(f"# {title} - Week {week_num} Teacher Answer Key\n\n")
-            f.write(f"**Macro Focus:** {week_pkg['macro_focus']}\n\n")
-            f.write(f"---\n\n")
-            f.write(teacher_key)
-        
-        print(f"  âœ“ Saved: {key_path.name}")
-        generated_files.append(key_path)
+    with open(worksheet_path, 'w', encoding='utf-8') as f:
+        f.write(worksheet)
+    print(f"   ✓ Worksheet: {worksheet_path.name}")
     
-    # Summary
-    print("\n" + "="*80)
-    print("âœ… STAGE 2 COMPLETE!")
-    print("="*80)
-    print(f"\nGenerated {len(generated_files)} files:")
-    for file_path in generated_files:
-        print(f"  - {file_path}")
+    with open(teacher_key_path, 'w', encoding='utf-8') as f:
+        f.write(teacher_key)
+    print(f"   ✓ Teacher Key: {teacher_key_path.name}")
     
-    print(f"\nðŸ“‚ All worksheets saved to: {output_dir}")
-    
-    # Cost estimate
-    num_weeks = len(weeks_to_generate)
-    estimated_cost = num_weeks * 0.20  # ~$0.20 per week (worksheet + key)
-    print(f"\nðŸ’° Estimated API cost: ~${estimated_cost:.2f}")
-    
-    return generated_files
+    return worksheet_path, teacher_key_path
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage:")
-        print("  python3 run_stage2.py outputs/Book_stage1b_v5.0.json")
-        print("  python3 run_stage2.py outputs/Book_stage1b_v5.0.json --week 1")
-        print("  python3 run_stage2.py outputs/Book_stage1b_v5.0.json --all-weeks")
+        print("Usage: python3 run_stage2.py outputs/Book_stage1b_v5_0.json --week 1")
+        print("       python3 run_stage2.py outputs/Book_stage1b_v5_0.json --all-weeks")
         sys.exit(1)
     
     stage1b_path = Path(sys.argv[1])
     
+    # Parse options
+    all_weeks = '--all-weeks' in sys.argv
+    week_num = None
+    if '--week' in sys.argv:
+        week_idx = sys.argv.index('--week')
+        if week_idx + 1 < len(sys.argv):
+            week_num = int(sys.argv[week_idx + 1])
+    
     if not stage1b_path.exists():
-        print(f"âŒ Error: Stage 1B file not found: {stage1b_path}")
+        print(f"❌ Error: Stage 1B file not found: {stage1b_path}")
         sys.exit(1)
     
-    # Parse arguments
-    week_num = None
-    all_weeks = False
+    # Initialize API client
+    if not Config.API_KEY:
+        print("❌ Error: ANTHROPIC_API_KEY environment variable not set")
+        sys.exit(1)
     
-    if "--all-weeks" in sys.argv:
-        all_weeks = True
-    elif "--week" in sys.argv:
-        try:
-            week_idx = sys.argv.index("--week")
-            week_num = int(sys.argv[week_idx + 1])
-        except (IndexError, ValueError):
-            print("âŒ Error: --week requires a number (1-4)")
-            sys.exit(1)
+    client = Anthropic(api_key=Config.API_KEY)
     
-    run_stage2(stage1b_path, week_num, all_weeks)
+    print("\n" + "="*80)
+    print("STAGE 2: TEMPLATE-BASED WORKSHEET GENERATION")
+    print("="*80)
+    
+    # Load Stage 1B data
+    print(f"\n📖 Loading Stage 1B output: {stage1b_path}")
+    with open(stage1b_path, 'r', encoding='utf-8') as f:
+        stage1b = json.load(f)
+    
+    title = stage1b['metadata']['text_title']
+    author = stage1b['metadata']['author']
+    print(f"  ✓ Loaded: {title} by {author}")
+    
+    # Setup paths
+    template_dir = Path(__file__).parent
+    output_dir = Path("outputs/worksheets")
+    
+    # Process weeks
+    week_packages = stage1b['week_packages']
+    
+    if all_weeks:
+        print(f"\n📚 Generating worksheets for all {len(week_packages)} weeks...")
+        generated_files = []
+        
+        for week_package in week_packages:
+            files = process_week(week_package, template_dir, output_dir, client)
+            generated_files.extend(files)
+        
+        print("\n" + "="*80)
+        print("✅ ALL WEEKS COMPLETE!")
+        print("="*80)
+        print(f"\nGenerated {len(generated_files)} files in: {output_dir}")
+        
+    else:
+        if week_num is None:
+            week_num = 1
+            print(f"\n📝 Generating worksheet for Week {week_num} (default)")
+            print("   Use --all-weeks to generate all weeks")
+        else:
+            print(f"\n📝 Generating worksheet for Week {week_num}")
+        
+        week_package = week_packages[week_num - 1]
+        worksheet_path, teacher_key_path = process_week(week_package, template_dir, output_dir, client)
+        
+        print("\n" + "="*80)
+        print("✅ STAGE 2 COMPLETE!")
+        print("="*80)
+        print(f"\nGenerated files:")
+        print(f"  - {worksheet_path}")
+        print(f"  - {teacher_key_path}")
+    
+    print(f"\n📂 All worksheets saved to: {output_dir}")
+    print(f"\n💰 Estimated API cost: ~${len(week_packages) * 3 * 0.015:.2f}")
 
 if __name__ == "__main__":
     main()

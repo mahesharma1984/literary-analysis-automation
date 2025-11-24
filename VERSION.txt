@@ -14,9 +14,8 @@ Stage 1B: run_stage1b.py
   Output: outputs/[book]_stage1b_v5.0.json (verified: 5 weeks)
           outputs/[book]_Integrated_Progression.md
 
-Stage 2:  run_stage2.py
+Stage 2:  run_stage2.py (template-based approach)
   Input:  outputs/[book]_stage1b_v5.0.json
-          kernels/[book]_kernel_v3.3.json
   Output: outputs/worksheets/[book]_Week[N]_Worksheet.md
           outputs/worksheets/[book]_Week[N]_TeacherKey.md
 
@@ -34,8 +33,13 @@ Run `python3 verify_pipeline.py` to re-verify at any time.
 - device_taxonomy_mapping.json (5-week categorization)
 - run_stage1a.py (macro-micro package creation)
 - run_stage1b.py (teaching progression)
-- run_stage2.py (worksheet generation)
+- run_stage2.py (worksheet generation - template-based approach, main version)
 - create_kernel.py (kernel creation automation)
+
+## ARCHIVED VERSIONS:
+- archive/run_stage2_old.py (previous fixed version with kernel input)
+- archive/run_stage2_old_v2.py (previous non-template version)
+- archive/run_stage2_template.py (backup of template version, now main)
 
 ## FOLDER STRUCTURE:
 - /kernels/         : Book kernels (v3.3 format)
