@@ -60,6 +60,7 @@ class KernelCreator:
         
         # Load book text
         self.book_text = self._load_book()
+        self.book_words = self.book_text.split()
         
         # Storage for stage outputs
         self.stage1_extracts = None
@@ -171,11 +172,30 @@ class KernelCreator:
             else:
                 print("Invalid response. Please enter y/n/save/quit")
     
+    def _create_book_sample(self) -> str:
+        """Create strategic sample of book for boundary identification"""
+        total_words = len(self.book_words)
+        
+        # Sample: 15K from beginning + 15K from middle + 15K from end = 45K words
+        beginning = ' '.join(self.book_words[:15000])
+        
+        middle_start = (total_words // 2) - 7500
+        middle_end = (total_words // 2) + 7500
+        middle = ' '.join(self.book_words[middle_start:middle_end])
+        
+        ending = ' '.join(self.book_words[-15000:])
+        
+        sample = f"{beginning}\n\n[... middle sections omitted ...]\n\n{middle}\n\n[... later sections omitted ...]\n\n{ending}"
+        
+        return sample
+    
     def stage1_extract_freytag(self):
         """Stage 1: Extract 5 Freytag sections with chapter ranges"""
         print("\n" + "="*80)
         print("STAGE 1: FREYTAG EXTRACT SELECTION (with chapter mapping)")
         print("="*80)
+        
+        book_sample = self._create_book_sample()
         
         prompt = f"""You are performing Stage 1 of the Kernel Validation Protocol v3.3.
 
@@ -223,8 +243,8 @@ PROTOCOL TO FOLLOW:
 ADDITIONAL CONTEXT:
 {self.protocols['lem']}
 
-BOOK TEXT (full):
-{self.book_text}
+BOOK SAMPLE (beginning, middle, end sections):
+{book_sample}
 
 OUTPUT FORMAT:
 Provide a JSON object with this structure:
@@ -236,7 +256,7 @@ Provide a JSON object with this structure:
     "total_chapters": {self.total_chapters},
     "extraction_date": "{datetime.now().isoformat()}"
   }},
-  "narrative_sections": {{
+  "extracts": {{
     "exposition": {{
       "chapter_range": "1-3",
       "primary_chapter": 1,
@@ -280,7 +300,7 @@ VERIFICATION CHECKLIST BEFORE SUBMITTING:
 ✓ Chapter ranges cover from 1 to {self.total_chapters} exactly
 ✓ Each section has primary_chapter specified
 ✓ Chapter ranges distribute across full book length
-✓ Text extracts are 200-400 words each
+✓ Text extracts are 200-400 words each from the book sample
 
 CRITICAL: Output ONLY valid JSON. No additional text before or after the JSON.
 """
@@ -301,6 +321,26 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after the JSON.
             print(f"Error details: {e}")
             return False
         
+        # Validate required fields
+        narrative_sections = extracts_json.get('extracts', {})
+        if not narrative_sections:
+            print(f"\n❌ Error: Missing 'extracts' in response")
+            return False
+        
+        missing_fields = []
+        for section_name, section_data in narrative_sections.items():
+            if 'chapter_range' not in section_data:
+                missing_fields.append(f"{section_name}: missing chapter_range")
+            if 'primary_chapter' not in section_data:
+                missing_fields.append(f"{section_name}: missing primary_chapter")
+        
+        if missing_fields:
+            print(f"\n❌ Error: Missing required fields:")
+            for field in missing_fields:
+                print(f"  - {field}")
+            print("\nStage 1 must include chapter_range and primary_chapter for each section.")
+            return False
+        
         # Review
         if self._review_and_approve("Stage 1: Freytag Extracts", result_formatted):
             self.stage1_extracts = extracts_json
@@ -318,7 +358,7 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after the JSON.
             return False
         
         extracts_text = ""
-        for section, data in self.stage1_extracts['extracts'].items():
+        for section, data in self.stage1_extracts.get('extracts', {}).items():
             extracts_text += f"\n### {section.upper()}\n{data['text']}\n"
         
         prompt = f"""You are performing Stage 2A of the Kernel Validation Protocol v3.3.
@@ -410,7 +450,7 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
             return False
         
         extracts_text = ""
-        for section, data in self.stage1_extracts['extracts'].items():
+        for section, data in self.stage1_extracts.get('narrative_sections', {}).items():
             extracts_text += f"\n### {section.upper()}\n{data['text']}\n"
         
         prompt = f"""You are performing Stage 2B of the Kernel Protocol Enhancement v3.3.
@@ -507,26 +547,20 @@ CRITICAL:
             return False
         
         kernel = {
-            "text_metadata": {
+            "metadata": {
                 "title": self.title,
                 "author": self.author,
                 "edition": self.edition,
-                "analysis_date": datetime.now().isoformat(),
-                "protocol_version": "Kernel Validation Protocol v3.3",
-                "enhancement_version": "Kernel Protocol Enhancement v3.3"
+                "creation_date": datetime.now().isoformat(),
+                "protocol_version": "3.3"
             },
             "extracts": self.stage1_extracts.get('narrative_sections', {}),
-            "narrative": self.stage2a_macro.get('narrative', {}),
-            "rhetoric": self.stage2a_macro.get('rhetoric', {}),
-            "device_mediation": self.stage2a_macro.get('device_mediation', {}),
-            "devices": self.stage2b_devices,
-            "validation_metadata": {
-                "total_devices": len(self.stage2b_devices),
-                "examples_provided": True,
-                "examples_format": "v3.3 (freytag_section, scene, chapter, page_range, quote_snippet)",
-                "education_vertical_ready": True,
-                "model_used": Config.MODEL
-            }
+            "macro_variables": {
+                "narrative": self.stage2a_macro.get('narrative', {}),
+                "rhetoric": self.stage2a_macro.get('rhetoric', {}),
+                "device_mediation": self.stage2a_macro.get('device_mediation', {})
+            },
+            "micro_devices": self.stage2b_devices
         }
         
         self.kernel = kernel
@@ -629,31 +663,6 @@ CRITICAL:
         if not self.save_kernel():
             print("\nâŒ Pipeline failed at save")
             return False
-
-        def save_reasoning_document(self, output_path: Optional[Path] = None):
-            """Generate narrative reasoning document"""
-            if not output_path:
-                safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
-                filename = f"{safe_title}_ReasoningDoc_v3.3.md"
-                output_path = Config.KERNELS_DIR / filename
-    
-            # Generate reasoning doc explaining tagging decisions
-            prompt = f"""Create a narrative reasoning document explaining the literary analysis decisions made for {self.title}.
-
-        STRUCTURE:
-        1. Overview of text and alignment pattern
-        2. Justification for macro variable selections (Stage 2A)
-        3. Explanation of device selections and their alignment functions (Stage 2B)
-        4. Summary of how devices mediate the macro alignment
-
-        Be clear and pedagogical - this document explains WHY these tags were chosen."""
-    
-            result = self._call_claude(prompt, "You are documenting literary analysis decisions.")
-    
-            with open(output_path, 'w') as f:
-                f.write(result)
-    
-            print(f"âœ“ Reasoning document saved: {output_path}")
 
         if not self.save_reasoning_document():
             print("\nÃ¢Å’ Pipeline failed at reasoning document")

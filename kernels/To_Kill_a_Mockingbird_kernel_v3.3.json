@@ -1,0 +1,512 @@
+{
+  "metadata": {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "edition": "1960",
+    "creation_date": "2025-11-21T16:07:12.582418",
+    "protocol_version": "3.3"
+  },
+  "extracts": {
+    "exposition": {
+      "chapter_range": "1-3",
+      "primary_chapter": 1,
+      "text": "When he was nearly thirteen, my brother Jem got his arm badly broken at the elbow. When it healed, and Jem's fears of never being able to play football were assuaged, he was seldom self-conscious about his injury. His left arm was somewhat shorter than his right; when he stood or walked, the back of his hand was at right angles to his body, his thumb parallel to his thigh. He couldn't have cared less, so long as he could pass and punt. When enough years had gone by to enable us to look back on them, we sometimes discussed the events leading to his accident. I maintain that the Ewells started it all, but Jem, who was four years my senior, said it started long before that. He said it began the summer Dill came to us, when Dill first gave us the idea of making Boo Radley come out. We lived on the main residential street in town\u2014Atticus, Jem and I, plus Calpurnia our cook. Jem and I found our father satisfactory: he played with us, read to us, and treated us with courteous detachment. That was the summer Dill came to us.",
+      "rationale": "Establishes narrator Scout looking back retrospectively, introduces main characters (Scout, Jem, Atticus, Calpurnia, Dill), sets up central mysteries (Jem's injury, Boo Radley), and provides essential background about the Finch family in Maycomb",
+      "word_count": 234
+    },
+    "rising_action": {
+      "chapter_range": "4-14",
+      "primary_chapter": 8,
+      "text": "The remainder of my schooldays were no more auspicious than the first. Indeed, they were an endless Project that slowly evolved into a Unit, in which miles of construction paper and wax crayon were expended by the State of Alabama in its well-meaning but fruitless efforts to teach me Group Dynamics. As the year passed, released from school thirty minutes before Jem, who had to stay until three o'clock, I ran by the Radley Place as fast as I could, not stopping until I reached the safety of our front porch. One afternoon as I raced by, something caught my eye and caught it in such a way that I took a deep breath, a long look around, and went back. Two live oaks stood at the edge of the Radley lot; their roots reached out into the side-road and made it bumpy. Something about one of the trees attracted my attention. Some tinfoil was sticking in a knot-hole just above my eye level, winking at me in the afternoon sun. I stood on tiptoe, hastily looked around once more, reached into the hole, and withdrew two pieces of chewing gum minus their outer wrappers.",
+      "rationale": "Develops the children's fascination with Boo Radley through the discovery of gifts in the tree hole, building tension and mystery while establishing the pattern of contact between Boo and the children that will become crucial to the story's climax",
+      "word_count": 237
+    },
+    "climax": {
+      "chapter_range": "15",
+      "primary_chapter": 15,
+      "text": "In ones and twos, men got out of the cars. Shadows became substance as light revealed solid shapes moving toward the jail door. Atticus remained where he was. The men hid him from view. 'He in there, Mr. Finch?' a man said. 'He is,' we heard Atticus answer, 'and he's asleep. Don't wake him up.' In obedience to my father, there followed what I later realized was a sickeningly comic aspect of an unfunny situation: the men talked in near-whispers. 'You know what we want,' another man said. 'Get aside from the door, Mr. Finch.' 'You can turn around and go home again, Walter,' Atticus said pleasantly. This was too good to miss. I broke away from Jem and ran as fast as I could to Atticus. 'H-ey, Atticus!' I thought he would have a fine surprise, but his face killed my joy. A flash of plain fear was going out of his eyes, but returned when Dill and Jem wriggled into the light. 'Hey, Mr. Cunningham.' The man did not hear me, it seemed. 'Hey, Mr. Cunningham. How's your entailment gettin' along?' Mr. Walter Cunningham's legal affairs were well known to me; Atticus had once described them at length.",
+      "rationale": "The confrontation at the jail represents the story's climactic moment where Scout's innocent intervention disperses the lynch mob, marking the peak of racial tension and the moment when Scout's understanding of good and evil crystallizes through direct action",
+      "word_count": 263
+    },
+    "falling_action": {
+      "chapter_range": "16-25",
+      "primary_chapter": 20,
+      "text": "The state has not produced one iota of medical evidence that the crime Tom Robinson is charged with ever took place. It has relied instead upon the testimony of two witnesses whose evidence has not only been called into serious question on cross-examination, but has been flatly contradicted by the defendant. The defendant is not guilty, but somebody in this courtroom is. I have nothing but pity in my heart for the chief witness for the state, but my pity does not extend so far as to her putting a man's life at stake, which she has done in an effort to get rid of her own guilt. I say guilt, gentlemen, because it was guilt that motivated her. She has committed no crime, she has merely broken a rigid and time-honored code of our society, a code so severe that whoever breaks it is hounded from our midst as unfit to live with. She is the victim of cruel poverty and ignorance, but I cannot pity her: she is white. She knew full well the enormity of her offense, but because her desires were stronger than the code she was breaking, she persisted in breaking it.",
+      "rationale": "Atticus's closing argument in Tom Robinson's trial represents the moral center of the novel's falling action, where the central conflict over racial injustice reaches its legal resolution, though not its moral one, setting up the consequences that will follow",
+      "word_count": 209
+    },
+    "resolution": {
+      "chapter_range": "26-31",
+      "primary_chapter": 28,
+      "text": "We turned off the road and entered the schoolyard. It was pitch black. 'How do you know where we're at, Jem?' I asked, when we had gone a few steps. 'I can tell we're under the big oak because we're passin' through a cool spot. Careful now, and don't fall again.' Someone leaped at us. 'God amighty!' Jem yelled. 'Run, Scout! Run! Run!' Jem screamed. I took one giant step and found myself reeling: my arms useless, in the dark, I could not keep my balance. 'Jem, Jem, help me, Jem!' Something crushed the chicken wire around me. From somewhere near by came scuffling, kicking sounds, sounds of shoes and flesh scraping dirt and roots. Someone rolled against me and I felt Jem. More scuffling, and there came a dull crunching sound and Jem screamed. Suddenly he was jerked backwards and flung on the ground, almost carrying me with him. The man was walking heavily and unsteadily toward the road. He was carrying Jem. By the time I reached the corner the man was crossing our front yard. Light from our front door framed Atticus for an instant; he ran down the steps, and together, he and the man took Jem inside.",
+      "rationale": "Bob Ewell's attack on the children and Boo Radley's rescue represents the story's resolution, bringing together all major themes and character arcs while resolving the mysteries established in the exposition, particularly Scout's relationship with Boo Radley",
+      "word_count": 262
+    }
+  },
+  "macro_variables": {
+    "narrative": {
+      "voice": {
+        "pov": "FP",
+        "pov_description": "First-person narration by Scout Finch, who tells her own story using 'I'",
+        "focalization": "INT",
+        "focalization_description": "Internal focalization limited to Scout's perspective and understanding",
+        "reliability": "REL",
+        "temporal_distance": "RETRO",
+        "mode_dominance": "BAL",
+        "character_revelation": "MIX"
+      },
+      "structure": {
+        "plot_architecture": "ARIST",
+        "plot_architecture_description": "Classic Aristotelian structure with clear exposition, rising action, climax (trial/mob scene), falling action (trial aftermath), and resolution (Boo Radley rescue)",
+        "chronology": "LIN",
+        "causation": "TIGHT",
+        "pacing_dominance": "SCENE"
+      }
+    },
+    "rhetoric": {
+      "alignment_type": "REINFORCING",
+      "alignment_type_description": "Narrative and rhetorical elements work together to reinforce themes of moral growth, prejudice, and understanding",
+      "dominant_mechanism": "RETROSPECTIVE_WISDOM",
+      "secondary_mechanism": "DRAMATIC_IRONY",
+      "alignment_strength": "STRONG"
+    },
+    "device_mediation": {
+      "score": 0.85,
+      "description": "Strong device mediation through symbolism (mockingbird), dramatic irony (Scout's naive perspective), and structural parallelism between Boo Radley and Tom Robinson storylines that reinforce thematic unity"
+    }
+  },
+  "micro_devices": [
+    {
+      "name": "First-Person Narration",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Story told by a character using 'I' perspective",
+      "student_facing_type": "Narrative Voice Device",
+      "pedagogical_function": "Creates intimacy and personal connection with the narrator's experience",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Scout introduces story",
+          "chapter": 1,
+          "page_range": "3-4",
+          "quote_snippet": "When he was nearly thirteen, my brother Jem got his arm badly broken"
+        },
+        {
+          "freytag_section": "climax",
+          "scene": "Scout at jail confrontation",
+          "chapter": 15,
+          "page_range": "204",
+          "quote_snippet": "I broke away from Jem and ran as fast as I could to Atticus"
+        }
+      ]
+    },
+    {
+      "name": "Symbolism",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Objects or actions that represent deeper meanings beyond their literal sense",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Connects concrete story elements to abstract themes and ideas",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Gifts in tree knot-hole",
+          "chapter": 4,
+          "page_range": "44",
+          "quote_snippet": "Some tinfoil was sticking in a knot-hole just above my eye level"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Attack in darkness",
+          "chapter": 28,
+          "page_range": "351",
+          "quote_snippet": "It was pitch black"
+        }
+      ]
+    },
+    {
+      "name": "Dramatic Irony",
+      "layer": "B",
+      "function": "Te",
+      "engagement": "V",
+      "classification": "B|Te|V",
+      "definition": "When readers know information that characters do not",
+      "student_facing_type": "Irony Device",
+      "pedagogical_function": "Creates tension and allows readers to understand situations more fully than characters",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Scout recognizes Cunningham",
+          "chapter": 15,
+          "page_range": "205",
+          "quote_snippet": "Hey, Mr. Cunningham. How's your entailment gettin' along?"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Atticus's closing argument",
+          "chapter": 20,
+          "page_range": "273",
+          "quote_snippet": "somebody in this courtroom is"
+        }
+      ]
+    },
+    {
+      "name": "Foreshadowing",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "B|Re|V",
+      "definition": "Hints or clues about what will happen later in the story",
+      "student_facing_type": "Narrative Structure Device",
+      "pedagogical_function": "Builds suspense and creates connections between early and later events",
+      "position_code": "CLUST-BEG",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Reference to Jem's broken arm",
+          "chapter": 1,
+          "page_range": "3",
+          "quote_snippet": "When he was nearly thirteen, my brother Jem got his arm badly broken"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Blame discussion",
+          "chapter": 1,
+          "page_range": "3",
+          "quote_snippet": "I maintain that the Ewells started it all"
+        }
+      ]
+    },
+    {
+      "name": "Metaphor",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Direct comparison between two unlike things without using 'like' or 'as'",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates vivid images and helps readers understand abstract concepts",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "School description",
+          "chapter": 4,
+          "page_range": "42",
+          "quote_snippet": "they were an endless Project that slowly evolved into a Unit"
+        },
+        {
+          "freytag_section": "climax",
+          "scene": "Men approaching jail",
+          "chapter": 15,
+          "page_range": "203",
+          "quote_snippet": "Shadows became substance as light revealed solid shapes"
+        }
+      ]
+    },
+    {
+      "name": "Imagery",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "B|Re|T",
+      "definition": "Vivid descriptive language that appeals to the senses",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates clear mental pictures and emotional responses in readers",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Tinfoil in tree",
+          "chapter": 4,
+          "page_range": "44",
+          "quote_snippet": "winking at me in the afternoon sun"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Night attack scene",
+          "chapter": 28,
+          "page_range": "351",
+          "quote_snippet": "sounds of shoes and flesh scraping dirt and roots"
+        }
+      ]
+    },
+    {
+      "name": "Direct Characterization",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Author directly tells readers about a character's traits",
+      "student_facing_type": "Characterization Device",
+      "pedagogical_function": "Provides clear information about characters to help readers understand them",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Description of Atticus",
+          "chapter": 1,
+          "page_range": "6",
+          "quote_snippet": "he played with us, read to us, and treated us with courteous detachment"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Mayella's description",
+          "chapter": 20,
+          "page_range": "272",
+          "quote_snippet": "She is the victim of cruel poverty and ignorance"
+        }
+      ]
+    },
+    {
+      "name": "Alliteration",
+      "layer": "R",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "R|Re|V",
+      "definition": "Repetition of initial consonant sounds in nearby words",
+      "student_facing_type": "Sound Device",
+      "pedagogical_function": "Creates rhythm and emphasis to make language more memorable",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Fear description",
+          "chapter": 15,
+          "page_range": "204",
+          "quote_snippet": "A flash of plain fear"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Court testimony description",
+          "chapter": 20,
+          "page_range": "271",
+          "quote_snippet": "flatly contradicted"
+        }
+      ]
+    },
+    {
+      "name": "Juxtaposition",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Placing contrasting elements side by side for comparison",
+      "student_facing_type": "Contrast Device",
+      "pedagogical_function": "Highlights differences to emphasize themes and create meaning",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Whispers vs. serious situation",
+          "chapter": 15,
+          "page_range": "203",
+          "quote_snippet": "sickeningly comic aspect of an unfunny situation"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Pity vs. justice",
+          "chapter": 20,
+          "page_range": "272",
+          "quote_snippet": "I have nothing but pity in my heart for the chief witness"
+        }
+      ]
+    },
+    {
+      "name": "Scene",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Detailed, moment-by-moment narration that feels like real time",
+      "student_facing_type": "Pacing Device",
+      "pedagogical_function": "Slows down important moments to create intensity and focus",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Jail confrontation",
+          "chapter": 15,
+          "page_range": "203-205",
+          "quote_snippet": "In ones and twos, men got out of the cars"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Attack sequence",
+          "chapter": 28,
+          "page_range": "351-352",
+          "quote_snippet": "Someone leaped at us"
+        }
+      ]
+    },
+    {
+      "name": "Direct Dialogue",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "T",
+      "classification": "N|Re|T",
+      "definition": "Characters speaking directly in quotation marks",
+      "student_facing_type": "Dialogue Device",
+      "pedagogical_function": "Reveals character personality and advances plot through conversation",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Scout addresses Cunningham",
+          "chapter": 15,
+          "page_range": "204-205",
+          "quote_snippet": "Hey, Mr. Cunningham. How's your entailment gettin' along?"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Jem's warning",
+          "chapter": 28,
+          "page_range": "351",
+          "quote_snippet": "Run, Scout! Run! Run!"
+        }
+      ]
+    },
+    {
+      "name": "Repetition",
+      "layer": "R",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "R|Re|V",
+      "definition": "Repeating words or phrases for emphasis",
+      "student_facing_type": "Sound Device",
+      "pedagogical_function": "Creates emphasis and helps important ideas stick in readers' minds",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Scout's greeting attempts",
+          "chapter": 15,
+          "page_range": "204-205",
+          "quote_snippet": "Hey, Mr. Cunningham... Hey, Mr. Cunningham"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Jem's urgent command",
+          "chapter": 28,
+          "page_range": "351",
+          "quote_snippet": "Run, Scout! Run! Run!"
+        }
+      ]
+    },
+    {
+      "name": "Personification",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "B|Me|V",
+      "definition": "Giving human qualities to non-human things",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Makes abstract or inanimate things relatable and vivid",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Tinfoil in tree",
+          "chapter": 4,
+          "page_range": "44",
+          "quote_snippet": "winking at me in the afternoon sun"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Tree roots description",
+          "chapter": 1,
+          "page_range": "44",
+          "quote_snippet": "their roots reached out into the side-road"
+        }
+      ]
+    },
+    {
+      "name": "Situational Irony",
+      "layer": "B",
+      "function": "Te",
+      "engagement": "V",
+      "classification": "B|Te|V",
+      "definition": "When what happens is the opposite of what's expected",
+      "student_facing_type": "Irony Device",
+      "pedagogical_function": "Surprises readers and highlights life's unpredictability",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "climax",
+          "scene": "Child stopping mob",
+          "chapter": 15,
+          "page_range": "205",
+          "quote_snippet": "Hey, Mr. Cunningham. How's your entailment gettin' along?"
+        },
+        {
+          "freytag_section": "falling_action",
+          "scene": "Innocent accused",
+          "chapter": 20,
+          "page_range": "271",
+          "quote_snippet": "The defendant is not guilty, but somebody in this courtroom is"
+        }
+      ]
+    },
+    {
+      "name": "Flashback",
+      "layer": "N",
+      "function": "Me",
+      "engagement": "V",
+      "classification": "N|Me|V",
+      "definition": "Interruption to show events from the past",
+      "student_facing_type": "Time Device",
+      "pedagogical_function": "Provides background information to help readers understand current events",
+      "position_code": "FRAME",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Adult Scout remembering",
+          "chapter": 1,
+          "page_range": "3",
+          "quote_snippet": "When enough years had gone by to enable us to look back on them"
+        },
+        {
+          "freytag_section": "climax",
+          "scene": "Scout recalls Cunningham knowledge",
+          "chapter": 15,
+          "page_range": "205",
+          "quote_snippet": "Atticus had once described them at length"
+        }
+      ]
+    },
+    {
+      "name": "Motif",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "V",
+      "classification": "B|Re|V",
+      "definition": "Recurring element that builds theme throughout the story",
+      "student_facing_type": "Symbolic Device",
+      "pedagogical_function": "Reinforces important themes through repetition and variation",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Jem's injury introduction",
+          "chapter": 1,
+          "page_range": "3",
+          "quote_snippet": "my brother Jem got his arm badly broken"
+        },
+        {
+          "freytag_section": "resolution",
+          "scene": "Violence and injury",
+          "chapter": 28,
+          "page_range": "352",
+          "quote_snippet": "there came a dull crunching sound and Jem screamed"
+        }
+      ]
+    }
+  ]
+}

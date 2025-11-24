@@ -3,7 +3,7 @@
 
 **Text:** The Giver by Lois Lowry  
 **Version:** 5.0 (Macro-Micro Integration)  
-**Date:** November 19, 2025  
+**Date:** November 21, 2025  
 **Structure:** Macro alignment elements taught through executing micro devices
 
 ---
@@ -12,19 +12,19 @@
 
 ### Pedagogical Approach
 
-This curriculum teaches **macro alignment elements** (Exposition, Literary Devices, Structure, Narrative Voice, Rhetorical Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
+This curriculum teaches **macro alignment elements** (Exposition, Structure, Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
 
-**Core Principle:** Literary concepts are not abstract ideas—they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
+**Core Principle:** Literary concepts like "exposition" are not abstract ideasâ€”they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
 
 ### 5-Week Progression
 
 | Week | Macro Focus | Teaching Approach | Devices | Scaffolding |
 |------|-------------|-------------------|---------|-------------|
-| 1 | Exposition | Here are devices. Let's identify them. | Direct Characterization, Direct Dialogue, Scene | High - Teacher models everything |
-| 2 | Literary Devices | Literary devices create meaning through figurative language. | Metaphor, Symbolism, Imagery, +2 more | Medium-High - Co-construction with students |
-| 3 | Structure | Structure UNFOLDS through devices that create pacing. | Foreshadowing, Climactic Structure, Motif, +1 more | Medium - Students lead with support |
-| 4 | Narrative Voice | Narrative voice OPERATES through perspective devices. | Third-Person Limited, Interior Monologue | Medium-Low - Independent work with feedback |
-| 5 | Rhetorical Voice | Rhetorical voice CONTROLS interpretation through irony and persuasion. | Dramatic Irony, Euphemism, Juxtaposition, +3 more | Low - Independent application |
+| 1 | Exposition | How do devices establish characters and setting in exposition? | Direct Dialogue, Scene, Indirect Characterization | High - Teacher models everything |
+| 2 | Literary Devices | How do devices build tension in rising action? | Symbolism, Metaphor, Imagery, +2 more | Medium-High - Co-construction with students |
+| 3 | Structure | How do devices create the story's climactic turning point? | Foreshadowing, Climactic Structure | Medium - Students lead with support |
+| 4 | Narrative Voice | How do devices manage perspective in falling action? | Third-Person Limited Narration, Internal Monologue | Medium-Low - Independent work with feedback |
+| 5 | Rhetorical Voice | How do devices bring rhetorical closure in resolution? | Dramatic Irony, Repetition, Juxtaposition | Low - Independent synthesis and analysis |
 
 ---
 
@@ -42,13 +42,13 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 5. Begin simple TVODE construction
 
 **Devices (3):**
-- **Direct Characterization**: Week 1: Exposition Elements
-- **Direct Dialogue**: Week 1: Exposition Elements
-- **Scene**: Week 1: Exposition Elements
+- **Direct Dialogue**: 
+- **Scene**: 
+- **Indirect Characterization**: 
 
 **Macro Variables:**
-- characterization_method: DRAM
-- mode_dominance: BAL
+- characterization_method: 
+- mode_dominance: 
 - mode_description: 
 
 ---
@@ -61,17 +61,17 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 
 **Teaching Sequence:**
 1. Review Week 1 foundation devices
-2. Introduce macro concept: Literary Devices
-3. Show how figurative language creates meaning
-4. Analyze device function in text
-5. Practice device identification TVODE
+2. Introduce macro concept: Rising Action
+3. Show how devices BUILD rising action and tension
+4. Analyze device-macro connection in text
+5. Practice macro-micro TVODE construction
 
 **Devices (5):**
-- **Metaphor**: Week 2: Literary Devices
-- **Symbolism**: Week 2: Literary Devices
-- **Imagery**: Week 2: Literary Devices
-- **Personification**: Week 2: Literary Devices
-- **Alliteration**: Week 2: Literary Devices
+- **Symbolism**: 
+- **Metaphor**: 
+- **Imagery**: 
+- **Personification**: 
+- **Alliteration**: 
 
 ---
 
@@ -82,23 +82,21 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 **Scaffolding:** Medium - Students lead with support
 
 **Teaching Sequence:**
-1. Review exposition and literary devices
-2. Introduce macro concept: Structure
-3. Analyze how devices create plot structure
+1. Review exposition and rising action concepts
+2. Introduce macro concept: Structure and Climax
+3. Analyze how devices create plot structure and turning points
 4. Trace structural patterns across chapters
 5. Build complex structural TVODE
 
-**Devices (4):**
-- **Foreshadowing**: Week 3: Structural Devices
-- **Climactic Structure**: Week 3: Structural Devices
-- **Motif**: Week 3: Structural Devices
-- **Circular Structure**: Week 3: Structural Devices
+**Devices (2):**
+- **Foreshadowing**: 
+- **Climactic Structure**: 
 
 **Macro Variables:**
-- plot_architecture: ARIST
-- chronology: LIN
-- causation: TIGHT
-- pacing_dominance: SCENE
+- plot_architecture: 
+- chronology: 
+- causation: 
+- pacing_dominance: 
 
 ---
 
@@ -109,21 +107,21 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 **Scaffolding:** Medium-Low - Independent work with feedback
 
 **Teaching Sequence:**
-1. Synthesize previous concepts
-2. Introduce macro concept: Narrative Voice
-3. Analyze perspective and consciousness through devices
-4. Compare voice techniques across texts
-5. Create voice analysis TVODE
+1. Review structural concepts from Week 3
+2. Introduce macro concept: Voice and Falling Action
+3. Analyze perspective and distance through devices
+4. Compare macro-micro relationships across weeks
+5. Create voice-focused analysis TVODE
 
 **Devices (2):**
-- **Third-Person Limited**: Week 4: Narrative Voice
-- **Interior Monologue**: Week 4: Narrative Voice
+- **Third-Person Limited Narration**: 
+- **Internal Monologue**: 
 
 **Macro Variables:**
-- pov: TPL
-- focalization: INT
-- reliability: REL
-- temporal_distance: IMM
+- pov: 
+- focalization: 
+- reliability: 
+- temporal_distance: 
 
 ---
 
@@ -131,22 +129,19 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 
 **Macro Element:** Irony, persuasion, and interpretive control
 **Teaching Goal:** Understanding irony and persuasive techniques
-**Scaffolding:** Low - Independent application
+**Scaffolding:** Low - Independent synthesis and analysis
 
 **Teaching Sequence:**
-1. Synthesize all previous concepts
-2. Introduce macro concept: Rhetorical Voice
-3. Analyze irony and persuasive techniques
-4. Compare rhetorical strategies
-5. Create independent rhetorical analysis TVODE
+1. Synthesize all previous concepts (Exposition, Rising Action, Structure, Voice)
+2. Introduce macro concept: Resolution
+3. Analyze how all devices work together to create resolution
+4. Demonstrate understanding of complete narrative arc
+5. Create independent comprehensive analysis TVODE
 
-**Devices (6):**
-- **Dramatic Irony**: Week 5: Rhetorical Voice
-- **Euphemism**: Week 5: Rhetorical Voice
-- **Juxtaposition**: Week 5: Rhetorical Voice
-- **Repetition**: Week 5: Rhetorical Voice
-- **Situational Irony**: Week 5: Rhetorical Voice
-- **Understatement**: Week 5: Rhetorical Voice
+**Devices (3):**
+- **Dramatic Irony**: 
+- **Repetition**: 
+- **Juxtaposition**: 
 
 ---
 
@@ -157,17 +152,16 @@ This curriculum teaches **macro alignment elements** (Exposition, Literary Devic
 - **Week 2:** Medium-High - Co-construction with students
 - **Week 3:** Medium - Students lead with support
 - **Week 4:** Medium-Low - Independent work with feedback
-- **Week 5:** Low - Independent application
+- **Week 5:** Low - Independent synthesis and analysis
 
 ### Skill Building
-1. Device recognition (Week 1) → 2. Figurative analysis (Week 2) → 3. Structural analysis (Week 3) → 4. Voice perspective (Week 4) → 5. Rhetorical synthesis (Week 5)
+1. Device recognition (Week 1) â†’ 2. Macro-micro connection (Week 2) â†’ 3. Structural analysis (Week 3) â†’ 4. Voice and perspective (Week 4) â†’ 5. Comprehensive synthesis (Week 5)
 
 ### TVODE Evolution
 - Week 1: Simple device TVODE
-- Week 2: Figurative device TVODE
+- Week 2: Macro-micro connection TVODE
 - Week 3: Structural function TVODE
-- Week 4: Voice analysis TVODE
-- Week 5: Rhetorical strategy TVODE
+- Week 4: Complex voice TVODE
 
 ---
 

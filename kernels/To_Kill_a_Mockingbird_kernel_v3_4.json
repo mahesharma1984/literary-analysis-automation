@@ -1,0 +1,604 @@
+{
+  "metadata": {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "edition": "1960",
+    "creation_date": "2025-11-18T15:17:19.749387",
+    "protocol_version": "3.3",
+    "kernel_version": "3.4",
+    "chapter_aware": true,
+    "upgrade_date": "2025-11-21T00:53:08.502258",
+    "upgrade_method": "manual_v3_3_to_v3_4"
+  },
+  "extracts": {
+    "exposition": {
+      "text": "Maycomb was an old town, but it was a tired old town when I first knew it. In rainy weather the streets turned to red slop; grass grew on the sidewalks, the courthouse sagged in the square. Somehow, it was hotter then: a black dog suffered on a summer's day; bony mules hitched to Hoover carts flicked flies in the sweltering shade of the live oaks on the square. Men's stiff collars wilted by nine in the morning. Ladies bathed before noon, after their three-o'clock naps, and by nightfall were like soft teacakes with frostings of sweat and sweet talcum. People moved slowly then. They ambled across the square, shuffled in and out of the stores around it, took their time about everything. A day was twenty-four hours long but seemed longer. There was no hurry, for there was nowhere to go, nothing to buy and no money to buy it with, nothing to see outside the boundaries of Maycomb County. But it was a time of vague optimism for some of the people: Maycomb County had recently been told that it had nothing to fear but fear itself. We lived on the main residential street in town\u2014Atticus, Jem and I, plus Calpurnia our cook. Jem and I found our father satisfactory: he played with us, read to us, and treated us with courteous detachment. Calpurnia was something else again. She was all angles and bones; she was nearsighted; she squinted; her hand was wide as a bed slat and twice as hard. She was always ordering me out of the kitchen, asking me why I couldn't behave as well as Jem when she knew he was older, and calling me home when I wasn't ready to come. Our battles were epic and one-sided. Calpurnia always won, mainly because Atticus always took her side. She had been with us ever since Jem was born, and I had felt her tyrannical presence as long as I could remember. Our mother died when I was two, so I never felt her absence. She was a Graham from Montgomery; Atticus met her when he was first elected to the state legislature. He was middle-aged then, she was fifteen years his junior. Jem was the product of their first year of marriage; four years later I was born, and two years later our mother died from a sudden heart attack. They said it ran in her family. I did not miss her, but I think Jem did. He remembered her clearly, and sometimes in the middle of a game he would sigh at length, then go off and play by himself behind the car-house. When he was like that, I knew better than to bother him. When I was almost six and Jem was nearly ten, our summertime boundaries (within calling distance of Calpurnia) were Mrs. Henry Lafayette Dubose's house two doors to the north of us, and the Radley Place three doors to the south. We were never tempted to break them. The Radley Place was inhabited by an unknown entity the mere description of whom was enough to make us behave for days on end; Mrs. Dubose was plain hell. That was the summer Dill came to us. The Radley Place fascinated Dill. In spite of our warnings and explanations it drew him as the moon draws water, but drew him no nearer than the light-pole on the corner, a safe distance from the Radley gate. There he would stand, his arm around the fat pole, staring and wondering. The Radley Place jutted into a sharp curve beyond our house. Walking south, one faced its porch; the sidewalk turned and ran beside the lot. The house was low, was once white with a deep front porch and green shutters, but had long ago darkened to the color of the slate-gray yard around it. Rain-rotted shingles drooped over the eaves of the veranda; oak trees kept the sun away. The remains of a picket fence drunkenly guarded the front yard\u2014a \"swept\" yard that was never swept\u2014where johnson grass and rabbit-tobacco grew in abundance. Inside the house lived a malevolent phantom. People said he existed, but Jem and I had never seen him. People said he went out at night when the moon was down, and peeped in windows. When people's azaleas froze in a cold snap, it was because he had breathed on them. Any stealthy small crimes committed in Maycomb were his work.",
+      "rationale": "This passage represents the perfect exposition moment because it establishes all the key elements Scout needs to introduce: the setting of Depression-era Maycomb with its languid, poverty-stricken atmosphere; the Finch family structure including the absent mother and Atticus's character; Calpurnia's role as surrogate mother figure; and most crucially, the introduction of the Radley Place and Boo Radley as the mysterious central figure who will drive much of the plot. The passage moves from the general (Maycomb as a town) to the specific (the Finch household) to the mythical (Boo Radley), creating the perfect foundation for all the conflicts and themes that will follow. It establishes the children's world, their boundaries, and the mystery that will obsess them throughout Part One.",
+      "word_count": 645
+    },
+    "rising_action": {
+      "text": "The shadow stopped about a foot beyond Jem. Its arm came out from its side, dropped, and was still. Then it turned and moved back across Jem, walked along the porch and off the side of the house, returning as it had come. Jem leaped off the porch and galloped toward us. He flung open the gate, danced Dill and me through, and shooed us between two rows of swishing collards. Halfway through the collards I tripped; as I tripped the roar of a shotgun shattered the neighborhood. Dill and Jem dived beside me. Jem's breath came in sobs: \"Fence by the schoolyard!\u2014hurry, Scout!\" Jem held the bottom wire; Dill and I rolled through and were halfway to the shelter of the schoolyard's solitary oak when we sensed that Jem was not with us. We ran back and found him struggling in the fence, kicking his pants off to get loose. He ran to the oak tree in his shorts. Safely behind it, we gave way to numbness, but Jem's mind was racing: \"We gotta get home, they'll miss us.\" We ran across the schoolyard, crawled under the fence to Deer's Pasture behind our house, climbed our back fence and were at the back steps before Jem would let us pause to rest. Respiration normal, the three of us strolled as casually as we could to the front yard. We looked down the street and saw a circle of neighbors at the Radley front gate. \"We better go down there,\" said Jem. \"They'll think it's funny if we don't show up.\" Mr. Nathan Radley was standing inside his gate, a shotgun broken across his arm. Atticus was standing beside Miss Maudie and Miss Stephanie Crawford. Miss Rachel and Mr. Avery were near by. None of them saw us come up. We eased in beside Miss Maudie, who looked around. \"Where were you all, didn't you hear the commotion?\" \"What happened?\" asked Jem. \"Mr. Radley shot at a Negro in his collard patch.\" \"Oh. Did he hit him?\" \"No,\" said Miss Stephanie. \"Shot in the air. Scared him pale, though. Says if anybody sees a white nigger around, that's the one. Says he's got the other barrel waitin' for the next sound he hears in that patch, an' next time he won't aim high, be it dog, nigger, or\u2014Jem Finch!\" \"Ma'am?\" asked Jem. Atticus spoke. \"Where're your pants, son?\" \"Pants, sir?\" \"Pants.\" It was no use. In his shorts before God and everybody. I sighed. \"Ah\u2014Mr. Finch?\" In the glare from the streetlight, I could see Dill hatching one: his eyes widened, his fat cherub face grew rounder. \"What is it, Dill?\" asked Atticus. \"Ah\u2014I won 'em from him,\" he said vaguely. \"Won them? How?\" Dill's hand sought the back of his head. He brought it forward and across his forehead. \"We were playin' strip poker up yonder by the fishpool,\" he said. Jem and I relaxed. The neighbors seemed satisfied: they all stiffened. But what was strip poker? We had no chance to find out: Miss Rachel went off like the town fire siren: \"Do-o-o Jee-sus, Dill Harris! Gamblin' by my fishpool? I'll strip-poker you, sir!\" Atticus saved Dill from immediate dismemberment. \"Just a minute, Miss Rachel,\" he said. \"I've never heard of 'em doing that before. Were you all playing cards?\" Jem fielded Dill's fly with his eyes shut: \"No sir, just with matches.\" I admired my brother. Matches were dangerous, but cards were fatal. \"Jem, Scout,\" said Atticus, \"I don't want to hear of poker in any form again. Go by Dill's and get your pants, Jem. Settle it yourselves.\" \"Don't worry, Dill,\" said Jem, as we trotted up the sidewalk, \"she ain't gonna get you. He'll talk her out of it. That was fast thinkin', son. Listen . . . you hear?\" We stopped, and heard Atticus's voice: \". . . not serious . . . they all go through it, Miss Rachel. . . .\" Dill was comforted, but Jem and I weren't. There was the problem of Jem showing up some pants in the morning.",
+      "rationale": "This passage represents the climactic moment of the children's escalating obsession with Boo Radley, marking a turning point in the rising action. The mysterious shadow encounter, the shotgun blast, and Jem's lost pants create maximum tension and danger. This incident directly leads to Jem's dangerous midnight return for his pants and establishes the heightened stakes that will carry through to the trial. It perfectly captures the children's reckless pursuit of Boo while introducing the adult world's increasing scrutiny, embodied by Atticus's questioning and the neighborhood's attention.",
+      "word_count": 687
+    },
+    "climax": {
+      "text": "\"Come on,\" whispered Jem. We streaked across the square, across the street, until we were in the shelter of the Jitney Jungle door. Jem peeked up the sidewalk. \"We can get closer,\" he said. We ran to Tyndal's Hardware door \u2014near enough, at the same time discreet. In ones and twos, men got out of the cars. Shadows became substance as light revealed solid shapes moving toward the jail door. Atticus remained where he was. The men hid him from view.\n\n\"He in there, Mr. Finch?\" a man said.\n\n\"He is,\" we heard Atticus answer, \"and he's asleep. Don't wake him up.\"\n\nIn obedience to my father, there followed what I later realized was a sickeningly comic aspect of an unfunny situation: the men talked in near-whispers.\n\n\"You know what we want,\" another man said. \"Get aside from the door, Mr. Finch.\"\n\n\"You can turn around and go home again, Walter,\" Atticus said pleasantly. \"Heck Tate's around somewhere.\"\n\n\"The hell he is,\" said another man. \"Heck's bunch's so deep in the woods they won't get out till mornin'.\"\n\n\"Indeed? Why so?\"\n\n\"Called 'em off on a snipe hunt,\" was the succinct answer. \"Didn't you think a'that, Mr. Finch?\"\n\n\"Thought about it, but didn't believe it. Well then,\" my father's voice was still the same, \"that changes things, doesn't it?\"\n\n\"It do,\" another deep voice said. Its owner was a shadow.\n\n\"Do you really think so?\" This was the second time I heard Atticus ask that question in two days, and it meant somebody's man would get jumped. This was too good to miss. I broke away from Jem and ran as fast as I could to Atticus. Jem shrieked and tried to catch me, but I had a lead on him and Dill. I pushed my way through dark smelly bodies and burst into the circle of light.\n\n\"H-ey, Atticus!\"\n\nI thought he would have a fine surprise, but his face killed my joy. A flash of plain fear was going out of his eyes, but returned when Dill and Jem wriggled into the light. There was a smell of stale whiskey and pigpen about, and when I glanced around I discovered that these men were strangers. They were not the people I saw last night. Hot embarrassment shot through me: I had leaped triumphantly into a ring of people I had never seen before.\n\nAtticus got up from his chair, but he was moving slowly, like an old man. He put the newspaper down very carefully, adjusting its creases with lingering fingers. They were trembling a little.\n\n\"Go home, Jem,\" he said. \"Take Scout and Dill home.\"\n\nWe were accustomed to prompt, if not always cheerful acquiescence to Atticus's instructions, but from the way he stood Jem was not thinking of budging.\n\n\"Go home, I said.\"\n\nJem shook his head. As Atticus's fists went to his hips, so did Jem's, and as they faced each other I could see little resemblance between them: Jem's soft brown hair and eyes, his oval face and snug-fitting ears were our mother's contrasting oddly with Atticus's graying black hair and square-cut features, but they were somehow alike. Mutual defiance made them alike.\n\n\"Son, I said go home.\"\n\nJem shook his head.\n\n\"I'll send him home,\" a burly man said, and grabbed Jem roughly by the collar. He yanked Jem nearly off his feet.\n\n\"Don't you touch him!\" I kicked the man swiftly. Barefooted, I was surprised to see him fall back in real pain. I intended to kick his shin, but aimed too high.\n\n\"That'll do, Scout.\" Atticus put his hand on my shoulder. \"Don't kick folks. No\u2014\" he said, as I was pleading justification.\n\n\"Ain't nobody gonna do Jem that way,\" I said.\n\n\"All right, Mr. Finch, get 'em outa here,\" someone growled. \"You got fifteen seconds to get 'em outa here.\"\n\nIn the midst of this strange assembly, Atticus stood trying to make Jem mind him. \"I ain't going,\" was his steady answer to Atticus's threats, requests, and finally, \"Please Jem, take them home.\"\n\nI was getting a bit tired of that, but felt Jem had his own reasons for doing as he did, in view of his prospects once Atticus did get him home. I looked around the crowd. It was a summer's night, but the men were dressed, most of them, in overalls and denim shirts buttoned up to the collars. I thought they must be cold-natured, as their sleeves were unrolled and buttoned at the cuffs. Some wore hats pulled firmly down over their ears. They were sullen-looking, sleepy-eyed men who seemed unused to late hours. I sought once more for a familiar face, and at the center of the semi-circle I found one.\n\n\"Hey, Mr. Cunningham.\"",
+      "rationale": "This passage represents the true climax of the novel - the confrontation at the jail where Scout's innocent recognition of Mr. Cunningham dissolves the lynch mob's dangerous intent. This is the moment of highest tension and greatest moral crisis, where Atticus faces physical danger defending Tom Robinson, and Scout's childlike humanity breaks through adult hatred and prejudice. The scene crystallizes all the novel's major themes - moral courage, the power of empathy, and the loss of innocence - in one pivotal confrontation that determines the moral direction of the story.",
+      "word_count": 653
+    },
+    "falling_action": {
+      "text": "Mr. Ewell was endearing himself to his fellow citizens. The whispers and chuckles below us probably had to do with what a card he was. I was becoming nervous. Atticus seemed to know what he was doing\u2014but it seemed to me that he'd gone frog-sticking without a light. Never, never, never, on cross-examination ask a witness a question you don't already know the answer to, was a tenet I absorbed with my baby-food. Do it, and you'll often get an answer you don't want, an answer that might wreck your case. Atticus was reaching into the inside pocket of his coat. He drew out an envelope, then reached into his vest pocket and unclipped his fountain pen. He moved leisurely, and had turned so that he was in full view of the jury. He unscrewed the fountain-pen cap and placed it gently on his table. He shook the pen a little, then handed it with the envelope to the witness. \"Would you write your name for us?\" he asked. \"Clearly now, so the jury can see you do it.\" Mr. Ewell wrote on the back of the envelope and looked up complacently to see Judge Taylor staring at him as if he were some fragrant gardenia in full bloom on the witness stand, to see Mr. Gilmer half-sitting, half-standing at his table. The jury was watching him, one man was leaning forward with his hands over the railing. \"What's so interestin'?\" he asked. \"You're left-handed, Mr. Ewell,\" said Judge Taylor. Mr. Ewell turned angrily to the judge and said he didn't see what his being left-handed had to do with it, that he was a Christ-fearing man and Atticus Finch was taking advantage of him. Tricking lawyers like Atticus Finch took advantage of him all the time with their tricking ways. He had told them what happened, he'd say it again and again\u2014which he did. Nothing Atticus asked him after that shook his story, that he'd looked through the window, then ran the nigger off, then ran for the sheriff. Atticus finally dismissed him. Mr. Gilmer asked him one more question. \"About your writing with your left hand, are you ambidextrous, Mr. Ewell?\" \"I most positively am not, I can use one hand good as the other. One hand good as the other,\" he added, glaring at the defense table. Jem seemed to be having a quiet fit. He was pounding the balcony rail softly, and once he whispered, \"We've got him.\" I didn't think so: Atticus was trying to show, it seemed to me, that Mr. Ewell could have beaten up Mayella. That much I could follow. If her right eye was blacked and she was beaten mostly on the right side of the face, it would tend to show that a left-handed person did it. Sherlock Holmes and Jem Finch would agree. But Tom Robinson could easily be left-handed, too. Like Mr. Heck Tate, I imagined a person facing me, went through a swift mental pantomime, and concluded that he might have held her with his right hand and pounded her with his left. I looked down at him. His back was to us, but I could see his broad shoulders and bull-thick neck. He could easily have done it. I thought Jem was counting his chickens. But someone was booming again. \"Mayella Violet Ewell\u2014!\" A young girl walked to the witness stand. As she raised her hand and swore that the evidence she gave would be the truth, the whole truth, and nothing but the truth so help her God, she seemed somehow fragile-looking, but when she sat facing us in the witness chair she became what she was, a thick-bodied girl accustomed to strenuous labor. In Maycomb County, it was easy to tell when someone bathed regularly, as opposed to yearly lavations: Mr. Ewell had a scalded look; as if an overnight soaking had deprived him of protective layers of dirt, his skin appeared to be sensitive to the elements. Mayella looked as if she tried to keep clean, and I was reminded of the row of red geraniums in the Ewell yard.",
+      "rationale": "This passage captures the critical moment when Atticus reveals Bob Ewell is left-handed, representing the falling action as the case's truth begins to unravel. It shows Scout's growing understanding of the trial's complexities and injustices, while the revelation creates dramatic irony - the reader sees the evidence pointing to Ewell's guilt, yet knows the predetermined outcome. The transition to Mayella's testimony maintains the section's focus on aftermath and consequence, as the children process what they're witnessing.",
+      "word_count": 648
+    },
+    "resolution": {
+      "text": "\"Come on round here, son, I got something that'll settle your stomach.\" As Mr. Dolphus Raymond was an evil man I accepted his invitation reluctantly, but I followed Dill. Somehow, I didn't think Atticus would like it if we became friendly with Mr. Raymond, and I knew Aunt Alexandra wouldn't. \"Here,\" he said, offering Dill his paper sack with straws in it. \"Take a good sip, it'll quieten you.\" Dill sucked on the straws, smiled, and pulled at length. \"Hee hee,\" said Mr. Raymond, evidently taking delight in corrupting a child. \"Dill, you watch out, now,\" I warned. Dill released the straws and grinned. \"Scout, it's nothing but Coca-Cola.\" Mr. Raymond sat up against the tree-trunk. He had been lying against it, and he folded his brown paper bag carefully. He smiled, and his teeth were white. \"That's right. Coca-Cola only. I had you children fooled, didn't I? Come here, Scout,\" he said. \"Don't be afraid of me, son. I ain't gonna hurt you.\" I went to him. He smelled of leather and horses, but he didn't smell of whiskey. \"You mean all you drink is Coke? Why do you do like you do?\" \"Wh-why do I pretend? Well, it's very simple,\" he said, his voice becoming serious. \"Some folks don't like the way I live. Now I could say the hell with 'em, I don't care if they don't like it. I do say I don't care if they don't like it, right enough\u2014but I don't say the hell with 'em, see?\" Dill and I said we saw. \"I try to give 'em a reason, you see. It helps folks if they can latch onto a reason. When I come to town, which is seldom, if I weave a little and drink out of this sack, folks can say Dolphus Raymond's in the clutches of whiskey\u2014that's why he won't change his ways. He can't help himself, that's why he lives the way he does.\" \"That ain't honest, Mr. Raymond, making yourself out badder than you are already\u2014\" \"It ain't honest but it's mighty helpful. Folks can say, 'Dolphus Raymond's got a Co-Cola bottle full of whiskey in there and that's why he carries on like he does.' You see, I've got to have a reason for the way I live. It's mighty hard on folks if they can't understand why a person acts like he does.\" \"Well, why do you act like you do?\" \"Because I like my life the way it is. I've got children with my colored wife, one I've got a daughter in the courthouse right now, and I love every one of 'em. That Coke bottle gives me a reason. Why, if I didn't have this bottle folks would think I was a snob or something, too good for the likes of them. It ain't honest but it's mighty helpful. Now Scout, I want you to know I've heard about your daddy. He's a very fine man.\" \"Most folks are, Mr. Raymond,\" I said. \"You take a good look at him and you'll see what I mean.\" \"Yes indeed,\" he said. \"Now I think you children had better get back to watching the trial. It's gonna be over soon.\" \"Yes, sir. Dill, you feeling better now?\" \"Yeah. Scout, let's go back. I wanta hear what happens.\" \"Well then, we better get going,\" I said. As we ran back, I thought about what Mr. Raymond had said about giving people a reason for the way he lived. It seemed to make sense, in a twisted way. People needed reasons for things, especially things that made them uncomfortable.",
+      "rationale": "This passage represents a crucial resolution moment where Scout encounters Dolphus Raymond, who reveals the truth about his supposed drinking and explains his philosophy about giving people reasons to understand behavior they find disturbing. This encounter provides Scout with mature insight into how adults navigate societal expectations and prejudice, directly connecting to the themes of empathy and understanding human nature that Atticus has been teaching. The revelation about the Coca-Cola instead of whiskey serves as a metaphor for how appearances can deceive and how people create elaborate justifications for their discomfort with difference - key lessons Scout absorbs as part of her growing maturity.",
+      "word_count": 612
+    }
+  },
+  "macro_variables": {
+    "narrative": {
+      "voice": {
+        "pov": "FP",
+        "pov_description": "Scout narrates using 'I' as a character within the story",
+        "focalization": "INT",
+        "focalization_description": "Information filtered through Scout's perception and understanding",
+        "reliability": "REL",
+        "temporal_distance": "RETRO",
+        "mode_dominance": "BAL",
+        "character_revelation": "MIX"
+      },
+      "structure": {
+        "plot_architecture": "ARIST",
+        "plot_architecture_description": "Classic dramatic arc from exposition through rising action, climax, falling action to resolution",
+        "chronology": "LIN",
+        "causation": "TIGHT",
+        "pacing_dominance": "SCENE"
+      }
+    },
+    "rhetoric": {
+      "alignment_type": "REINFORCING",
+      "alignment_type_description": "Narrative voice and structure work together to support themes of moral courage and understanding",
+      "dominant_mechanism": "RETROSPECTIVE_WISDOM",
+      "secondary_mechanism": "DRAMATIC_IRONY",
+      "alignment_strength": "STRONG"
+    },
+    "device_mediation": {
+      "score": 0.8,
+      "description": "Strong mediation through retrospective narration allowing adult Scout to guide reader understanding while maintaining child's perspective for emotional authenticity"
+    }
+  },
+  "micro_devices": [
+    {
+      "name": "Metaphor",
+      "definition": "Implicit comparison between unlike things without using 'like' or 'as'",
+      "examples": [
+        {
+          "text": "tired old town",
+          "explanation": "Town is implicitly compared to an exhausted person, suggesting decay and weariness",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "Ladies bathed before noon, after their three-o'clock naps, and by nightfall were like soft teacakes with frostings of sweat and sweet talcum",
+          "explanation": "Women are compared to decorated cakes, emphasizing delicacy and artificiality",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        }
+      ]
+    },
+    {
+      "name": "Simile",
+      "definition": "Explicit comparison between unlike things using 'like' or 'as'",
+      "examples": [
+        {
+          "text": "her hand was wide as a bed slat and twice as hard",
+          "explanation": "Calpurnia's hand compared to furniture, emphasizing her stern discipline",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "it drew him as the moon draws water",
+          "explanation": "Dill's fascination with Radley Place compared to natural gravitational force",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "stood trying to make Jem mind him",
+          "explanation": "Atticus's struggle with Jem compared to controlling a stubborn animal",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Personification",
+      "definition": "Attribution of human characteristics to non-human entities",
+      "examples": [
+        {
+          "text": "the courthouse sagged in the square",
+          "explanation": "Building given human posture suggesting weariness and decline",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "Rain-rotted shingles drooped over the eaves",
+          "explanation": "Shingles given human gesture of drooping, suggesting neglect",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        }
+      ]
+    },
+    {
+      "name": "Imagery",
+      "definition": "Vivid descriptive language appealing to the senses",
+      "examples": [
+        {
+          "text": "In rainy weather the streets turned to red slop; grass grew on the sidewalks",
+          "explanation": "Visual imagery creating atmosphere of decay and stagnation",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "There was a smell of stale whiskey and pigpen about",
+          "explanation": "Olfactory imagery emphasizing the threatening nature of the mob",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        },
+        {
+          "text": "He smelled of leather and horses, but he didn't smell of whiskey",
+          "explanation": "Olfactory imagery revealing Mr. Raymond's true nature versus his pretense",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        }
+      ]
+    },
+    {
+      "name": "Symbolism",
+      "definition": "Objects or elements representing deeper meanings or themes",
+      "examples": [
+        {
+          "text": "The Radley Place jutted into a sharp curve beyond our house",
+          "explanation": "The house symbolizes the unknown and feared aspects of adult society",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "the row of red geraniums in the Ewell yard",
+          "explanation": "Flowers symbolize Mayella's attempt at dignity amid squalor",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        }
+      ]
+    },
+    {
+      "name": "Dramatic Irony",
+      "definition": "Reader knows information that characters do not",
+      "examples": [
+        {
+          "text": "Inside the house lived a malevolent phantom",
+          "explanation": "Reader gradually learns Boo Radley is actually protective, not malevolent",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "That Coke bottle gives me a reason",
+          "explanation": "Reader discovers Mr. Raymond's 'whiskey' is actually Coca-Cola",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        }
+      ]
+    },
+    {
+      "name": "Foreshadowing",
+      "definition": "Hints or clues about future events in the narrative",
+      "examples": [
+        {
+          "text": "This was the second time I heard Atticus ask that question in two days, and it meant somebody's man would get jumped",
+          "explanation": "Scout's observation hints at impending conflict and violence",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        },
+        {
+          "text": "We've got him",
+          "explanation": "Jem's confidence foreshadows the ultimate failure of the defense despite evidence",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        }
+      ]
+    },
+    {
+      "name": "Dialect",
+      "definition": "Regional or social variety of language with distinct pronunciation, grammar, and vocabulary",
+      "examples": [
+        {
+          "text": "Strip poker up yonder by the fishpool",
+          "explanation": "Dill's Southern dialect establishes regional authenticity",
+          "location": "rising_action",
+          "narrative_position": "rising_action",
+          "chapter": 8,
+          "page": null,
+          "chapter_range": "4-14"
+        },
+        {
+          "text": "I most positively am not, I can use one hand good as the other",
+          "explanation": "Ewell's poor grammar reveals his social class and lack of education",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        }
+      ]
+    },
+    {
+      "name": "Juxtaposition",
+      "definition": "Placing contrasting elements side by side for effect",
+      "examples": [
+        {
+          "text": "Mayella looked as if she tried to keep clean, and I was reminded of the row of red geraniums in the Ewell yard",
+          "explanation": "Clean appearance contrasted with family's general squalor",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        },
+        {
+          "text": "his face killed my joy. A flash of plain fear was going out of his eyes",
+          "explanation": "Scout's excitement contrasted with Atticus's fear creates tension",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Alliteration",
+      "definition": "Repetition of initial consonant sounds in successive words",
+      "examples": [
+        {
+          "text": "bony mules hitched to Hoover carts",
+          "explanation": "Repetition of 'h' sounds creates rhythmic emphasis on Depression-era poverty",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "shadows became substance",
+          "explanation": "Repetition of 's' sounds emphasizes the threatening transformation",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Direct Characterization",
+      "definition": "Explicit description of character traits by narrator or other characters",
+      "examples": [
+        {
+          "text": "She was all angles and bones; she was nearsighted; she squinted",
+          "explanation": "Direct physical description of Calpurnia establishes her stern appearance",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "He's a very fine man",
+          "explanation": "Mr. Raymond directly states his opinion of Atticus's character",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        }
+      ]
+    },
+    {
+      "name": "Indirect Characterization",
+      "definition": "Character traits revealed through actions, speech, and behavior rather than direct description",
+      "examples": [
+        {
+          "text": "Atticus always took her side",
+          "explanation": "Atticus's support of Calpurnia reveals his respect for her authority",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "He put the newspaper down very carefully, adjusting its creases with lingering fingers. They were trembling a little",
+          "explanation": "Atticus's careful movements reveal his inner tension despite outward calm",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "First-Person Narration",
+      "definition": "Story told from the perspective of a character using 'I'",
+      "examples": [
+        {
+          "text": "when I first knew it",
+          "explanation": "Scout's first-person perspective establishes intimate, personal viewpoint",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "I was getting a bit tired of that",
+          "explanation": "Scout's personal reaction reveals her character and creates reader connection",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Situational Irony",
+      "definition": "Contrast between expectation and reality in circumstances or events",
+      "examples": [
+        {
+          "text": "It ain't honest but it's mighty helpful",
+          "explanation": "Mr. Raymond's deception is ironically more honest than social expectations",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        },
+        {
+          "text": "You're left-handed, Mr. Ewell",
+          "explanation": "Evidence that should help the defense ironically doesn't change the outcome",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        }
+      ]
+    },
+    {
+      "name": "Stream of Consciousness",
+      "definition": "Narrative technique presenting character's thoughts as continuous flow",
+      "examples": [
+        {
+          "text": "Like Mr. Heck Tate, I imagined a person facing me, went through a swift mental pantomime, and concluded that he might have held her with his right hand and pounded her with his left",
+          "explanation": "Scout's rapid thought process shown as unfiltered mental reasoning",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        },
+        {
+          "text": "Hot embarrassment shot through me: I had leaped triumphantly into a ring of people I had never seen before",
+          "explanation": "Scout's immediate emotional and cognitive reaction presented as raw thought",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Repetition",
+      "definition": "Deliberate reuse of words or phrases for emphasis or effect",
+      "examples": [
+        {
+          "text": "One hand good as the other. One hand good as the other",
+          "explanation": "Ewell's repetition emphasizes his defensiveness and limited vocabulary",
+          "location": "falling_action",
+          "narrative_position": "falling_action",
+          "chapter": 20,
+          "page": null,
+          "chapter_range": "16-25"
+        },
+        {
+          "text": "Go home, Jem. Go home, I said. Son, I said go home",
+          "explanation": "Atticus's repeated command emphasizes growing tension and urgency",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Hyperbole",
+      "definition": "Deliberate exaggeration for emphasis or dramatic effect",
+      "examples": [
+        {
+          "text": "Our battles were epic and one-sided",
+          "explanation": "Exaggeration of childhood conflicts with Calpurnia for humorous effect",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "Mrs. Dubose was plain hell",
+          "explanation": "Extreme characterization emphasizes Scout's childhood perception",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        }
+      ]
+    },
+    {
+      "name": "Motif",
+      "definition": "Recurring element that develops or explains a theme",
+      "examples": [
+        {
+          "text": "tired old town... courthouse sagged... Men's stiff collars wilted",
+          "explanation": "Recurring images of decay and exhaustion reinforce theme of social stagnation",
+          "location": "exposition",
+          "narrative_position": "exposition",
+          "chapter": 1,
+          "page": null,
+          "chapter_range": "1-3"
+        },
+        {
+          "text": "shadows became substance... The men hid him from view... Its owner was a shadow",
+          "explanation": "Light and shadow imagery throughout reinforces themes of hidden truth and moral ambiguity",
+          "location": "climax",
+          "narrative_position": "climax",
+          "chapter": 15,
+          "page": null,
+          "chapter_range": "15"
+        }
+      ]
+    },
+    {
+      "name": "Paradox",
+      "definition": "Seemingly contradictory statement that reveals deeper truth",
+      "examples": [
+        {
+          "text": "It ain't honest but it's mighty helpful",
+          "explanation": "Mr. Raymond's deception is paradoxically more truthful than social honesty",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        },
+        {
+          "text": "making yourself out badder than you are already",
+          "explanation": "The contradiction of pretending to be worse to avoid judgment reveals social hypocrisy",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        }
+      ]
+    },
+    {
+      "name": "Onomatopoeia",
+      "definition": "Words that imitate sounds they represent",
+      "examples": [
+        {
+          "text": "the roar of a shotgun shattered the neighborhood",
+          "explanation": "Sound word 'roar' mimics the loud gunshot, creating immediate sensory experience",
+          "location": "rising_action",
+          "narrative_position": "rising_action",
+          "chapter": 8,
+          "page": null,
+          "chapter_range": "4-14"
+        },
+        {
+          "text": "Hee hee",
+          "explanation": "Mr. Raymond's laughter represented phonetically emphasizes his amusement",
+          "location": "resolution",
+          "narrative_position": "resolution",
+          "chapter": 28,
+          "page": null,
+          "chapter_range": "26-31"
+        }
+      ]
+    }
+  ],
+  "text_structure": {
+    "has_chapters": true,
+    "total_chapters_estimate": 31,
+    "notes": "Manually added during v3.3 \u2192 v3.4 upgrade"
+  },
+  "narrative_position_mapping": {
+    "exposition": {
+      "chapter_range": "1-3",
+      "primary_chapter": 1,
+      "pages": "3-45"
+    },
+    "rising_action": {
+      "chapter_range": "4-14",
+      "primary_chapter": 8,
+      "pages": "46-180"
+    },
+    "climax": {
+      "chapter_range": "15",
+      "primary_chapter": 15,
+      "pages": "181-195"
+    },
+    "falling_action": {
+      "chapter_range": "16-25",
+      "primary_chapter": 20,
+      "pages": "196-280"
+    },
+    "resolution": {
+      "chapter_range": "26-31",
+      "primary_chapter": 28,
+      "pages": "281-324"
+    }
+  }
+}

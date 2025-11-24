@@ -1,0 +1,497 @@
+{
+  "metadata": {
+    "title": "Matilda",
+    "author": "Roald Dahl",
+    "edition": "Penguin 2003",
+    "creation_date": "2025-11-21T23:58:40.672702",
+    "protocol_version": "3.3"
+  },
+  "extracts": {
+    "exposition": {
+      "chapter_range": "1-1 (first 20%)",
+      "primary_chapter": 1,
+      "rationale": "Establishes Matilda as a brilliant child ignored by awful parents, introduces her love of reading and the library. Sets up the core character dynamics and Matilda's extraordinary abilities."
+    },
+    "rising_action": {
+      "chapter_range": "1-1 (20%-60%)",
+      "primary_chapter": 1,
+      "rationale": "Matilda begins school, meets Miss Honey who recognizes her genius, faces Miss Trunchbull's tyranny. Conflict escalates through supernatural incidents and Miss Honey's tragic backstory revelation."
+    },
+    "climax": {
+      "chapter_range": "1-1 (60%-70%)",
+      "primary_chapter": 1,
+      "rationale": "Matilda uses her telekinetic powers to write Magnus's message on the blackboard, terrifying Miss Trunchbull and causing her to flee. This is the peak confrontation that resolves the central conflict."
+    },
+    "falling_action": {
+      "chapter_range": "1-1 (70%-90%)",
+      "primary_chapter": 1,
+      "rationale": "Miss Trunchbull disappears, Miss Honey inherits her rightful home and possessions. Matilda moves to the top class and her powers fade as her mind is properly challenged."
+    },
+    "resolution": {
+      "chapter_range": "1-1 (90%-100%)",
+      "primary_chapter": 1,
+      "rationale": "Matilda's parents flee to Spain as criminals, and she chooses to stay with Miss Honey who becomes her guardian. Both characters achieve their happy endings together."
+    }
+  },
+  "macro_variables": {
+    "narrative": {
+      "voice": {
+        "pov": "TPO",
+        "pov_description": "Third person omniscient narrator with access to multiple characters' thoughts and knowledge of events",
+        "focalization": "ZERO",
+        "focalization_description": "Narrator has unlimited access to all characters' minds and situations",
+        "reliability": "REL",
+        "temporal_distance": "RETRO",
+        "mode_dominance": "BAL",
+        "free_indirect": "SOME",
+        "stream_consciousness": "NONE",
+        "character_revelation": "MIX",
+        "narrative_intrusion": "SOME",
+        "voice_consistency": "CONS"
+      },
+      "structure": {
+        "chronology": "LIN",
+        "framing": "NONE",
+        "plot_architecture": "MONO",
+        "plot_architecture_description": "Single plot focused on the chocolate cake punishment scene",
+        "pacing": "SLOW",
+        "temporal_span": "BRIEF",
+        "beginning_type": "MEDIAS",
+        "ending_type": "OPEN",
+        "scene_summary_ratio": "SCENE",
+        "chapter_structure": "TRAD",
+        "causation": "STRONG"
+      }
+    },
+    "rhetoric": {
+      "voice": {
+        "tone": "Darkly humorous with underlying menace and tension",
+        "register": "COLL",
+        "stance": "SUBJ",
+        "ethos": "STRONG",
+        "pathos": "STRONG",
+        "logos": "MOD",
+        "irony": "DRAM",
+        "figurative_density": "MOD"
+      },
+      "structure": {
+        "alignment_type": "TRANS",
+        "narrative_rhetoric_relationship": "TIGHT",
+        "primary_mechanism": "CHAR",
+        "device_density": "MOD",
+        "device_distribution": "EVEN",
+        "mediation_strategy": "ACCUMULATION"
+      }
+    },
+    "device_mediation": {
+      "summary": "Devices mediate alignment through character-driven tension, using dramatic irony and vivid imagery to build sympathy for the victim while establishing the antagonist's cruelty, creating transformative alignment that challenges adult authority structures"
+    }
+  },
+  "micro_devices": [
+    {
+      "name": "Simile",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Pa",
+      "classification": "B|Me|Pa",
+      "definition": "A comparison using 'like' or 'as' to create vivid imagery",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates memorable visual descriptions that help readers visualize characters and scenes",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "cook's appearance description",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "The cook stood there like a shrivelled bootlace, tight-lipped, implacable"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "cook's facial expression",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "She looked as though her mouth was full of lemon juice"
+        }
+      ]
+    },
+    {
+      "name": "Hyperbole",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Pa",
+      "classification": "B|Me|Pa",
+      "definition": "Deliberate exaggeration used for emphasis or dramatic effect",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Emphasizes the absurdity of situations and characters' extreme traits",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "cake size description",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "The cake was fully eighteen inches in diameter"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "cook's physical strain",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "she was back again staggering under the weight of an enormous round chocolate cake"
+        }
+      ]
+    },
+    {
+      "name": "Dramatic Irony",
+      "layer": "N",
+      "function": "Dr",
+      "engagement": "Ac",
+      "classification": "N|Dr|Ac",
+      "definition": "When readers know something that characters don't, creating tension",
+      "student_facing_type": "Irony/Contrast Device",
+      "pedagogical_function": "Creates suspense as readers understand the trap while Bruce remains unaware",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Trunchbull's false kindness",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "her voice became soft, persuasive, even gentle"
+        },
+        {
+          "freytag_section": "rising_action",
+          "scene": "Bruce's confusion",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "He knew there was a catch in this somewhere, but he wasn't sure where"
+        }
+      ]
+    },
+    {
+      "name": "Situational Irony",
+      "layer": "N",
+      "function": "Dr",
+      "engagement": "Ac",
+      "classification": "N|Dr|Ac",
+      "definition": "When the outcome is opposite to what would normally be expected",
+      "student_facing_type": "Irony/Contrast Device",
+      "pedagogical_function": "Highlights the absurdity of punishment disguised as reward",
+      "position_code": "CLUST-MID",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "punishment as gift",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "I ordered cook to bake you an extra large one all for yourself"
+        },
+        {
+          "freytag_section": "rising_action",
+          "scene": "forced gratitude",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "You must show cookie here how grateful you are for all the trouble she's taken"
+        }
+      ]
+    },
+    {
+      "name": "Alliteration",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Pa",
+      "classification": "B|Me|Pa",
+      "definition": "Repetition of initial consonant sounds in consecutive or nearby words",
+      "student_facing_type": "Sound Device",
+      "pedagogical_function": "Creates rhythm and emphasizes key descriptive phrases",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "cook's attitude description",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "tight-lipped, implacable, disapproving"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Trunchbull's tone",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "soft, persuasive"
+        }
+      ]
+    },
+    {
+      "name": "Foreshadowing",
+      "layer": "N",
+      "function": "Dr",
+      "engagement": "Sy",
+      "classification": "N|Dr|Sy",
+      "definition": "Hints or clues about what will happen later in the story",
+      "student_facing_type": "Narrative Structure",
+      "pedagogical_function": "Builds tension and prepares readers for coming conflict",
+      "position_code": "CLUST-BEG",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "boy's suspicion",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "You could see he was now beginning to wonder what all this was leading up to"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Trunchbull's unpredictability",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "the Trunchbull was totally unpredictable. One never knew what she was going to do next"
+        }
+      ]
+    },
+    {
+      "name": "Third-Person Omniscient",
+      "layer": "N",
+      "function": "Re",
+      "engagement": "Sy",
+      "classification": "N|Re|Sy",
+      "definition": "Narrator who knows the thoughts and feelings of all characters",
+      "student_facing_type": "Narrative Voice",
+      "pedagogical_function": "Allows readers to understand multiple perspectives and hidden motivations",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Bruce's internal thoughts",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "You could see he was now beginning to wonder what all this was leading up to"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "cook's rehearsed response",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "She seemed to have learnt her lines by heart"
+        }
+      ]
+    },
+    {
+      "name": "Juxtaposition",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Sy",
+      "classification": "B|Me|Sy",
+      "definition": "Placing contrasting elements side by side to highlight their differences",
+      "student_facing_type": "Structural Device",
+      "pedagogical_function": "Emphasizes the contrast between appearance and reality in the scene",
+      "position_code": "CLUST-MID",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "gentle voice vs. cruel intent",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "her voice became soft, persuasive, even gentle"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "gift vs. punishment",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "It's all for you, every bit of it"
+        }
+      ]
+    },
+    {
+      "name": "Characterization Through Action",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "Pa",
+      "classification": "B|Re|Pa",
+      "definition": "Revealing character traits through what characters do rather than direct description",
+      "student_facing_type": "Character Development",
+      "pedagogical_function": "Shows character personalities through behavior rather than telling",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Trunchbull's theatrical setup",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "Her entrance had clearly been arranged beforehand by the Headmistress"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "boy's cautious movement",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "The boy moved cautiously to the table and sat down"
+        }
+      ]
+    },
+    {
+      "name": "Rhetorical Question",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Ac",
+      "classification": "B|Me|Ac",
+      "definition": "A question asked for effect rather than expecting an answer",
+      "student_facing_type": "Rhetorical Device",
+      "pedagogical_function": "Engages readers and highlights character uncertainty",
+      "position_code": "CLUST-MID",
+      "examples": [
+        {
+          "freytag_section": "rising_action",
+          "scene": "Bruce's desperate hope",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "What? Now?"
+        },
+        {
+          "freytag_section": "rising_action",
+          "scene": "Bruce seeking escape",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "Can't I take it home instead?"
+        }
+      ]
+    },
+    {
+      "name": "Metaphor",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Pa",
+      "classification": "B|Me|Pa",
+      "definition": "A direct comparison between two unlike things without using 'like' or 'as'",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "Creates vivid imagery and emphasizes character traits",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "cook as bootlace",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "The cook stood there like a shrivelled bootlace"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "theatrical setting",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "There was a small table centre stage"
+        }
+      ]
+    },
+    {
+      "name": "Dialogue Tags for Characterization",
+      "layer": "B",
+      "function": "Re",
+      "engagement": "Pa",
+      "classification": "B|Re|Pa",
+      "definition": "Using descriptive words with dialogue to reveal character traits and emotions",
+      "student_facing_type": "Character Development",
+      "pedagogical_function": "Provides insight into characters' personalities and emotional states",
+      "position_code": "DIST",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "Trunchbull's commanding presence",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "the Trunchbull boomed"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "Bruce's uncertainty",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "the boy mumbled"
+        }
+      ]
+    },
+    {
+      "name": "Symbolism",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Sy",
+      "classification": "B|Me|Sy",
+      "definition": "Using objects or elements to represent deeper meanings or ideas",
+      "student_facing_type": "Figurative Language",
+      "pedagogical_function": "The cake represents both temptation and punishment, highlighting themes of power abuse",
+      "position_code": "CLUST-MID",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "enormous cake as weapon",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "an enormous round chocolate cake on a china platter"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "riding-crop as threat",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "the riding-crop that she kept smacking against her thigh"
+        }
+      ]
+    },
+    {
+      "name": "Suspense Building",
+      "layer": "N",
+      "function": "Dr",
+      "engagement": "Ac",
+      "classification": "N|Dr|Ac",
+      "definition": "Creating tension and anticipation about what will happen next",
+      "student_facing_type": "Narrative Structure",
+      "pedagogical_function": "Keeps readers engaged and creates emotional investment in the outcome",
+      "position_code": "CLUST-BEG",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "ominous setup",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "He knew there was a catch in this somewhere, but he wasn't sure where"
+        },
+        {
+          "freytag_section": "rising_action",
+          "scene": "forced compliance",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "The boy didn't move"
+        }
+      ]
+    },
+    {
+      "name": "Repetition for Emphasis",
+      "layer": "B",
+      "function": "Me",
+      "engagement": "Pa",
+      "classification": "B|Me|Pa",
+      "definition": "Repeating words or phrases to emphasize important ideas or create rhythm",
+      "student_facing_type": "Rhetorical Device",
+      "pedagogical_function": "Emphasizes key themes and creates memorable moments",
+      "position_code": "CLUST-MID",
+      "examples": [
+        {
+          "freytag_section": "exposition",
+          "scene": "cake obsession",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "your cake... your cake... your cake"
+        },
+        {
+          "freytag_section": "exposition",
+          "scene": "repeated commands",
+          "chapter": 12,
+          "page_range": "140-141",
+          "quote_snippet": "Thank cook, not me... Thank you, cook"
+        }
+      ]
+    }
+  ]
+}
