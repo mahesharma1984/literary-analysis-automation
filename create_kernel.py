@@ -141,7 +141,7 @@ class KernelCreator:
         return result
     
     def _review_and_approve(self, stage_name: str, output: str) -> bool:
-        """Present output to user for review"""
+        """Present output to user for review (automatically approved)"""
         print(f"\n{'='*80}")
         print(f"STAGE COMPLETE: {stage_name}")
         print(f"{'='*80}")
@@ -151,28 +151,10 @@ class KernelCreator:
             print(f"\n... ({len(output) - 2000:,} more characters)")
         
         print(f"\n{'='*80}")
-        while True:
-            response = input("\nâœ“ Approve and continue? [y/n/save/quit]: ").lower().strip()
-            
-            if response == 'y':
-                return True
-            elif response == 'n':
-                print("âŒ Stage rejected. Please restart or modify manually.")
-                return False
-            elif response == 'save':
-                filename = f"{stage_name.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-                save_path = Config.OUTPUTS_DIR / filename
-                save_path.parent.mkdir(parents=True, exist_ok=True)
-                with open(save_path, 'w', encoding='utf-8') as f:
-                    f.write(output)
-                print(f"ðŸ’¾ Saved to: {save_path}")
-                continue
-            elif response == 'quit':
-                print("ðŸ‘‹ Exiting...")
-                sys.exit(0)
-            else:
-                print("Invalid response. Please enter y/n/save/quit")
-    
+        print("Automatically approved and continuing...")
+        return True
+
+
     def _create_book_sample(self) -> str:
         """Create strategic sample of book for boundary identification"""
         total_words = len(self.book_words)
@@ -500,59 +482,170 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         
         prompt = f"""You are performing Stage 2B of the Kernel Protocol Enhancement v3.3.
 
-TASK: Identify 8-12 micro literary devices in the text with quoted examples.
+TASK: Identify micro literary devices FOR EACH NARRATIVE SECTION with quoted examples.
 
-REQUIREMENTS:
-- Minimum 15 devices (target: 20+)
-- At least 3 figurative language devices
-- At least 1 sound device
-- At least 2 irony/contrast devices
-- 2-3 examples per device with structured format
+CRITICAL CONSTRAINT - VALID DEVICES ONLY:
+
+You must ONLY use devices from the Device Taxonomy (Artifact 1). Do NOT invent new device names.
+
+Valid devices include:
+
+- Narrative Structure: Linear Chronology, Non-Linear Chronology, Frame Narrative, In Medias Res, Circular Structure, Episodic Structure, Climactic Structure
+
+- Narrative Voice: First-Person Narration, Third-Person Omniscient, Third-Person Limited, Unreliable Narrator, Free Indirect Discourse, Stream of Consciousness, Internal Monologue
+
+- Dialogue/Speech: Dialogue, Dialect
+
+- Temporal: Foreshadowing, Flashback, Flashforward
+
+- Pacing: Scene, Summary, Pause, Ellipsis
+
+- Figurative Language: Metaphor, Simile, Personification, Hyperbole, Understatement, Imagery, Euphemism, Allusion
+
+- Symbolic: Symbolism, Allegory, Motif
+
+- Irony (MUST specify type): Verbal Irony, Situational Irony, Dramatic Irony, Structural Irony
+
+- Sound/Rhythm: Alliteration, Rhythm, Onomatopoeia
+
+- Structural Repetition: Parallelism, Anaphora, Epistrophe, Chiasmus, Repetition
+
+- Contrast: Juxtaposition, Paradox, Oxymoron, Foil
+
+- Character: Direct Characterization, Indirect Characterization
+
+- Atmosphere: Pathetic Fallacy, Setting as Symbol
+
+- Tension: Suspense, Cliffhanger, Red Herring
+
+- Rhetorical: Apostrophe, Rhetorical Question, Pathos
+
+NAMING RULES:
+
+- Use base names only (e.g., "Motif" not "Hope Motif")
+
+- Always specify irony type (e.g., "Dramatic Irony" not "Irony")
+
+- Match taxonomy names exactly
+
+- Do NOT invent new device names
+
+If a section has limited device variety, the SAME device may appear in multiple sections with DIFFERENT examples. For instance, Symbolism can appear in exposition AND resolution if both sections contain symbolic elements.
+
+SECTION REQUIREMENTS:
+
+You must identify 3-4 devices PER FREYTAG SECTION with examples from that section's chapters:
+
+- Exposition: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['exposition']['chapter_range']}
+
+- Rising Action: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['rising_action']['chapter_range']}
+
+- Climax: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['climax']['chapter_range']}
+
+- Falling Action: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['falling_action']['chapter_range']}
+
+- Resolution: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['resolution']['chapter_range']}
+
+Total: 15-20 devices across all sections.
+
+DEVICE SELECTION CRITERIA:
+
+For each section, choose devices that BEST demonstrate the macro-micro alignment for that narrative stage:
+
+- Exposition devices: How character/setting are established
+
+- Rising Action devices: How tension builds
+
+- Climax devices: How the turning point is created
+
+- Falling Action devices: How consequences unfold
+
+- Resolution devices: How closure is achieved
 
 BOOK METADATA:
+
 - Title: {self.title}
+
 - Author: {self.author}
+
 - Edition: {self.edition}
 
-PROTOCOL TO FOLLOW:
-{self.protocols['kernel_enhancement']}
+DEVICE TAXONOMY (Use ONLY these devices):
 
-DEVICE TAXONOMY:
 {self.protocols['artifact_1']}
 
 FREYTAG EXTRACTS:
+
 {extracts_text}
 
 OUTPUT FORMAT:
-Provide a JSON array of devices:
+
+Provide a JSON array of devices. Each device must be from the taxonomy above:
+
 [
+
   {{
-    "name": "Device Name",
+
+    "name": "Device Name (MUST match taxonomy exactly)",
+
     "layer": "CODE (N/B/R)",
-    "function": "CODE (Re/Me/Dr)",
-    "engagement": "CODE (Pa/Ac/Sy)",
+
+    "function": "CODE (Re/Me/Te)",
+
+    "engagement": "CODE (T/V/F)",
+
     "classification": "Layer|Function|Engagement",
+
     "definition": "student-facing definition",
-    "student_facing_type": "Figurative Language/Sound Device/etc.",
+
+    "student_facing_type": "Figurative Language/Sound Device/Narrative Technique/etc.",
+
     "pedagogical_function": "what it does for reader/theme",
-    "position_code": "DIST/CLUST-BEG/etc.",
+
+    "position_code": "DIST/CLUST-BEG/CLUST-MID/CLUST-END",
+
+    "assigned_section": "exposition/rising_action/climax/falling_action/resolution",
+
     "examples": [
+
       {{
-        "freytag_section": "exposition/rising_action/etc.",
+
+        "freytag_section": "must match assigned_section",
+
         "scene": "brief scene identifier",
+
         "chapter": X,
+
         "page_range": "X-Y",
-        "quote_snippet": "20-100 character quote excerpt"
+
+        "quote_snippet": "20-100 character exact quote from text"
+
       }}
+
     ]
+
   }}
+
 ]
 
-CRITICAL: 
-- Output ONLY valid JSON array
-- Include 2-3 examples per device
-- Use structured example format (v3.3)
-- Ensure examples align with position codes
+CRITICAL RULES:
+
+1. Output ONLY valid JSON array
+
+2. Device names MUST match the taxonomy exactly - no invented names
+
+3. Every device must have assigned_section field
+
+4. Examples must come from the assigned section's chapters only
+
+5. Include 2-3 examples per device from that section
+
+6. ALL 5 sections must have 3-4 devices each
+
+7. Use base device names (not "Hope Motif", just "Motif")
+
+8. Always specify irony type (Verbal/Situational/Dramatic/Structural)
+
 """
         
         system_prompt = "You are a literary analysis expert identifying and cataloging micro literary devices according to Kernel Protocol Enhancement v3.3."
@@ -568,13 +661,56 @@ CRITICAL:
         except json.JSONDecodeError as e:
             print(f"\nâŒ Error: Invalid JSON response from Claude")
             print(f"Error details: {e}")
+            # Save problematic response for debugging
+            debug_path = Config.OUTPUTS_DIR / "stage2b_debug_response.json"
+            with open(debug_path, 'w', encoding='utf-8') as f:
+                f.write(result)
+            print(f"Debug: Saved problematic response to {debug_path}")
+            print(f"Response length: {len(result)} characters")
+            print(f"First 500 characters: {result[:500]}")
             return False
         
         # Validate minimum requirements
         device_count = len(devices_json)
-        if device_count < 8:
-            print(f"\nâš ï¸  Warning: Only {device_count} devices found (minimum 15 required)")
+        if device_count < 15:
+            print(f"\nâš ï¸  Warning: Only {device_count} devices found (minimum 15 required, target: 20)")
         
+        # Validate section distribution
+        section_counts = {
+            "exposition": 0,
+            "rising_action": 0,
+            "climax": 0,
+            "falling_action": 0,
+            "resolution": 0
+        }
+        
+        missing_assigned_section = []
+        for device in devices_json:
+            assigned_section = device.get("assigned_section")
+            if not assigned_section:
+                missing_assigned_section.append(device.get("name", "Unknown"))
+            elif assigned_section in section_counts:
+                section_counts[assigned_section] += 1
+        
+        if missing_assigned_section:
+            print(f"\n⚠️  Warning: {len(missing_assigned_section)} device(s) missing 'assigned_section' field")
+        
+        # Check section distribution
+        sections_with_few_devices = []
+        for section, count in section_counts.items():
+            if count < 3:
+                sections_with_few_devices.append(f"{section}: {count} devices (need 3-4)")
+        
+        if sections_with_few_devices:
+            print(f"\n⚠️  Warning: Some sections have insufficient devices:")
+            for section_info in sections_with_few_devices:
+                print(f"  - {section_info}")
+        
+        print(f"\n✓ Device distribution by section:")
+        for section, count in section_counts.items():
+            print(f"  - {section}: {count} devices")
+        
+
         # Review
         if self._review_and_approve("Stage 2B: Micro Devices", result_formatted):
             self.stage2b_devices = devices_json
@@ -591,14 +727,31 @@ CRITICAL:
             print("âŒ Error: Not all stages completed")
             return False
         
+        # Create narrative_position_mapping from extracts
+        narrative_position_mapping = {}
+        for section, data in self.stage1_extracts.get('extracts', {}).items():
+            narrative_position_mapping[section] = {
+                "chapter_range": data.get('chapter_range', ''),
+                "primary_chapter": data.get('primary_chapter', 1),
+                "pages": ""  # Pages would need to be determined from PDF if available
+            }
+        
         kernel = {
             "metadata": {
                 "title": self.title,
                 "author": self.author,
                 "edition": self.edition,
                 "creation_date": datetime.now().isoformat(),
-                "protocol_version": "3.3"
+                "protocol_version": "3.3",
+                "kernel_version": "3.4",
+                "chapter_aware": True
             },
+            "text_structure": {
+                "has_chapters": True,
+                "total_chapters_estimate": self.total_chapters,
+                "notes": "Chapter breaks identified during kernel creation"
+            },
+            "narrative_position_mapping": narrative_position_mapping,
             "extracts": self.stage1_extracts.get('extracts', {}),
             "macro_variables": {
                 "narrative": self.stage2a_macro.get('narrative', {}),
@@ -626,7 +779,7 @@ CRITICAL:
             # Generate default filename
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_kernel_v3.3.json"
+            filename = f"{safe_title}_kernel_v3_4.json"
             output_path = Config.KERNELS_DIR / filename
         
         # Ensure directory exists
