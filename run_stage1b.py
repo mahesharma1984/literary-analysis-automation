@@ -26,15 +26,15 @@ def create_week_package(week_data, week_num):
     teaching_sequences = {
         1: [
             "Introduce concept of literary devices as author's tools",
-            "Define specific devices with clear examples",
-            "Practice identifying devices in text together",
+            "Define exposition and its components",
+            "Practice identifying exposition devices in text together",
             "Explain what each device accomplishes",
             "Begin simple TVODE construction"
         ],
         2: [
-            "Review Week 1 foundation devices",
-            "Introduce macro concept: Rising Action",
-            "Show how devices BUILD rising action and tension",
+            "Review Week 1 exposition devices",
+            "Introduce macro concept: Literary Devices Foundation",
+            "Show how devices BUILD meaning through figurative language",
             "Analyze device-macro connection in text",
             "Practice macro-micro TVODE construction"
         ],
@@ -113,13 +113,13 @@ def create_progression_summary(week_packages):
         "progression": [
             {
                 "week": 1,
-                "focus": "Foundation - What are literary devices?",
-                "skill": "Device recognition and identification"
+                "focus": "Exposition - How characters/setting are introduced",
+                "skill": "Connecting devices to macro exposition concept"
             },
             {
                 "week": 2,
-                "focus": "Exposition - How characters/setting are introduced",
-                "skill": "Connecting devices to macro exposition concept"
+                "focus": "Literary Devices Foundation - What are literary devices?",
+                "skill": "Device recognition and identification"
             },
             {
                 "week": 3,
@@ -130,13 +130,19 @@ def create_progression_summary(week_packages):
                 "week": 4,
                 "focus": "Voice - Narrative perspective",
                 "skill": "Synthesizing macro-micro relationships"
+            },
+            {
+                "week": 5,
+                "focus": "Resolution - How conflicts resolve and themes culminate",
+                "skill": "Comprehensive synthesis of all concepts"
             }
         ],
         "scaffolding_withdrawal": {
             "week1": "High - Teacher-led modeling",
             "week2": "Medium-High - Guided practice",
             "week3": "Medium - Supported independence",
-            "week4": "Medium-Low - Independent analysis"
+            "week4": "Medium-Low - Independent analysis",
+            "week5": "Low - Independent synthesis and analysis"
         }
     }
 
@@ -147,7 +153,7 @@ def generate_progression_document(title, author, week_packages):
 ## 5-Week Literary Analysis Curriculum
 
 **Text:** {title} by {author}  
-**Version:** 5.0 (Macro-Micro Integration)  
+**Version:** 5.1 (Chapter-Aware)  
 **Date:** {datetime.now().strftime('%B %d, %Y')}  
 **Structure:** Macro alignment elements taught through executing micro devices
 
@@ -222,8 +228,8 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
     
     doc += "### Skill Building\n"
     skills = [
-        "1. Device recognition (Week 1)",
-        "2. Macro-micro connection (Week 2)",
+        "1. Exposition and macro-micro connection (Week 1)",
+        "2. Device recognition and identification (Week 2)",
         "3. Structural analysis (Week 3)",
         "4. Voice and perspective (Week 4)",
         "5. Comprehensive synthesis (Week 5)"
@@ -232,10 +238,11 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
     
     doc += "### TVODE Evolution\n"
     tvode_progression = [
-        "Week 1: Simple device TVODE",
-        "Week 2: Macro-micro connection TVODE",
+        "Week 1: Exposition-focused TVODE",
+        "Week 2: Device recognition and macro-micro connection TVODE",
         "Week 3: Structural function TVODE",
-        "Week 4: Complex voice TVODE"
+        "Week 4: Complex voice TVODE",
+        "Week 5: Comprehensive synthesis TVODE"
     ]
     for item in tvode_progression:
         doc += f"- {item}\n"
@@ -305,7 +312,7 @@ def run_stage1b(stage1a_path):
         "metadata": {
             "text_title": title,
             "author": author,
-            "package_version": "5.0",
+            "package_version": "5.1",
             "package_date": datetime.now().isoformat(),
             "structure_type": "macro-micro week packages with pedagogical scaffolding",
             "total_weeks": 5,
@@ -322,7 +329,7 @@ def run_stage1b(stage1a_path):
     safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
     
     # Save JSON
-    output_path = output_dir / f"{safe_title}_stage1b_v5.0.json"
+    output_path = output_dir / f"{safe_title}_stage1b_v5.1.json"
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
     
