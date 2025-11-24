@@ -24,127 +24,179 @@ How conscious is the reader of the device's operation?
 Complete Device Taxonomy
 NARRATIVE STRUCTURE DEVICES
 1. Linear Chronology
-Classification: N | Re | T Definition: Events presented in cause-effect temporal sequence Alignment Function: Reinforces logical/causal rhetorical arguments by matching story order to argument order Reader Experience: Transparent; readers follow naturally without awareness Example: Most realist fiction; journalistic narrative Use Case: When rhetoric requires clear causation or moral progression
+Classification: N | Re | TDefinition: Events presented in cause-effect temporal sequenceAlignment Function: Reinforces logical/causal rhetorical arguments by matching story order to argument orderReader Experience: Transparent; readers follow naturally without awarenessExample: Most realist fiction; journalistic narrativeUse Case: When rhetoric requires clear causation or moral progression
 2. Non-Linear Chronology (Flashback/Flashforward)
-Classification: N | Te/Me | V Definition: Disrupts temporal sequence through analepsis or prolepsis Alignment Function: Can create tension (disrupting rhetorical flow) or mediate (revealing hidden causes) Reader Experience: Visible; reader aware of time manipulation Example: Slaughterhouse-Five (Vonnegut) - "unstuck in time" reinforces fatalism Use Case: When rhetoric requires questioning causation or revealing determinism
+Classification: N | Te/Me | VDefinition: Disrupts temporal sequence through analepsis or prolepsisAlignment Function: Can create tension (disrupting rhetorical flow) or mediate (revealing hidden causes)Reader Experience: Visible; reader aware of time manipulationExample: Slaughterhouse-Five (Vonnegut) - "unstuck in time" reinforces fatalismUse Case: When rhetoric requires questioning causation or revealing determinism
 3. Frame Narrative
-Classification: N | Me | V Definition: Story within story; outer narrator frames inner narrative Alignment Function: Mediates by adding interpretive layer between inner story and reader Reader Experience: Visible; reader aware of dual narrative levels Example: Heart of Darkness (Conrad) - frame creates distance from colonial violence Use Case: When rhetoric requires critical distance or contextual interpretation
+Classification: N | Me | VDefinition: Story within story; outer narrator frames inner narrativeAlignment Function: Mediates by adding interpretive layer between inner story and readerReader Experience: Visible; reader aware of dual narrative levelsExample: Heart of Darkness (Conrad) - frame creates distance from colonial violenceUse Case: When rhetoric requires critical distance or contextual interpretation
 4. In Medias Res
-Classification: N | Te | V Definition: Beginning in middle of action, filling backstory later Alignment Function: Creates tension by disrupting orientation; reader must reconstruct Reader Experience: Visible; reader notices disorientation then reconstruction Example: The Odyssey - begins with Odysseus trapped, flashbacks fill journey Use Case: When rhetoric emphasizes immediacy or consequence over cause
+Classification: N | Te | VDefinition: Beginning in middle of action, filling backstory laterAlignment Function: Creates tension by disrupting orientation; reader must reconstructReader Experience: Visible; reader notices disorientation then reconstructionExample: The Odyssey - begins with Odysseus trapped, flashbacks fill journeyUse Case: When rhetoric emphasizes immediacy or consequence over cause
 5. Circular/Spiral Structure
-Classification: B | Te | V Definition: Narrative returns to starting point or repeats with variation Alignment Function: Creates tension between narrative progress and rhetorical claim of stasis/futility Reader Experience: Visible; reader recognizes pattern return Example: One Hundred Years of Solitude (García Márquez) - cyclical history Use Case: When rhetoric argues inevitability, repetition, or impossibility of change
+Classification: B | Te | VDefinition: Narrative returns to starting point or repeats with variationAlignment Function: Creates tension between narrative progress and rhetorical claim of stasis/futilityReader Experience: Visible; reader recognizes pattern returnExample: One Hundred Years of Solitude (García Márquez) - cyclical historyUse Case: When rhetoric argues inevitability, repetition, or impossibility of change
 6. Episodic Structure
-Classification: N | Re/Te | T/V Definition: Loosely connected events without tight causal links Alignment Function: Can reinforce picaresque rhetoric (life as random) or create tension with unity claims Reader Experience: Transparent if genre-expected, visible if unusual Example: Don Quixote - episodic adventures Use Case: When rhetoric emphasizes variety, exploration, or anti-progression
+Classification: N | Re/Te | T/VDefinition: Loosely connected events without tight causal linksAlignment Function: Can reinforce picaresque rhetoric (life as random) or create tension with unity claimsReader Experience: Transparent if genre-expected, visible if unusualExample: Don Quixote - episodic adventuresUse Case: When rhetoric emphasizes variety, exploration, or anti-progression
+
+7. Climactic Structure
+Classification: N | Re | T Definition: Arrangement of events building toward a peak moment of tension or revelation Alignment Function: Reinforces rhetorical impact by structuring narrative toward maximum intensity Reader Experience: Transparent; readers experience building tension naturally Example: Successive revelations leading to a final confrontation Use Case: When rhetoric requires escalating intensity toward a turning point
 
 NARRATIVE VOICE DEVICES
 7. First-Person Narration
-Classification: N | Re/Te | T Definition: Narrator is character ("I") with limited perspective Alignment Function: Reinforces intimacy/subjectivity rhetoric or creates tension if rhetoric claims objectivity Reader Experience: Transparent; readers adopt perspective naturally Example: The Catcher in the Rye (Salinger) - reinforces alienation theme Use Case: When rhetoric requires personal authenticity or subjective truth
+Classification: N | Re/Te | TDefinition: Narrator is character ("I") with limited perspectiveAlignment Function: Reinforces intimacy/subjectivity rhetoric or creates tension if rhetoric claims objectivityReader Experience: Transparent; readers adopt perspective naturallyExample: The Catcher in the Rye (Salinger) - reinforces alienation themeUse Case: When rhetoric requires personal authenticity or subjective truth
 8. Third-Person Omniscient
-Classification: N | Re | T Definition: Godlike narrator with access to all minds and information Alignment Function: Reinforces authoritative, objective, or moral-judgment rhetoric Reader Experience: Transparent; readers accept narrative authority Example: Middlemarch (Eliot) - narrator makes moral pronouncements Use Case: When rhetoric requires comprehensive view or moral clarity
+Classification: N | Re | TDefinition: Godlike narrator with access to all minds and informationAlignment Function: Reinforces authoritative, objective, or moral-judgment rhetoricReader Experience: Transparent; readers accept narrative authorityExample: Middlemarch (Eliot) - narrator makes moral pronouncementsUse Case: When rhetoric requires comprehensive view or moral clarity
 9. Third-Person Limited
-Classification: N | Me | T Definition: Narration limited to one character's perspective Alignment Function: Mediates between subjective experience and external events Reader Experience: Transparent; readers follow focal character naturally Example: Harry Potter series - limited to Harry's knowledge Use Case: When rhetoric requires both intimacy and external validation
+Classification: N | Me | TDefinition: Narration limited to one character's perspectiveAlignment Function: Mediates between subjective experience and external eventsReader Experience: Transparent; readers follow focal character naturallyExample: Harry Potter series - limited to Harry's knowledgeUse Case: When rhetoric requires both intimacy and external validation
 10. Unreliable Narrator
-Classification: B | Te | V/F Definition: Narrator whose credibility is compromised (bias, deception, instability) Alignment Function: Creates tension between what narrator claims (rhetoric) and what story shows (narrative) Reader Experience: Visible to foregrounded; reader must detect unreliability Example: The Great Gatsby (Fitzgerald) - Nick's biases shape story Use Case: When rhetoric critiques self-deception, bias, or subjective reality
+Classification: B | Te | V/FDefinition: Narrator whose credibility is compromised (bias, deception, instability)Alignment Function: Creates tension between what narrator claims (rhetoric) and what story shows (narrative)Reader Experience: Visible to foregrounded; reader must detect unreliabilityExample: The Great Gatsby (Fitzgerald) - Nick's biases shape storyUse Case: When rhetoric critiques self-deception, bias, or subjective reality
 11. Free Indirect Discourse
-Classification: B | Me | T/V Definition: Third-person narration blended with character's thoughts/voice Alignment Function: Mediates between objective narration and subjective experience Reader Experience: Can be transparent or visible depending on execution Example: Emma (Austen) - narrator slides in/out of Emma's perspective Use Case: When rhetoric requires both sympathy and critical distance
+Classification: B | Me | T/VDefinition: Third-person narration blended with character's thoughts/voiceAlignment Function: Mediates between objective narration and subjective experienceReader Experience: Can be transparent or visible depending on executionExample: Emma (Austen) - narrator slides in/out of Emma's perspectiveUse Case: When rhetoric requires both sympathy and critical distance
 12. Stream of Consciousness
-Classification: N | Re | V/F Definition: Unfiltered flow of character's thoughts Alignment Function: Reinforces psychological realism or fragmentation rhetoric Reader Experience: Visible to foregrounded; technique draws attention Example: Ulysses (Joyce) - Molly Bloom's monologue Use Case: When rhetoric emphasizes interiority, consciousness, or fragmentation
+Classification: N | Re | V/FDefinition: Unfiltered flow of character's thoughtsAlignment Function: Reinforces psychological realism or fragmentation rhetoricReader Experience: Visible to foregrounded; technique draws attentionExample: Ulysses (Joyce) - Molly Bloom's monologueUse Case: When rhetoric emphasizes interiority, consciousness, or fragmentation
 13. Second-Person Narration
-Classification: B | Te | F Definition: Narrator addresses reader as "you," making reader the protagonist Alignment Function: Creates tension by collapsing distance between reader and character Reader Experience: Foregrounded; technique is unavoidable Example: Bright Lights, Big City (McInerney) Use Case: When rhetoric requires reader implication or discomfort
+Classification: B | Te | FDefinition: Narrator addresses reader as "you," making reader the protagonistAlignment Function: Creates tension by collapsing distance between reader and characterReader Experience: Foregrounded; technique is unavoidableExample: Bright Lights, Big City (McInerney)Use Case: When rhetoric requires reader implication or discomfort
+
+DIALOGUE AND SPEECH DEVICES
+14. Dialogue
+Classification: N | Re | T Definition: Direct speech between characters presented in quotation marks Alignment Function: Reinforces narrative momentum and character development through spoken exchange Reader Experience: Transparent; readers process as natural character interaction Example: "I don't understand," she said. "Why won't you tell me?" Use Case: When narrative requires character revelation, conflict, or information exchange
+
+15. Dialect
+Classification: R | Me | V Definition: A particular form of language specific to a region, social group, or time period Alignment Function: Mediates by embedding social/cultural meaning in character speech patterns Reader Experience: Visible; reader notices non-standard speech patterns Example: "You be going to the market?" - regional speech pattern Use Case: When rhetoric requires social distinction, authenticity, or cultural characterization
+
+16. Internal Monologue
+Classification: N | Re | T/V Definition: Character's private thoughts presented directly to the reader Alignment Function: Reinforces intimacy by giving reader access to unspoken thoughts Reader Experience: Can be transparent (brief thoughts) or visible (extended reflection) Example: "She wondered if he had noticed. Probably not. He never noticed anything." Use Case: When narrative requires psychological depth or character interiority
 
 TEMPORAL MANIPULATION DEVICES
-14. Foreshadowing
-Classification: B | Re | T/V Definition: Hints at future events Alignment Function: Reinforces rhetorical themes (fate, inevitability) while advancing narrative suspense Reader Experience: Often transparent initially, visible in retrospect Example: Romeo and Juliet - "star-crossed lovers" signals tragedy Use Case: When rhetoric emphasizes destiny, causation, or thematic inevitability
-15. Flashback (Analepsis)
-Classification: N | Me | V Definition: Interruption to show past events Alignment Function: Mediates by providing causal/contextual information that shapes interpretation Reader Experience: Visible; reader aware of temporal shift Example: Beloved (Morrison) - fragmented memories of slavery Use Case: When rhetoric requires understanding present through past
-16. Flashforward (Prolepsis)
-Classification: N | Te | V Definition: Jump to future events Alignment Function: Creates tension by revealing outcomes before causes Reader Experience: Visible; disrupts normal temporal flow Example: One Hundred Years of Solitude - narrator previews deaths Use Case: When rhetoric emphasizes fatalism or predetermined outcomes
+17. Foreshadowing
+Classification: B | Re | T/VDefinition: Hints at future eventsAlignment Function: Reinforces rhetorical themes (fate, inevitability) while advancing narrative suspenseReader Experience: Often transparent initially, visible in retrospectExample: Romeo and Juliet - "star-crossed lovers" signals tragedyUse Case: When rhetoric emphasizes destiny, causation, or thematic inevitability
+18. Flashback (Analepsis)
+Classification: N | Me | VDefinition: Interruption to show past eventsAlignment Function: Mediates by providing causal/contextual information that shapes interpretationReader Experience: Visible; reader aware of temporal shiftExample: Beloved (Morrison) - fragmented memories of slaveryUse Case: When rhetoric requires understanding present through past
+19. Flashforward (Prolepsis)
+Classification: N | Te | VDefinition: Jump to future eventsAlignment Function: Creates tension by revealing outcomes before causesReader Experience: Visible; disrupts normal temporal flowExample: One Hundred Years of Solitude - narrator previews deathsUse Case: When rhetoric emphasizes fatalism or predetermined outcomes
 
 PACING AND DURATION DEVICES
 17. Scene (Detailed Moment)
-Classification: N | Re | T Definition: Real-time or highly detailed narration of moment Alignment Function: Reinforces importance/intensity rhetoric by slowing narrative time Reader Experience: Transparent; readers experience as "being there" Example: Dialogue scenes, climactic moments Use Case: When rhetoric requires emotional intensity or present-moment awareness
+Classification: N | Re | TDefinition: Real-time or highly detailed narration of momentAlignment Function: Reinforces importance/intensity rhetoric by slowing narrative timeReader Experience: Transparent; readers experience as "being there"Example: Dialogue scenes, climactic momentsUse Case: When rhetoric requires emotional intensity or present-moment awareness
 18. Summary
-Classification: N | Re | T Definition: Compressed time; events described briefly Alignment Function: Reinforces efficiency or de-emphasizes certain events Reader Experience: Transparent; accepted as necessary compression Example: Transitions between important scenes Use Case: When rhetoric prioritizes certain events over others
+Classification: N | Re | TDefinition: Compressed time; events described brieflyAlignment Function: Reinforces efficiency or de-emphasizes certain eventsReader Experience: Transparent; accepted as necessary compressionExample: Transitions between important scenesUse Case: When rhetoric prioritizes certain events over others
 19. Pause (Descriptive/Commentary)
-Classification: B | Me | V Definition: Narrative time stops for description or narrator commentary Alignment Function: Mediates by adding interpretive layer or rhetorical meaning to narrative moment Reader Experience: Visible; reader aware that story has paused Example: Victorian novels - narrator commentary on morality Use Case: When rhetoric requires explicit interpretation or thematic emphasis
+Classification: B | Me | VDefinition: Narrative time stops for description or narrator commentaryAlignment Function: Mediates by adding interpretive layer or rhetorical meaning to narrative momentReader Experience: Visible; reader aware that story has pausedExample: Victorian novels - narrator commentary on moralityUse Case: When rhetoric requires explicit interpretation or thematic emphasis
 20. Ellipsis
-Classification: N | Te | V Definition: Time skipped entirely; gap in narrative Alignment Function: Creates tension by forcing reader to infer missing events Reader Experience: Visible; reader notices the gap Example: Chapter breaks that skip years Use Case: When rhetoric emphasizes what's unsaid or unknowable
+Classification: N | Te | VDefinition: Time skipped entirely; gap in narrativeAlignment Function: Creates tension by forcing reader to infer missing eventsReader Experience: Visible; reader notices the gapExample: Chapter breaks that skip yearsUse Case: When rhetoric emphasizes what's unsaid or unknowable
 
 FIGURATIVE LANGUAGE DEVICES
 21. Metaphor
-Classification: B | Me | T/V Definition: Implicit comparison between unlike things Alignment Function: Mediates by translating narrative concrete into rhetorical abstract Reader Experience: Can be transparent (dead metaphors) or visible (fresh metaphors) Example: "Time is a thief" - translates temporal passage into theft rhetoric Use Case: When rhetoric requires conceptual bridging or abstract ideas
+Classification: B | Me | T/VDefinition: Implicit comparison between unlike thingsAlignment Function: Mediates by translating narrative concrete into rhetorical abstractReader Experience: Can be transparent (dead metaphors) or visible (fresh metaphors)Example: "Time is a thief" - translates temporal passage into theft rhetoricUse Case: When rhetoric requires conceptual bridging or abstract ideas
 22. Simile
-Classification: B | Me | T/V Definition: Explicit comparison using "like" or "as" Alignment Function: Mediates by creating explicit interpretive bridge Reader Experience: Visible; comparison is overt Example: "Her smile was like sunshine" - translates description into emotional meaning Use Case: When rhetoric requires clear, accessible comparison
+Classification: B | Me | T/VDefinition: Explicit comparison using "like" or "as"Alignment Function: Mediates by creating explicit interpretive bridgeReader Experience: Visible; comparison is overtExample: "Her smile was like sunshine" - translates description into emotional meaningUse Case: When rhetoric requires clear, accessible comparison
 23. Personification
-Classification: B | Me | V Definition: Human qualities attributed to non-human Alignment Function: Mediates by making abstract/inanimate accessible to human rhetoric Reader Experience: Visible; reader aware of attribution Example: "Death knocked on the door" - makes mortality relatable Use Case: When rhetoric requires humanizing abstract concepts
+Classification: B | Me | VDefinition: Human qualities attributed to non-humanAlignment Function: Mediates by making abstract/inanimate accessible to human rhetoricReader Experience: Visible; reader aware of attributionExample: "Death knocked on the door" - makes mortality relatableUse Case: When rhetoric requires humanizing abstract concepts
 24. Hyperbole
-Classification: R | Re | V Definition: Deliberate exaggeration Alignment Function: Reinforces rhetorical emphasis or emotional intensity Reader Experience: Visible; reader recognizes exaggeration Example: "I've told you a million times" - emphasizes frustration Use Case: When rhetoric requires emphasis or emotional amplification
+Classification: R | Re | VDefinition: Deliberate exaggerationAlignment Function: Reinforces rhetorical emphasis or emotional intensityReader Experience: Visible; reader recognizes exaggerationExample: "I've told you a million times" - emphasizes frustrationUse Case: When rhetoric requires emphasis or emotional amplification
 25. Understatement/Litotes
-Classification: R | Te | V Definition: Deliberate minimization Alignment Function: Creates tension between literal statement and implied meaning Reader Experience: Visible; reader must recognize restraint Example: "Not bad" meaning "excellent" - British reserve Use Case: When rhetoric requires irony, sophistication, or cultural coding
+Classification: R | Te | VDefinition: Deliberate minimizationAlignment Function: Creates tension between literal statement and implied meaningReader Experience: Visible; reader must recognize restraintExample: "Not bad" meaning "excellent" - British reserveUse Case: When rhetoric requires irony, sophistication, or cultural coding
+
+26. Imagery
+Classification: B | Me | T/V Definition: Vivid descriptive language that appeals to the senses (sight, sound, touch, taste, smell) Alignment Function: Mediates by translating abstract ideas into concrete sensory experience Reader Experience: Can be transparent (simple description) or visible (elaborate sensory detail) Example: "The cold bit through his thin jacket, and the smell of woodsmoke hung in the air" Use Case: When rhetoric requires immersive experience or emotional atmosphere
+
+27. Euphemism
+Classification: B | Me | V Definition: A mild or indirect term substituted for something harsh, blunt, or offensive Alignment Function: Mediates by revealing how language conceals uncomfortable truths Reader Experience: Visible; reader recognizes the softening of harsh reality Example: "Passed away" instead of "died"; "let go" instead of "fired" Use Case: When rhetoric exposes social hypocrisy or reveals character avoidance
+
+28. Allusion
+Classification: B | Me | V Definition: A brief reference to a person, place, event, or text outside the narrative Alignment Function: Mediates by importing external meaning into narrative context Reader Experience: Visible to those who recognize the reference Example: "He was a real Romeo" - references Shakespeare's character Use Case: When rhetoric requires cultural depth or shared knowledge
 
 SYMBOLIC AND ALLEGORICAL DEVICES
 26. Symbolism
-Classification: B | Me | T/V Definition: Objects/events representing abstract ideas Alignment Function: Mediates by embedding rhetorical meaning in narrative elements Reader Experience: Can be transparent (conventional symbols) or visible (private symbols) Example: Green light in Gatsby = hope/American Dream Use Case: When rhetoric requires thematic depth or multi-layered meaning
+Classification: B | Me | T/VDefinition: Objects/events representing abstract ideasAlignment Function: Mediates by embedding rhetorical meaning in narrative elementsReader Experience: Can be transparent (conventional symbols) or visible (private symbols)Example: Green light in Gatsby = hope/American DreamUse Case: When rhetoric requires thematic depth or multi-layered meaning
 27. Allegory
-Classification: B | Re | V/F Definition: Extended symbolic narrative where everything has secondary meaning Alignment Function: Reinforces one-to-one correspondence between narrative and rhetoric Reader Experience: Visible to foregrounded; reader must decode Example: Animal Farm (Orwell) - animals = Russian Revolution figures Use Case: When rhetoric requires sustained political/moral argument
+Classification: B | Re | V/FDefinition: Extended symbolic narrative where everything has secondary meaningAlignment Function: Reinforces one-to-one correspondence between narrative and rhetoricReader Experience: Visible to foregrounded; reader must decodeExample: Animal Farm (Orwell) - animals = Russian Revolution figuresUse Case: When rhetoric requires sustained political/moral argument
 28. Motif
-Classification: B | Re | T/V Definition: Recurring element (image, phrase, idea) building theme Alignment Function: Reinforces rhetorical theme through repetition in narrative Reader Experience: Transparent initially, visible through accumulation Example: Blood imagery in Macbeth - reinforces guilt theme Use Case: When rhetoric requires thematic unity or emphasis through pattern
+Classification: B | Re | T/VDefinition: Recurring element (image, phrase, idea) building themeAlignment Function: Reinforces rhetorical theme through repetition in narrativeReader Experience: Transparent initially, visible through accumulationExample: Blood imagery in Macbeth - reinforces guilt themeUse Case: When rhetoric requires thematic unity or emphasis through pattern
 
 IRONY DEVICES
 29. Verbal Irony
-Classification: R | Te | V Definition: Saying opposite of what's meant Alignment Function: Creates tension between literal statement and intended meaning Reader Experience: Visible; reader must detect reversal Example: "Wonderful weather" during a storm - sarcasm Use Case: When rhetoric requires critique, humor, or social commentary
+Classification: R | Te | VDefinition: Saying opposite of what's meantAlignment Function: Creates tension between literal statement and intended meaningReader Experience: Visible; reader must detect reversalExample: "Wonderful weather" during a storm - sarcasmUse Case: When rhetoric requires critique, humor, or social commentary
 30. Situational Irony
-Classification: B | Te | V Definition: Events contradict expectations Alignment Function: Creates tension between what happens (narrative) and what should happen (rhetoric) Reader Experience: Visible; reader recognizes contradiction Example: Fire station burns down - contradicts function Use Case: When rhetoric critiques assumptions or reveals absurdity
+Classification: B | Te | VDefinition: Events contradict expectationsAlignment Function: Creates tension between what happens (narrative) and what should happen (rhetoric)Reader Experience: Visible; reader recognizes contradictionExample: Fire station burns down - contradicts functionUse Case: When rhetoric critiques assumptions or reveals absurdity
 31. Dramatic Irony
-Classification: B | Te | V Definition: Reader knows more than character Alignment Function: Creates tension between character's understanding and reader's knowledge Reader Experience: Visible; reader actively aware of gap Example: Oedipus - audience knows his identity before he does Use Case: When rhetoric requires critique of limited perspective or self-deception
+Classification: B | Te | VDefinition: Reader knows more than characterAlignment Function: Creates tension between character's understanding and reader's knowledgeReader Experience: Visible; reader actively aware of gapExample: Oedipus - audience knows his identity before he doesUse Case: When rhetoric requires critique of limited perspective or self-deception
 32. Structural Irony
-Classification: B | Te | F Definition: Sustained ironic stance throughout work Alignment Function: Creates ongoing tension between surface narrative and deeper rhetoric Reader Experience: Foregrounded; sustained detection required Example: Gulliver's Travels (Swift) - apparent travelogue, actual satire Use Case: When rhetoric requires sustained critique or satire
+Classification: B | Te | FDefinition: Sustained ironic stance throughout workAlignment Function: Creates ongoing tension between surface narrative and deeper rhetoricReader Experience: Foregrounded; sustained detection requiredExample: Gulliver's Travels (Swift) - apparent travelogue, actual satireUse Case: When rhetoric requires sustained critique or satire
 
 RHETORICAL SOUND AND RHYTHM DEVICES
 33. Alliteration/Assonance/Consonance
-Classification: R | Re | T/V Definition: Repeated sounds creating pattern Alignment Function: Reinforces rhetorical emphasis through phonetic pleasure/memorability Reader Experience: Can be transparent (unconscious) or visible (obvious pattern) Example: "Peter Piper picked" - emphasizes through sound Use Case: When rhetoric requires memorability, emphasis, or aesthetic pleasure
+Classification: R | Re | T/VDefinition: Repeated sounds creating patternAlignment Function: Reinforces rhetorical emphasis through phonetic pleasure/memorabilityReader Experience: Can be transparent (unconscious) or visible (obvious pattern)Example: "Peter Piper picked" - emphasizes through soundUse Case: When rhetoric requires memorability, emphasis, or aesthetic pleasure
 34. Rhythm/Meter
-Classification: R | Re | T/V Definition: Patterned stress in language Alignment Function: Reinforces rhetorical tone (formal, casual, urgent) through sound pattern Reader Experience: Transparent in prose, visible in poetry Example: Iambic pentameter in Shakespeare - creates elevated tone Use Case: When rhetoric requires tonal consistency or aesthetic formality
+Classification: R | Re | T/VDefinition: Patterned stress in languageAlignment Function: Reinforces rhetorical tone (formal, casual, urgent) through sound patternReader Experience: Transparent in prose, visible in poetryExample: Iambic pentameter in Shakespeare - creates elevated toneUse Case: When rhetoric requires tonal consistency or aesthetic formality
 35. Onomatopoeia
-Classification: B | Re | T Definition: Words mimicking sounds Alignment Function: Reinforces sensory narrative through sound-meaning correspondence Reader Experience: Transparent; immediate sound association Example: "Buzz," "crash," "whisper" Use Case: When rhetoric requires sensory immediacy or vividness
+Classification: B | Re | TDefinition: Words mimicking soundsAlignment Function: Reinforces sensory narrative through sound-meaning correspondenceReader Experience: Transparent; immediate sound associationExample: "Buzz," "crash," "whisper"Use Case: When rhetoric requires sensory immediacy or vividness
 
 STRUCTURAL REPETITION DEVICES
 36. Parallelism
-Classification: R | Re | V Definition: Repeated grammatical structures Alignment Function: Reinforces rhetorical emphasis, equality, or patterned thinking Reader Experience: Visible; reader recognizes structural echo Example: "I came, I saw, I conquered" - emphasizes sequence and agency Use Case: When rhetoric requires emphasis, clarity, or persuasive rhythm
+Classification: R | Re | VDefinition: Repeated grammatical structuresAlignment Function: Reinforces rhetorical emphasis, equality, or patterned thinkingReader Experience: Visible; reader recognizes structural echoExample: "I came, I saw, I conquered" - emphasizes sequence and agencyUse Case: When rhetoric requires emphasis, clarity, or persuasive rhythm
 37. Anaphora
-Classification: R | Re | V Definition: Repetition at beginning of clauses Alignment Function: Reinforces rhetorical emphasis through accumulation Reader Experience: Visible; clear repetition pattern Example: King's "I have a dream" speech - repeated phrase builds emotion Use Case: When rhetoric requires mounting emphasis or emotional crescendo
+Classification: R | Re | VDefinition: Repetition at beginning of clausesAlignment Function: Reinforces rhetorical emphasis through accumulationReader Experience: Visible; clear repetition patternExample: King's "I have a dream" speech - repeated phrase builds emotionUse Case: When rhetoric requires mounting emphasis or emotional crescendo
 38. Epistrophe
-Classification: R | Re | V Definition: Repetition at end of clauses Alignment Function: Reinforces conclusion or theme through ending emphasis Reader Experience: Visible; reader recognizes pattern Example: Lincoln's "government of the people, by the people, for the people" Use Case: When rhetoric requires unity or closure emphasis
+Classification: R | Re | VDefinition: Repetition at end of clausesAlignment Function: Reinforces conclusion or theme through ending emphasisReader Experience: Visible; reader recognizes patternExample: Lincoln's "government of the people, by the people, for the people"Use Case: When rhetoric requires unity or closure emphasis
 39. Chiasmus
-Classification: R | Re | V/F Definition: Reversed parallel structure (AB-BA) Alignment Function: Reinforces rhetorical balance or reversal through symmetry Reader Experience: Visible to foregrounded; elegant structure draws attention Example: "Ask not what your country can do for you..." Use Case: When rhetoric requires balance, wit, or reversal emphasis
+Classification: R | Re | V/FDefinition: Reversed parallel structure (AB-BA)Alignment Function: Reinforces rhetorical balance or reversal through symmetryReader Experience: Visible to foregrounded; elegant structure draws attentionExample: "Ask not what your country can do for you..."Use Case: When rhetoric requires balance, wit, or reversal emphasis
 40. Polysyndeton
-Classification: R | Re | V Definition: Excessive conjunctions Alignment Function: Reinforces accumulation, weight, or breathless energy Reader Experience: Visible; reader notices "and and and" Example: "We ate and laughed and talked and danced" - emphasizes fullness Use Case: When rhetoric requires overwhelming abundance or energy
+Classification: R | Re | VDefinition: Excessive conjunctionsAlignment Function: Reinforces accumulation, weight, or breathless energyReader Experience: Visible; reader notices "and and and"Example: "We ate and laughed and talked and danced" - emphasizes fullnessUse Case: When rhetoric requires overwhelming abundance or energy
 41. Asyndeton
-Classification: R | Re | V Definition: Omitted conjunctions Alignment Function: Reinforces speed, urgency, or starkness Reader Experience: Visible; reader notices absence/speed Example: "I came, I saw, I conquered" - emphasizes rapid action Use Case: When rhetoric requires urgency, efficiency, or impact
+Classification: R | Re | VDefinition: Omitted conjunctionsAlignment Function: Reinforces speed, urgency, or starknessReader Experience: Visible; reader notices absence/speedExample: "I came, I saw, I conquered" - emphasizes rapid actionUse Case: When rhetoric requires urgency, efficiency, or impact
 
 JUXTAPOSITION AND CONTRAST DEVICES
 42. Juxtaposition
-Classification: B | Me | V Definition: Placing contrasting elements side by side Alignment Function: Mediates by creating interpretive comparison between narrative elements Reader Experience: Visible; reader notices deliberate pairing Example: Wealth/poverty scenes alternating in Bleak House Use Case: When rhetoric requires comparison, critique, or thematic tension
+Classification: B | Me | VDefinition: Placing contrasting elements side by sideAlignment Function: Mediates by creating interpretive comparison between narrative elementsReader Experience: Visible; reader notices deliberate pairingExample: Wealth/poverty scenes alternating in Bleak HouseUse Case: When rhetoric requires comparison, critique, or thematic tension
 43. Paradox
-Classification: B | Te | V Definition: Apparent contradiction revealing truth Alignment Function: Creates tension between logical impossibility and intuitive truth Reader Experience: Visible; reader must resolve contradiction Example: "Less is more" - contradicts logic but reveals truth Use Case: When rhetoric requires complexity or philosophical insight
+Classification: B | Te | VDefinition: Apparent contradiction revealing truthAlignment Function: Creates tension between logical impossibility and intuitive truthReader Experience: Visible; reader must resolve contradictionExample: "Less is more" - contradicts logic but reveals truthUse Case: When rhetoric requires complexity or philosophical insight
 44. Oxymoron
-Classification: R | Te | V Definition: Contradictory terms together Alignment Function: Creates tension within single phrase Reader Experience: Visible; immediate contradiction noticed Example: "Deafening silence" - contradictory but meaningful Use Case: When rhetoric requires compact complexity or paradox
+Classification: R | Te | VDefinition: Contradictory terms togetherAlignment Function: Creates tension within single phraseReader Experience: Visible; immediate contradiction noticedExample: "Deafening silence" - contradictory but meaningfulUse Case: When rhetoric requires compact complexity or paradox
 
 METAFICTIONAL AND SELF-REFLEXIVE DEVICES
 45. Metafiction
-Classification: B | Te | F Definition: Narrative that draws attention to its own construction Alignment Function: Creates tension by breaking illusion; narrative acknowledges itself as narrative Reader Experience: Foregrounded; impossible to ignore Example: Tristram Shandy (Sterne) - narrator discusses writing the book Use Case: When rhetoric critiques narrative itself or questions representation
+Classification: B | Te | FDefinition: Narrative that draws attention to its own constructionAlignment Function: Creates tension by breaking illusion; narrative acknowledges itself as narrativeReader Experience: Foregrounded; impossible to ignoreExample: Tristram Shandy (Sterne) - narrator discusses writing the bookUse Case: When rhetoric critiques narrative itself or questions representation
 46. Breaking Fourth Wall
-Classification: B | Te | F Definition: Direct address to reader/audience Alignment Function: Creates tension by collapsing distance between fiction and reality Reader Experience: Foregrounded; narrator acknowledges reader presence Example: Narrator says "Dear reader" or character looks at camera Use Case: When rhetoric requires reader complicity or illusion-breaking
+Classification: B | Te | FDefinition: Direct address to reader/audienceAlignment Function: Creates tension by collapsing distance between fiction and realityReader Experience: Foregrounded; narrator acknowledges reader presenceExample: Narrator says "Dear reader" or character looks at cameraUse Case: When rhetoric requires reader complicity or illusion-breaking
 47. Unreliable Chronology
-Classification: B | Te | V/F Definition: Inconsistent or contradictory timeline Alignment Function: Creates tension by undermining narrative authority Reader Experience: Visible to foregrounded; reader must detect inconsistency Example: Contradictory accounts of same event Use Case: When rhetoric questions truth, memory, or narrative authority
+Classification: B | Te | V/FDefinition: Inconsistent or contradictory timelineAlignment Function: Creates tension by undermining narrative authorityReader Experience: Visible to foregrounded; reader must detect inconsistencyExample: Contradictory accounts of same eventUse Case: When rhetoric questions truth, memory, or narrative authority
 
 RHETORICAL APPEAL DEVICES
 48. Apostrophe (Rhetorical)
-Classification: R | Re | V Definition: Direct address to absent person or abstract concept Alignment Function: Reinforces emotional rhetoric through performative address Reader Experience: Visible; clearly rhetorical gesture Example: "O Death, where is thy sting?" Use Case: When rhetoric requires elevated emotion or philosophical address
+Classification: R | Re | VDefinition: Direct address to absent person or abstract conceptAlignment Function: Reinforces emotional rhetoric through performative addressReader Experience: Visible; clearly rhetorical gestureExample: "O Death, where is thy sting?"Use Case: When rhetoric requires elevated emotion or philosophical address
 49. Rhetorical Question
-Classification: R | Re | V Definition: Question asked for effect, not answer Alignment Function: Reinforces rhetorical claim by inviting (false) participation Reader Experience: Visible; reader recognizes non-question Example: "Who can deny this truth?" Use Case: When rhetoric requires emphasis or implied consensus
+Classification: R | Re | VDefinition: Question asked for effect, not answerAlignment Function: Reinforces rhetorical claim by inviting (false) participationReader Experience: Visible; reader recognizes non-questionExample: "Who can deny this truth?"Use Case: When rhetoric requires emphasis or implied consensus
 50. Ethos Establishment
-Classification: R | Re | T/V Definition: Building speaker credibility Alignment Function: Reinforces rhetorical authority through credentials/character Reader Experience: Can be transparent or visible depending on subtlety Example: "As a doctor, I can assure you..." Use Case: When rhetoric requires trust or authoritative positioning
+Classification: R | Re | T/VDefinition: Building speaker credibilityAlignment Function: Reinforces rhetorical authority through credentials/characterReader Experience: Can be transparent or visible depending on subtletyExample: "As a doctor, I can assure you..."Use Case: When rhetoric requires trust or authoritative positioning
+
+51. Pathos (Emotional Appeal)
+Classification: R | Re | V Definition: Language designed to evoke strong emotional responses in the reader Alignment Function: Reinforces rhetorical persuasion through emotional engagement Reader Experience: Visible; reader aware of emotional manipulation Example: "Think of the children who will suffer" - appeals to compassion Use Case: When rhetoric requires emotional persuasion or reader sympathy
+
+CHARACTER DEVELOPMENT DEVICES
+52. Direct Characterization
+Classification: N | Re | T Definition: Narrator explicitly tells the reader about a character's traits Alignment Function: Reinforces character understanding through direct statement Reader Experience: Transparent; reader accepts narrator's authority Example: "Tom was a cruel man who enjoyed others' suffering" Use Case: When rhetoric requires clear moral positioning or efficiency
+
+53. Indirect Characterization
+Classification: N | Me | T/V Definition: Character traits revealed through actions, speech, thoughts, or others' reactions Alignment Function: Mediates by requiring reader inference about character Reader Experience: Transparent (obvious actions) to visible (subtle implications) Example: Character kicks a dog; reader infers cruelty without being told Use Case: When rhetoric requires reader engagement or character complexity
+
+54. Foil
+Classification: B | Me | V Definition: A character who contrasts with another to highlight particular qualities Alignment Function: Mediates by making traits visible through contrast Reader Experience: Visible; reader notices the deliberate contrast Example: Mercutio's wit contrasts with Romeo's melancholy Use Case: When rhetoric requires emphasis on specific character traits
+
+ATMOSPHERE AND SETTING DEVICES
+55. Pathetic Fallacy
+Classification: B | Re | V Definition: Attributing human emotions to nature or weather to reflect character mood Alignment Function: Reinforces emotional tone by aligning environment with internal state Reader Experience: Visible; reader recognizes the correspondence Example: Storm during an argument; sunshine during reconciliation Use Case: When rhetoric requires environmental reinforcement of emotion
+
+56. Setting as Symbol
+Classification: B | Me | V Definition: Physical location carrying thematic or emotional significance beyond literal meaning Alignment Function: Mediates by embedding meaning in narrative space Reader Experience: Visible; reader interprets setting meaningfully Example: Prison representing psychological confinement; garden representing growth Use Case: When rhetoric requires spatial embodiment of theme
+
+TENSION AND SUSPENSE DEVICES
+57. Suspense
+Classification: B | Te | T/V Definition: Uncertainty about outcome created to maintain reader interest Alignment Function: Creates tension between reader's desire to know and delayed revelation Reader Experience: Transparent (page-turner effect) to visible (recognized technique) Example: "Little did she know what awaited behind that door" Use Case: When rhetoric requires reader investment in outcome
+
+58. Cliffhanger
+Classification: N | Te | F Definition: Ending a section at a moment of high tension or unresolved conflict Alignment Function: Creates tension by interrupting narrative at peak uncertainty Reader Experience: Foregrounded; reader acutely aware of interruption Example: Chapter ends with "The gun fired" before revealing who was hit Use Case: When rhetoric requires sustained reader engagement across breaks
+
+59. Red Herring
+Classification: B | Te | V Definition: A misleading clue or distraction from the true direction of narrative Alignment Function: Creates tension between reader expectation and eventual revelation Reader Experience: Visible in retrospect; reader recognizes misdirection Example: Suspicious character who turns out to be innocent Use Case: When rhetoric requires surprise or critique of assumptions
 
 SUMMARY TABLES
 Distribution by Operational Layer
@@ -189,6 +241,23 @@ For Quality Evaluation
 * Medium quality: Devices present but underutilized or inconsistent
 * Low quality: Device use contradicts rhetoric or draws unwanted attention
 
+NAMING CONVENTIONS
+When identifying devices, use the BASE NAME only:
+
+- ✓ "Motif" NOT "Hope Motif" or "Color Motif"
+
+- ✓ "Symbolism" NOT "Light Symbolism" or "Water Symbolism"
+
+- ✓ "Imagery" NOT "Visual Imagery" or "Auditory Imagery"
+
+For Irony, ALWAYS specify type:
+
+- ✓ "Verbal Irony" or "Situational Irony" or "Dramatic Irony" or "Structural Irony"
+
+- ✗ "Irony" (too vague)
+
+Device names should match taxonomy exactly. Do not create compound names or qualified versions.
+
 SPECIAL DEVICE COMBINATIONS
 Common Reinforcing Clusters
 * Linear chronology + scene + metaphor = realist meaning production
@@ -229,7 +298,7 @@ Medium-Specific Adaptations Needed
 * Interactive: Player agency devices
 
 VERSION CONTROL
-Version: 1.0 Date: 2025 Status: Core 50 devices classified; tested against LEM framework Validation Status: Theoretical; requires empirical testing Next Steps:
+Version: 1.0Date: 2025Status: Core 50 devices classified; tested against LEM frameworkValidation Status: Theoretical; requires empirical testingNext Steps:
 1. Validate classifications through text corpus analysis
 2. Test inter-rater reliability on device identification
 3. Expand to include medium-specific devices
