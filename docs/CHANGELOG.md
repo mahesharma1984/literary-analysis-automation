@@ -15,6 +15,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+### [v5.1.2] - 2025-11-24
+
+#### Added
+- **Archive versioning system** (`archive_versioning.py`)
+  - Automated file archiving with version tracking
+  - Metadata tracking in `archive/archive_metadata.json`
+  - Archive documentation (`docs/ARCHIVE_VERSIONING_GUIDE.md`)
+  - Archive directory README with usage instructions
+- Updated The Giver kernel files:
+  - `The_Giver_kernel_v3.3.json` - Updated kernel data
+  - `The_Giver_kernel_v3_4.json` - New v3.4 kernel format
+  - `The_Giver_ReasoningDoc_v3.3.md` - Updated reasoning document
+
+#### Changed
+- Updated device taxonomy protocol (`Artifact_1_-_Device_Taxonomy_by_Alignment_Function.md`)
+- Updated The Giver worksheets and integrated progression:
+  - `The_Giver_Week1_Worksheet.md`
+  - `The_Giver_Week1_TeacherKey.md`
+  - `The_Giver_Integrated_Progression.md`
+- Updated pipeline scripts:
+  - `run_stage1a.py` - Improvements to stage 1A processing
+  - `run_stage1b.py` - Improvements to stage 1B processing
+  - `create_kernel.py` - Kernel creation enhancements
+- Updated `README.md` with latest project information
+
+#### Dependencies
+- Archive versioning system enables better file management
+- Kernel v3.4 format supports enhanced device tracking
+- Updated taxonomy protocol improves device categorization
+
+---
+
 ### [v5.1.1] - 2025-11-24
 
 #### Changed
@@ -607,5 +639,5 @@ For questions about version compatibility or migration:
 
 ---
 
-**Last Updated:** 2025-11-24  
+**Last Updated:** 2025-11-24 (v5.1.2)  
 **Changelog Maintainer:** Project Documentation System

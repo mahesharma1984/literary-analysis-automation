@@ -1,6 +1,6 @@
 # Literary Analysis Automation - Current Version
 # Last Updated: November 24, 2025
-# System Version: 5.1
+# System Version: 5.1.2
 # ✓ Verified empirically by checking actual outputs
 
 ## PRODUCTION PIPELINE (Verified Working):
@@ -35,8 +35,11 @@ Run `python3 verify_pipeline.py` to re-verify at any time.
 - run_stage1b.py (teaching progression)
 - run_stage2.py (worksheet generation - template-based approach, main version)
 - create_kernel.py (kernel creation automation)
+- archive_versioning.py (file archiving and version tracking)
 
 ## ARCHIVED VERSIONS:
+- Archive versioning system: `archive_versioning.py` with metadata tracking
+- archive/archive_metadata.json (tracks all archived file versions)
 - archive/run_stage2_old.py (previous fixed version with kernel input)
 - archive/run_stage2_old_v2.py (previous non-template version)
 - archive/run_stage2_template.py (backup of template version, now main)
@@ -59,3 +62,5 @@ Run full test:
 
 ## FOR DOCUMENTATION:
 See docs/DEVELOPER_GUIDE.md
+See docs/CHANGELOG.md for version history
+See docs/ARCHIVE_VERSIONING_GUIDE.md for archive system usage
