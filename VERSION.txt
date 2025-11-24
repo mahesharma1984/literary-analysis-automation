@@ -1,6 +1,6 @@
 # Literary Analysis Automation - Current Version
-# Last Updated: November 21, 2025
-# System Version: 5.0
+# Last Updated: November 24, 2025
+# System Version: 5.1
 # ✓ Verified empirically by checking actual outputs
 
 ## PRODUCTION PIPELINE (Verified Working):
@@ -14,11 +14,11 @@ Stage 1B: run_stage1b.py
   Output: outputs/[book]_stage1b_v5.0.json (verified: 5 weeks)
           outputs/[book]_Integrated_Progression.md
 
-Stage 2:  run_stage2_fixed.py
+Stage 2:  run_stage2.py
   Input:  outputs/[book]_stage1b_v5.0.json
           kernels/[book]_kernel_v3.3.json
-  Output: outputs/books/[book]_Week[N]_Worksheet.md
-          outputs/books/[book]_Week[N]_TeacherKey.md
+  Output: outputs/worksheets/[book]_Week[N]_Worksheet.md
+          outputs/worksheets/[book]_Week[N]_TeacherKey.md
 
 ## HOW THIS WAS VERIFIED:
 
@@ -34,13 +34,14 @@ Run `python3 verify_pipeline.py` to re-verify at any time.
 - device_taxonomy_mapping.json (5-week categorization)
 - run_stage1a.py (macro-micro package creation)
 - run_stage1b.py (teaching progression)
-- run_stage2_fixed.py (worksheet generation)
+- run_stage2.py (worksheet generation)
+- create_kernel.py (kernel creation automation)
 
 ## FOLDER STRUCTURE:
 - /kernels/         : Book kernels (v3.3 format)
 - /outputs/         : Stage 1A/1B JSON outputs
-- /outputs/books/   : Final worksheets & teacher keys
-- /templates/       : Worksheet templates
+- /outputs/worksheets/ : Final worksheets & teacher keys
+- /templates/       : Worksheet templates (Template_Literary_Analysis_6Step.md, etc.)
 - /tests/           : Test scripts
 - /docs/            : Documentation
 - /archive/         : Old/experimental files

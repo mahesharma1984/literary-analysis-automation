@@ -241,29 +241,59 @@ Using Claude Sonnet 4.5 via API:
 
 Much cheaper than using Claude Pro credits in chat!
 
-## Next Steps
+## Complete Pipeline
 
-Once you have a kernel JSON, you can:
+This repository contains a complete automation pipeline for literary analysis:
 
-1. **Run Stage 1A:** Extract macro-micro packages
-   ```bash
-   python run_stage1a.py kernels/TKAM_kernel_v3.3.json
-   ```
+1. **Kernel Creation** (`create_kernel.py`) - Create kernel JSONs from book PDFs
+2. **Stage 1A** (`run_stage1a.py`) - Extract macro-micro packages (5 weeks)
+3. **Stage 1B** (`run_stage1b.py`) - Create weekly teaching packages
+4. **Stage 2** (`run_stage2.py`) - Generate worksheets and teacher keys
 
-2. **Run Stage 1B:** Package into 4 weeks
-   ```bash
-   python run_stage1b.py outputs/TKAM_stage1a_v5.0.json
-   ```
+### Quick Start
 
-3. **Run Stage 2:** Generate worksheets
-   ```bash
-   python run_stage2.py outputs/TKAM_stage1b_v5.0.json
-   ```
+```bash
+# 1. Create kernel
+python3 create_kernel.py books/TKAM.pdf "To Kill a Mockingbird" "Harper Lee" "1960"
+
+# 2. Run Stage 1A (instant, free)
+python3 run_stage1a.py kernels/To_Kill_a_Mockingbird_kernel_v3.3.json
+
+# 3. Run Stage 1B (instant, free)
+python3 run_stage1b.py outputs/To_Kill_a_Mockingbird_stage1a_v5.0.json
+
+# 4. Generate worksheets (requires API key)
+python3 run_stage2.py outputs/To_Kill_a_Mockingbird_stage1b_v5.0.json --all-weeks
+```
+
+**Total time:** ~30 minutes  
+**Total cost:** ~$2-3 per book (kernel + worksheets)
+
+## Documentation
+
+- **[Stage Automation Guide](docs/STAGE_AUTOMATION_GUIDE.md)** - Complete workflow for Stages 1A/1B/2
+- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - How to modify the codebase safely
+- **[Changelog](docs/CHANGELOG.md)** - Version history and migration guides
+- **[Quick Start](QUICKSTART.md)** - Get running in 5 minutes
+- **[Version Info](VERSION.txt)** - Current system version (5.1)
+
+## System Version
+
+**Current Version:** 5.1 (November 2025)
+
+- 5-week pedagogical progression
+- Macro-micro integration
+- Device taxonomy mapping system
+- Automated worksheet generation
+
+See [VERSION.txt](VERSION.txt) for detailed pipeline information.
 
 ## Support
 
 For issues or questions:
-- Check protocol documentation in `protocols/`
+- Check documentation in `docs/` folder
+- Review [Developer Guide](docs/DEVELOPER_GUIDE.md) for making changes
+- Check [Changelog](docs/CHANGELOG.md) for version compatibility
 - Review example kernels in `kernels/`
 - Verify your protocol versions match (v3.3)
 

@@ -3,7 +3,7 @@
 **Purpose:** Instructions for AI assistants (Claude) or developers on how to safely modify this codebase without creating cascading errors.
 
 **Last Updated:** November 18, 2025  
-**System Version:** 5.0 (5-week progression with device taxonomy mapping)
+**System Version:** 5.1 (5-week progression with device taxonomy mapping)
 
 ---
 
@@ -22,7 +22,7 @@ Stage 1A JSON output
     ↓
 Stage 1B JSON output + Integrated Progression MD
     ↓
-[Stage 2] run_stage2_fixed.py
+[Stage 2] run_stage2.py
     ↓
 Weekly worksheets (Literary Analysis + TVODE + Teacher Key)
 ```
@@ -34,7 +34,7 @@ Weekly worksheets (Literary Analysis + TVODE + Teacher Key)
 | `device_taxonomy_mapping.json` | Device→Week categorization | None | JSON mapping structure |
 | `run_stage1a.py` | Extract macro-micro packages | kernel, mapping | JSON with 5 week packages |
 | `run_stage1b.py` | Create weekly teaching progression | Stage 1A JSON | JSON + Markdown document |
-| `run_stage2_fixed.py` | Generate worksheets | Stage 1B JSON, kernel | Markdown worksheets |
+| `run_stage2.py` | Generate worksheets | Stage 1B JSON, kernel | Markdown worksheets |
 
 ### Key Data Structures
 
@@ -111,7 +111,7 @@ run_stage1a.py (create_macro_micro_packages function)
   ↓ output format breaks
 run_stage1b.py (create_week_package function)
   ↓ markdown format breaks
-run_stage2_fixed.py
+run_stage2.py
 ```
 
 **Use this checklist:**
@@ -256,7 +256,7 @@ I'm providing the complete rewritten file to avoid this cycle.
    - `teaching_approaches` dict
    - Loop ranges: `range(1, 6)` → `range(1, 7)`
    - Progression summary
-4. `run_stage2_fixed.py`:
+4. `run_stage2.py`:
    - Week lookup logic (if hardcoded)
 
 **Recommendation:** DON'T add weeks without careful planning. This is a major refactor.
@@ -285,7 +285,7 @@ def categorize_device(device_name: str, classification: str) -> tuple:
 
 **Impact:** Low - Stage 2 only  
 **Steps:**
-1. Edit `run_stage2_fixed.py` only
+1. Edit `run_stage2.py` only
 2. Update template strings
 3. Test output format
 4. No upstream changes needed
@@ -329,7 +329,7 @@ If you see KeyError → I missed updating a dict key
 # Test complete pipeline
 python3 run_stage1a.py kernels/The_Giver_kernel_v3.3.json
 python3 run_stage1b.py outputs/The_Giver_stage1a_v5.0.json
-python3 run_stage2_fixed.py outputs/The_Giver_stage1b_v5.0.json kernels/The_Giver_kernel_v3.3.json --week 1
+python3 run_stage2.py outputs/The_Giver_stage1b_v5.0.json kernels/The_Giver_kernel_v3.3.json --week 1
 
 # Should produce:
 # - Stage 1A JSON with 5 week packages

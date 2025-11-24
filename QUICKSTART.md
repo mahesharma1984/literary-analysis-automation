@@ -87,7 +87,9 @@ A complete kernel JSON with:
 
 Once you have a kernel, you can:
 1. Run Stage 1A to extract macro-micro packages
-2. Run Stage 1B to package into 4 weeks
+2. Run Stage 1B to package into 5 weeks
 3. Run Stage 2 to generate worksheets
 
-See README.md for full documentation.
+See [README.md](README.md) for full documentation, or check:
+- [Stage Automation Guide](docs/STAGE_AUTOMATION_GUIDE.md) for complete workflow
+- [Developer Guide](docs/DEVELOPER_GUIDE.md) for making changes
