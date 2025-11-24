@@ -20,7 +20,7 @@ def create_week_package(week_data, week_num):
         2: "Medium-High - Co-construction with students",
         3: "Medium - Students lead with support",
         4: "Medium-Low - Independent work with feedback",
-        5: "Low - Independent synthesis and analysis"
+        5: "Low - Independent application"
     }
     
     teaching_sequences = {
@@ -33,31 +33,31 @@ def create_week_package(week_data, week_num):
         ],
         2: [
             "Review Week 1 foundation devices",
-            "Introduce macro concept: Rising Action",
-            "Show how devices BUILD rising action and tension",
-            "Analyze device-macro connection in text",
-            "Practice macro-micro TVODE construction"
+            "Introduce macro concept: Literary Devices",
+            "Show how figurative language creates meaning",
+            "Analyze device function in text",
+            "Practice device identification TVODE"
         ],
         3: [
-            "Review exposition and rising action concepts",
-            "Introduce macro concept: Structure and Climax",
-            "Analyze how devices create plot structure and turning points",
+            "Review exposition and literary devices",
+            "Introduce macro concept: Structure",
+            "Analyze how devices create plot structure",
             "Trace structural patterns across chapters",
             "Build complex structural TVODE"
         ],
         4: [
-            "Review structural concepts from Week 3",
-            "Introduce macro concept: Voice and Falling Action",
-            "Analyze perspective and distance through devices",
-            "Compare macro-micro relationships across weeks",
-            "Create voice-focused analysis TVODE"
+            "Synthesize previous concepts",
+            "Introduce macro concept: Narrative Voice",
+            "Analyze perspective and consciousness through devices",
+            "Compare voice techniques across texts",
+            "Create voice analysis TVODE"
         ],
         5: [
-            "Synthesize all previous concepts (Exposition, Rising Action, Structure, Voice)",
-            "Introduce macro concept: Resolution",
-            "Analyze how all devices work together to create resolution",
-            "Demonstrate understanding of complete narrative arc",
-            "Create independent comprehensive analysis TVODE"
+            "Synthesize all previous concepts",
+            "Introduce macro concept: Rhetorical Voice",
+            "Analyze irony and persuasive techniques",
+            "Compare rhetorical strategies",
+            "Create independent rhetorical analysis TVODE"
         ]
     }
     
@@ -71,8 +71,6 @@ def create_week_package(week_data, week_num):
         "teaching_goal": week_data.get("teaching_goal", ""),
         "scaffolding_level": scaffolding_levels.get(week_num, "Medium"),
         "teaching_sequence": teaching_sequences.get(week_num, []),
-        "activity_chapter": week_data.get("activity_chapter"),
-        "reading_range": week_data.get("reading_range"),  
         "micro_devices": []
     }
     
@@ -88,11 +86,11 @@ def create_week_package(week_data, week_num):
             "layer": device.get("layer", ""),
             "function": device.get("function", ""),
             "definition": device.get("definition", ""),
-            "executes_macro": device.get("executes_macro", ""),
+            "week_label": device.get("week_label", ""),
             "tvode_components": device.get("tvode_components", {}),
             "examples": device.get("examples", []),
             "teaching_notes": {
-                "introduce_as": device.get("executes_macro", ""),
+                "introduce_as": device.get("week_label", ""),
                 "macro_connection": f"This device is one way {package['macro_focus']} works",
                 "student_task": f"Find and analyze this device in the text",
                 "common_confusion": "Watch for surface-level readings",
@@ -113,13 +111,13 @@ def create_progression_summary(week_packages):
         "progression": [
             {
                 "week": 1,
-                "focus": "Foundation - What are literary devices?",
+                "focus": "Exposition - How characters/setting are introduced",
                 "skill": "Device recognition and identification"
             },
             {
                 "week": 2,
-                "focus": "Exposition - How characters/setting are introduced",
-                "skill": "Connecting devices to macro exposition concept"
+                "focus": "Literary Devices - Foundational figurative language",
+                "skill": "Recognizing and analyzing figurative devices"
             },
             {
                 "week": 3,
@@ -128,15 +126,21 @@ def create_progression_summary(week_packages):
             },
             {
                 "week": 4,
-                "focus": "Voice - Narrative perspective",
-                "skill": "Synthesizing macro-micro relationships"
+                "focus": "Narrative Voice - Perspective and consciousness",
+                "skill": "Understanding point of view techniques"
+            },
+            {
+                "week": 5,
+                "focus": "Rhetorical Voice - Irony and persuasion",
+                "skill": "Synthesizing rhetorical strategies"
             }
         ],
         "scaffolding_withdrawal": {
             "week1": "High - Teacher-led modeling",
-            "week2": "Medium-High - Guided practice",
+            "week2": "Medium-High - Co-construction",
             "week3": "Medium - Supported independence",
-            "week4": "Medium-Low - Independent analysis"
+            "week4": "Medium-Low - Independent with feedback",
+            "week5": "Low - Independent application"
         }
     }
 
@@ -157,9 +161,9 @@ def generate_progression_document(title, author, week_packages):
 
 ### Pedagogical Approach
 
-This curriculum teaches **macro alignment elements** (Exposition, Structure, Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
+This curriculum teaches **macro alignment elements** (Exposition, Literary Devices, Structure, Narrative Voice, Rhetorical Voice) through the **micro devices** that execute them, rather than teaching devices in isolation.
 
-**Core Principle:** Literary concepts like "exposition" are not abstract ideasâ€”they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
+**Core Principle:** Literary concepts are not abstract ideas—they manifest through specific devices working together. Students learn to see how macro elements OPERATE through micro techniques.
 
 ### 5-Week Progression
 
@@ -200,7 +204,8 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
         # Devices
         doc += f"**Devices ({len(pkg['micro_devices'])}):**\n"
         for device in pkg['micro_devices']:
-            doc += f"- **{device['name']}**: {device['executes_macro']}\n"
+            week_label = device.get('week_label', '')
+            doc += f"- **{device['name']}**: {week_label}\n"
         doc += "\n"
         
         # Macro variables if present
@@ -223,19 +228,20 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
     doc += "### Skill Building\n"
     skills = [
         "1. Device recognition (Week 1)",
-        "2. Macro-micro connection (Week 2)",
+        "2. Figurative analysis (Week 2)",
         "3. Structural analysis (Week 3)",
-        "4. Voice and perspective (Week 4)",
-        "5. Comprehensive synthesis (Week 5)"
+        "4. Voice perspective (Week 4)",
+        "5. Rhetorical synthesis (Week 5)"
     ]
-    doc += " â†’ ".join(skills) + "\n\n"
+    doc += " → ".join(skills) + "\n\n"
     
     doc += "### TVODE Evolution\n"
     tvode_progression = [
         "Week 1: Simple device TVODE",
-        "Week 2: Macro-micro connection TVODE",
+        "Week 2: Figurative device TVODE",
         "Week 3: Structural function TVODE",
-        "Week 4: Complex voice TVODE"
+        "Week 4: Voice analysis TVODE",
+        "Week 5: Rhetorical strategy TVODE"
     ]
     for item in tvode_progression:
         doc += f"- {item}\n"
@@ -252,35 +258,45 @@ def run_stage1b(stage1a_path):
     print("="*80)
     
     # Load Stage 1A output
-    print(f"\nðŸ“– Loading Stage 1A output: {stage1a_path}")
+    print(f"\n📖 Loading Stage 1A output: {stage1a_path}")
     with open(stage1a_path, 'r', encoding='utf-8') as f:
         stage1a = json.load(f)
     
     title = stage1a.get("metadata", {}).get("text_title", "Unknown")
     author = stage1a.get("metadata", {}).get("author", "Unknown")
-    print(f"  âœ“ Loaded: {title} by {author}")
+    print(f"  ✓ Loaded: {title} by {author}")
     
     # Get packages
     packages = stage1a.get("macro_micro_packages", {})
     
     # Create week packages
-    print("\nðŸ“¦ Creating weekly packages...")
+    print("\n📦 Creating weekly packages...")
     week_packages = []
     
+    # Define teaching approaches for all 5 weeks
+    teaching_approaches = {
+        1: "Here are devices. Let's identify them.",
+        2: "Literary devices create meaning through figurative language.",
+        3: "Structure UNFOLDS through devices that create pacing.",
+        4: "Narrative voice OPERATES through perspective devices.",
+        5: "Rhetorical voice CONTROLS interpretation through irony and persuasion."
+    }
+    
     for week_num in range(1, 6):
-        week_key = [k for k in packages.keys() if f"week{week_num}" in k][0]
+        # Find the matching week key
+        week_key = None
+        for k in packages.keys():
+            if f"week{week_num}" in k:
+                week_key = k
+                break
+        
+        if not week_key:
+            print(f"  ⚠ Warning: Week {week_num} not found in packages")
+            continue
+        
         week_data = packages[week_key]
         week_data["text_title"] = title
         week_data["text_author"] = author
-        
-        # Add teaching approach
-        teaching_approaches = {
-        1: "How do devices establish characters and setting in exposition?",
-        2: "How do devices build tension in rising action?",
-        3: "How do devices create the story's climactic turning point?",
-        4: "How do devices manage perspective in falling action?",
-        5: "How do devices bring rhetorical closure in resolution?"
-    }
         week_data["teaching_approach"] = teaching_approaches.get(week_num, "")
         
         package = create_week_package(week_data, week_num)
@@ -288,17 +304,17 @@ def run_stage1b(stage1a_path):
         week_packages.append(package)
         
         device_count = len(package["micro_devices"])
-        print(f"  âœ“ Week {week_num}: {package['macro_focus']} ({device_count} devices)")
+        print(f"  ✓ Week {week_num}: {package['macro_focus']} ({device_count} devices)")
     
     # Create progression summary
-    print("\nðŸ“‹ Creating progression summary...")
+    print("\n📋 Creating progression summary...")
     progression = create_progression_summary(week_packages)
-    print(f"  âœ“ Summary created")
+    print(f"  ✓ Summary created")
     
     # Generate progression document
-    print("\nðŸ“„ Generating progression document...")
+    print("\n📄 Generating progression document...")
     progression_doc = generate_progression_document(title, author, week_packages)
-    print(f"  âœ“ Document generated")
+    print(f"  ✓ Document generated")
     
     # Assemble output
     output = {
@@ -326,7 +342,7 @@ def run_stage1b(stage1a_path):
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
     
-    print(f"\nâœ… Stage 1B JSON saved!")
+    print(f"\n✅ Stage 1B JSON saved!")
     print(f"   Output: {output_path}")
     print(f"   Size: {output_path.stat().st_size:,} bytes")
     
@@ -335,7 +351,7 @@ def run_stage1b(stage1a_path):
     with open(progression_path, 'w', encoding='utf-8') as f:
         f.write(progression_doc)
     
-    print(f"\nâœ… Progression document saved!")
+    print(f"\n✅ Progression document saved!")
     print(f"   Output: {progression_path}")
     print(f"   Size: {progression_path.stat().st_size:,} bytes")
     
@@ -347,7 +363,7 @@ def run_stage1b(stage1a_path):
         print(f"Week {pkg['week']}: {pkg['macro_focus']} - {len(pkg['micro_devices'])} devices")
     
     print("\n" + "="*80)
-    print("ðŸ“‹ REVIEW PROGRESSION DOCUMENT BEFORE GENERATING WORKSHEETS")
+    print("📋 REVIEW PROGRESSION DOCUMENT BEFORE GENERATING WORKSHEETS")
     print("="*80)
     print(f"Open: {progression_path}")
     print("Verify the week structure makes sense before running Stage 2")
@@ -362,7 +378,7 @@ def main():
     stage1a_path = Path(sys.argv[1])
     
     if not stage1a_path.exists():
-        print(f"âŒ Error: Stage 1A file not found: {stage1a_path}")
+        print(f"❌ Error: Stage 1A file not found: {stage1a_path}")
         sys.exit(1)
     
     output_path = run_stage1b(stage1a_path)

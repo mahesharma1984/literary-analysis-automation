@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 """
-STAGE 1A AUTOMATION - FIXED FOR MULTIPLE KERNEL FORMATS
+STAGE 1A AUTOMATION
 Extract macro-micro packages from kernel JSON
-
-Handles both kernel formats:
-- Format A: text_metadata + devices (OMATS, Giver)
-- Format B: metadata + micro_devices (TKAM)
 
 Usage:
     python3 run_stage1a.py kernels/Book_kernel_v3.3.json
@@ -20,79 +16,12 @@ from datetime import datetime
 with open('device_taxonomy_mapping.json', 'r') as f:
     DEVICE_MAPPING = json.load(f)
 
-
-# ============================================================================
-# KERNEL NORMALIZATION HELPERS
-# ============================================================================
-
-def get_kernel_metadata(kernel):
-    """Extract metadata from kernel regardless of format"""
-    # Try Format A (text_metadata at top level)
-    if 'text_metadata' in kernel:
-        meta = kernel['text_metadata']
-        return {
-            'title': meta.get('title', 'Unknown'),
-            'author': meta.get('author', 'Unknown'),
-            'edition': meta.get('edition', '')
-        }
-    
-    # Try Format B (metadata at top level)
-    if 'metadata' in kernel:
-        meta = kernel['metadata']
-        return {
-            'title': meta.get('title', 'Unknown'),
-            'author': meta.get('author', 'Unknown'),
-            'edition': meta.get('edition', '')
-        }
-    
-    # Fallback
-    return {'title': 'Unknown', 'author': 'Unknown', 'edition': ''}
-
-
-def get_kernel_devices(kernel):
-    """Extract device array from kernel regardless of format"""
-    # Try Format A (devices)
-    if 'devices' in kernel:
-        return kernel['devices']
-    
-    # Try Format B (micro_devices)
-    if 'micro_devices' in kernel:
-        return kernel['micro_devices']
-    
-    # Fallback
-    return []
-
-
-def get_kernel_narrative_data(kernel):
-    """Extract narrative/voice data from kernel regardless of format"""
-    # Try Format A (narrative.voice)
-    if 'narrative' in kernel:
-        narrative = kernel['narrative']
-        voice = narrative.get('voice', {})
-        structure = narrative.get('structure', {})
-        return {
-            'voice': voice,
-            'structure': structure
-        }
-    
-    # Try Format B (macro_variables or empty)
-    # TKAM kernels may not have this data
-    return {
-        'voice': {},
-        'structure': {}
-    }
-
-
-# ============================================================================
-# MACRO EXTRACTION
-# ============================================================================
-
 def extract_macro_elements(kernel):
     """Extract macro alignment elements from kernel"""
     
-    narrative_data = get_kernel_narrative_data(kernel)
-    voice = narrative_data['voice']
-    structure = narrative_data['structure']
+    narrative = kernel.get("narrative", {})
+    voice = narrative.get("voice", {})
+    structure = narrative.get("structure", {})
     
     return {
         "exposition": {
@@ -136,10 +65,6 @@ def extract_macro_elements(kernel):
         }
     }
 
-
-# ============================================================================
-# DEVICE CATEGORIZATION
-# ============================================================================
 
 def fallback_categorization(device_name: str, classification: str) -> str:
     """Fallback heuristic categorization if device not in mapping"""
@@ -213,6 +138,27 @@ def extract_tvode_components(device):
     }
 
 
+def get_chapter_info(kernel, section_name):
+    """Extract chapter info from kernel extracts section with fallback"""
+    extracts = kernel.get("extracts", {})
+    section_data = extracts.get(section_name, {})
+    
+    # Get primary_chapter (with fallback to first chapter in range)
+    primary_chapter = section_data.get("primary_chapter")
+    if primary_chapter is None:
+        chapter_range = section_data.get("chapter_range", "1")
+        # Parse first number from range (e.g., "1-3" -> 1, "15" -> 15)
+        if "-" in str(chapter_range):
+            primary_chapter = int(str(chapter_range).split("-")[0])
+        else:
+            primary_chapter = int(chapter_range) if chapter_range else 1
+    
+    # Get reading_range
+    reading_range = section_data.get("chapter_range", "TBD")
+    
+    return primary_chapter, reading_range
+
+
 def categorize_devices(kernel):
     """Group devices by pedagogical week"""
     
@@ -224,8 +170,8 @@ def categorize_devices(kernel):
         'week_5_rhetorical_voice': []
     }
     
-    # Get devices using normalized helper
-    devices_list = get_kernel_devices(kernel)
+    # Check both 'devices' and 'micro_devices' for compatibility with different kernel versions
+    devices_list = kernel.get("devices", kernel.get("micro_devices", []))
     
     for device in devices_list:
         week_key, week_label = categorize_device(
@@ -237,7 +183,6 @@ def categorize_devices(kernel):
             "name": device.get("name", ""),
             "layer": device.get("layer", ""),
             "function": device.get("function", ""),
-            "classification": device.get("classification", ""),
             "definition": device.get("definition", device.get("student_facing_definition", "")),
             "examples": device.get("examples", []),
             "week_label": week_label,
@@ -249,12 +194,15 @@ def categorize_devices(kernel):
     return device_mapping
 
 
-# ============================================================================
-# PACKAGE CREATION
-# ============================================================================
-
-def create_macro_micro_packages(macro_elements, device_mapping):
-    """Create 5-week macro-micro packages"""
+def create_macro_micro_packages(kernel, macro_elements, device_mapping):
+    """Create 5-week macro-micro packages with chapter information"""
+    
+    # Extract chapter info for each week
+    w1_activity, w1_reading = get_chapter_info(kernel, "exposition")
+    w2_activity, w2_reading = get_chapter_info(kernel, "rising_action")
+    w3_activity, w3_reading = get_chapter_info(kernel, "climax")
+    w4_activity, w4_reading = get_chapter_info(kernel, "falling_action")
+    w5_activity, w5_reading = get_chapter_info(kernel, "resolution")
     
     return {
         "week1_exposition": {
@@ -265,6 +213,8 @@ def create_macro_micro_packages(macro_elements, device_mapping):
             "macro_variables": macro_elements["exposition"]["variables"],
             "teaching_goal": "Understanding how exposition is built through devices",
             "scaffolding": "High - Teacher models everything",
+            "activity_chapter": w1_activity,
+            "reading_range": w1_reading,
             "micro_devices": device_mapping["week_1_exposition"]
         },
         "week2_literary_devices": {
@@ -275,6 +225,8 @@ def create_macro_micro_packages(macro_elements, device_mapping):
             "macro_variables": macro_elements["literary_devices"]["variables"],
             "teaching_goal": "Device recognition and identification",
             "scaffolding": "Medium-High - Co-construction with students",
+            "activity_chapter": w2_activity,
+            "reading_range": w2_reading,
             "micro_devices": device_mapping["week_2_literary_devices"]
         },
         "week3_structure": {
@@ -285,6 +237,8 @@ def create_macro_micro_packages(macro_elements, device_mapping):
             "macro_variables": macro_elements["structure"]["variables"],
             "teaching_goal": "Understanding how structure unfolds through devices",
             "scaffolding": "Medium - Students lead with support",
+            "activity_chapter": w3_activity,
+            "reading_range": w3_reading,
             "micro_devices": device_mapping["week_3_structure"]
         },
         "week4_narrative_voice": {
@@ -295,6 +249,8 @@ def create_macro_micro_packages(macro_elements, device_mapping):
             "macro_variables": macro_elements["narrative_voice"]["variables"],
             "teaching_goal": "Understanding perspective and consciousness",
             "scaffolding": "Medium-Low - Independent work with feedback",
+            "activity_chapter": w4_activity,
+            "reading_range": w4_reading,
             "micro_devices": device_mapping["week_4_narrative_voice"]
         },
         "week5_rhetorical_voice": {
@@ -305,14 +261,12 @@ def create_macro_micro_packages(macro_elements, device_mapping):
             "macro_variables": macro_elements["rhetorical_voice"]["variables"],
             "teaching_goal": "Understanding irony and persuasive techniques",
             "scaffolding": "Low - Independent application",
+            "activity_chapter": w5_activity,
+            "reading_range": w5_reading,
             "micro_devices": device_mapping["week_5_rhetorical_voice"]
         }
     }
 
-
-# ============================================================================
-# MAIN PROCESSING
-# ============================================================================
 
 def run_stage1a(kernel_path):
     """Main Stage 1A processing"""
@@ -326,12 +280,8 @@ def run_stage1a(kernel_path):
     with open(kernel_path, 'r', encoding='utf-8') as f:
         kernel = json.load(f)
     
-    # Extract metadata using normalized helper
-    metadata = get_kernel_metadata(kernel)
-    title = metadata['title']
-    author = metadata['author']
-    
-    print(f"  ✓ Loaded: {title} by {author}")
+    title = kernel.get("metadata", {}).get("title", "Unknown")
+    print(f"  ✓ Loaded: {title}")
     
     # Extract macro elements
     print("\n🔍 Extracting macro elements...")
@@ -349,14 +299,14 @@ def run_stage1a(kernel_path):
     
     # Create packages
     print("\n📦 Creating macro-micro packages...")
-    packages = create_macro_micro_packages(macro_elements, device_mapping)
+    packages = create_macro_micro_packages(kernel, macro_elements, device_mapping)
     print(f"  ✓ Created 5-week packages")
     
     # Assemble output
     output = {
         "metadata": {
             "text_title": title,
-            "author": author,
+            "author": kernel.get("metadata", {}).get("author", "Unknown"),
             "extraction_version": "5.0",
             "extraction_date": datetime.now().isoformat(),
             "source_kernel": str(kernel_path)
