@@ -15,6 +15,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+### [Template v2.2 & Stage 2 Refactor] - 2025-11-25
+
+#### Added
+- **Template v2.2 Updates:**
+  - Randomized sequencing activities (Step 4) - correct answer not always A→B→C
+  - Simplified academic language in sequencing instructions
+  - Balanced multiple choice answer lengths (10-15 words each)
+  - Redesigned Step 6 with Parts A, B, C structure:
+    - Part A: Sort effects into "What I Felt / What I Understood / Big Idea Connection"
+    - Part B: Build insights using 6 sentence starter combinations
+    - Part C: Swap and compare insights
+  - New placeholders for randomized sequencing and simplified effects
+
+- **Stage 2 Template-Based Extraction:**
+  - Device type classification system (comparison, human_quality, sensory, sound, etc.)
+  - MC distractor templates by device type (no device names in wrong answers)
+  - Chronological sequencing templates (reading experience, not analytical steps)
+  - Direct effects extraction from Stage 1B JSON (no synthesis needed)
+  - Effects randomization to prevent obvious category ordering
+
+#### Changed
+- **Template_Literary_Analysis_6Step.md:**
+  - Step 4: New placeholders `{{DEVICE_X_SEQUENCE_STEP_RANDOMIZED_1/2/3}}` and `{{DEVICE_X_SEQUENCE_CORRECT_ORDER}}`
+  - Step 6: Complete redesign with Parts A, B, C and new category names
+  - Step 3: Updated design notes for equal answer length requirements
+
+- **Template_Teacher_Key.md:**
+  - Step 4: Shows randomized answer format with examples
+  - Step 6: New structure with combination examples table and "What Different Combinations Yield" table
+  - Updated teaching notes to reference new Step 6 structure
+
+- **run_stage2.py:**
+  - Removed all API code (Anthropic imports, client initialization, API calls)
+  - Replaced API generation with template-based extraction
+  - Chronological sequencing shows reading experience ("Reader encounters...")
+  - Effects extracted directly from Stage 1B and randomized
+  - MC uses device-type-specific distractor templates
+
+#### Removed
+- All Anthropic API dependencies
+- `generate_placeholder_data()` function (replaced with extraction)
+- API client initialization and configuration
+- Effect synthesis logic (now uses Stage 1B effects directly)
+
+#### Benefits
+- **Cost:** $0.00 per worksheet (no API calls)
+- **Speed:** <1 second per device (vs. ~30 seconds with API)
+- **Quality:** Contextual content from actual Stage 1B analysis
+- **Pedagogy:** Chronological sequencing shows reading experience, not analysis process
+- **Consistency:** Template-based generation ensures uniform quality
+
+#### Technical Details
+- Device type classification maps 20+ devices to 8 pedagogical categories
+- MC distractors test understanding, not device recognition
+- Sequencing templates show chronological build-up during reading
+- Effects randomized to prevent obvious categorization
+- All content references actual text elements (Maycomb, Calpurnia, etc.)
+
+---
+
 ### [Stage 1B v5.2] - 2025-11-25
 
 #### Added

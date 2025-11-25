@@ -1,4 +1,4 @@
-# LITERARY ANALYSIS WORKSHEET - Device Recognition v2.1
+# LITERARY ANALYSIS WORKSHEET - Device Recognition v2.2
 
 **Aligned to LEM Stage 1 Logic: Comprehension → Device Recognition → TVODE Preparation**
 
@@ -102,7 +102,7 @@ ________________________________________________________________________________
 
 **TVODE Note:** This is your **OBJECT** - what the device does or shows in the text.
 
-**Design Note:** Answers describe function/purpose (WHAT the device does), not effect (WHY). Two options should be "quite possible." All answers should be the same length, a single clause; don't use complex sentences for answers. Make sure you randomize multiple choice answers across questions for device 1, 2, 3, etc.
+**Design Note:** Answers describe function/purpose (WHAT the device does), not effect (WHY). Two options should be "quite possible." All four options must be similar length (one clause each, roughly 10-15 words). Avoid making the correct answer noticeably longer or more specific than distractors. Randomize correct answer position across devices (don't always make B correct).
 
 ---
 
@@ -110,13 +110,15 @@ ________________________________________________________________________________
 
 **Put these details in order to show HOW {{DEVICE_1_NAME}} is used in the text.**
 
-**A)** {{DEVICE_1_SEQUENCE_A}}  
-**B)** {{DEVICE_1_SEQUENCE_B}}  
-**C)** {{DEVICE_1_SEQUENCE_C}}
+**A)** {{DEVICE_1_SEQUENCE_STEP_RANDOMIZED_1}}  
+**B)** {{DEVICE_1_SEQUENCE_STEP_RANDOMIZED_2}}  
+**C)** {{DEVICE_1_SEQUENCE_STEP_RANDOMIZED_3}}
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
-**Teacher Note:** Answers should be RANDOMIZED (not 1-2-3 order). Correct answer format: "1-B, 2-A, 3-C"
+{{DEVICE_1_SEQUENCE_CORRECT_ORDER}}
+
+**Teacher Note:** When generating worksheets, RANDOMIZE the order of options A, B, C so the correct sequence is NOT 1-A, 2-B, 3-C. Example correct answers: "1-C, 2-A, 3-B" or "1-B, 2-C, 3-A"
 
 ---
 
@@ -136,43 +138,79 @@ ________________________________________________________________________________
 
 ---
 
-#### Step 6 (STANDARD/HIGH TIER): CATEGORIZE THE EFFECT
+#### Step 6 (STANDARD/HIGH TIER): EFFECTS AND INSIGHTS
 
-**Part A: Sort ALL the effects into categories**
+**Part A: Sort the Effects**
 
-Read these possible effects and write EACH ONE in the correct category box below:
+Read these effects and sort them into the three categories below.
+
+**Tip:** Look for signal words:
+- **What I Felt** → feeling words (uneasy, curious, tense, surprised)
+- **What I Understood** → "shows," "reveals," "we learn," "tells us"
+- **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. {{DEVICE_1_EFFECT_1}}
-2. {{DEVICE_1_EFFECT_2}}
-3. {{DEVICE_1_EFFECT_3}}
-4. {{DEVICE_1_EFFECT_4}}
-5. {{DEVICE_1_EFFECT_5}}
-6. {{DEVICE_1_EFFECT_6}}
+1. {{DEVICE_1_EFFECT_1_SIMPLIFIED}}
+2. {{DEVICE_1_EFFECT_2_SIMPLIFIED}}
+3. {{DEVICE_1_EFFECT_3_SIMPLIFIED}}
+4. {{DEVICE_1_EFFECT_4_SIMPLIFIED}}
+5. {{DEVICE_1_EFFECT_5_SIMPLIFIED}}
+6. {{DEVICE_1_EFFECT_6_SIMPLIFIED}}
 
-**Category Definitions:**
-- **Reader Response:** How the device affects what readers feel or experience
-- **Meaning Creation:** How the device builds understanding or reveals ideas
-- **Thematic Impact:** How the device connects to the text's bigger message or theme
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| | | |
+| | | |
 
-**Sort them here (write the effect numbers AND the full effect):**
+---
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
+**Part B: Build an Insight**
 
-**Part B: Now identify which applies to YOUR device**
+Pick TWO categories and combine them using a sentence starter:
 
-Which category best describes how {{DEVICE_1_NAME}} works in THIS text? ____________
+**Feeling → Understanding:**
+"The [feeling] I experienced helped me realize that..."
 
-Which specific effect from that category best fits? (Write the full effect): 
+**Understanding → Feeling:**
+"Once I understood [X], I felt..."
 
-____________________________________________________________
+**Understanding → Big Idea:**
+"This shows [X], which connects to the theme of..."
 
-**TVODE Note:** This is your **EFFECT** - the impact on meaning or the reader.
+**Big Idea → Understanding:**
+"The theme of [X] explains why..."
+
+**Feeling → Big Idea:**
+"Feeling [X] connects to the theme of..."
+
+**Big Idea → Feeling:**
+"The theme of [X] is why readers feel..."
+
+My combination: ____________ → ____________
+
+My sentence:
+
+________________________________________________________________________________
+
+---
+
+**Part C: Swap and Compare**
+
+Now write the SAME insight but flip your two categories around.
+
+Flipped combination: ____________ → ____________
+
+Flipped sentence:
+
+________________________________________________________________________________
+
+**Reflection:** How did the insight change when you swapped the order?
+
+________________________________________________________________________________
+
+---
+
+**TVODE Note:** Your sentence from Part B or C becomes your **EFFECT** — the impact on meaning or the reader.
 
 ---
 
@@ -227,13 +265,15 @@ ________________________________________________________________________________
 
 **Put these details in order to show HOW {{DEVICE_2_NAME}} is used in the text.**
 
-**A)** {{DEVICE_2_SEQUENCE_A}}  
-**B)** {{DEVICE_2_SEQUENCE_B}}  
-**C)** {{DEVICE_2_SEQUENCE_C}}
+**A)** {{DEVICE_2_SEQUENCE_STEP_RANDOMIZED_1}}  
+**B)** {{DEVICE_2_SEQUENCE_STEP_RANDOMIZED_2}}  
+**C)** {{DEVICE_2_SEQUENCE_STEP_RANDOMIZED_3}}
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
-**Teacher Note:** Answers should be RANDOMIZED (not 1-2-3 order). Correct answer format: "1-B, 2-A, 3-C"
+{{DEVICE_2_SEQUENCE_CORRECT_ORDER}}
+
+**Teacher Note:** When generating worksheets, RANDOMIZE the order of options A, B, C so the correct sequence is NOT 1-A, 2-B, 3-C. Example correct answers: "1-C, 2-A, 3-B" or "1-B, 2-C, 3-A"
 
 ---
 
@@ -251,43 +291,79 @@ ________________________________________________________________________________
 
 ---
 
-#### Step 6 (STANDARD/HIGH TIER): CATEGORIZE THE EFFECT
+#### Step 6 (STANDARD/HIGH TIER): EFFECTS AND INSIGHTS
 
-**Part A: Sort ALL the effects into categories**
+**Part A: Sort the Effects**
 
-Read these possible effects and write EACH ONE in the correct category box below:
+Read these effects and sort them into the three categories below.
+
+**Tip:** Look for signal words:
+- **What I Felt** → feeling words (uneasy, curious, tense, surprised)
+- **What I Understood** → "shows," "reveals," "we learn," "tells us"
+- **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. {{DEVICE_2_EFFECT_1}}
-2. {{DEVICE_2_EFFECT_2}}
-3. {{DEVICE_2_EFFECT_3}}
-4. {{DEVICE_2_EFFECT_4}}
-5. {{DEVICE_2_EFFECT_5}}
-6. {{DEVICE_2_EFFECT_6}}
+1. {{DEVICE_2_EFFECT_1_SIMPLIFIED}}
+2. {{DEVICE_2_EFFECT_2_SIMPLIFIED}}
+3. {{DEVICE_2_EFFECT_3_SIMPLIFIED}}
+4. {{DEVICE_2_EFFECT_4_SIMPLIFIED}}
+5. {{DEVICE_2_EFFECT_5_SIMPLIFIED}}
+6. {{DEVICE_2_EFFECT_6_SIMPLIFIED}}
 
-**Category Definitions:**
-- **Reader Response:** How the device affects what readers feel or experience
-- **Meaning Creation:** How the device builds understanding or reveals ideas
-- **Thematic Impact:** How the device connects to the text's bigger message or theme
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| | | |
+| | | |
 
-**Sort them here (write the effect numbers AND the full effect):**
+---
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
+**Part B: Build an Insight**
 
-**Part B: Now identify which applies to YOUR device**
+Pick TWO categories and combine them using a sentence starter:
 
-Which category best describes how {{DEVICE_2_NAME}} works in THIS text? ____________
+**Feeling → Understanding:**
+"The [feeling] I experienced helped me realize that..."
 
-Which specific effect from that category best fits? (Write the full effect): 
+**Understanding → Feeling:**
+"Once I understood [X], I felt..."
 
-____________________________________________________________
+**Understanding → Big Idea:**
+"This shows [X], which connects to the theme of..."
 
-**TVODE Note:** This is your **EFFECT** - the impact on meaning or the reader.
+**Big Idea → Understanding:**
+"The theme of [X] explains why..."
+
+**Feeling → Big Idea:**
+"Feeling [X] connects to the theme of..."
+
+**Big Idea → Feeling:**
+"The theme of [X] is why readers feel..."
+
+My combination: ____________ → ____________
+
+My sentence:
+
+________________________________________________________________________________
+
+---
+
+**Part C: Swap and Compare**
+
+Now write the SAME insight but flip your two categories around.
+
+Flipped combination: ____________ → ____________
+
+Flipped sentence:
+
+________________________________________________________________________________
+
+**Reflection:** How did the insight change when you swapped the order?
+
+________________________________________________________________________________
+
+---
+
+**TVODE Note:** Your sentence from Part B or C becomes your **EFFECT** — the impact on meaning or the reader.
 
 ---
 
@@ -335,11 +411,15 @@ ________________________________________________________________________________
 
 **Put these details in order to show HOW {{DEVICE_3_NAME}} is used in the text.**
 
-**A)** {{DEVICE_3_SEQUENCE_A}}  
-**B)** {{DEVICE_3_SEQUENCE_B}}  
-**C)** {{DEVICE_3_SEQUENCE_C}}
+**A)** {{DEVICE_3_SEQUENCE_STEP_RANDOMIZED_1}}  
+**B)** {{DEVICE_3_SEQUENCE_STEP_RANDOMIZED_2}}  
+**C)** {{DEVICE_3_SEQUENCE_STEP_RANDOMIZED_3}}
 
 **Your Answer:** 1-___ , 2-___ , 3-___
+
+{{DEVICE_3_SEQUENCE_CORRECT_ORDER}}
+
+**Teacher Note:** When generating worksheets, RANDOMIZE the order of options A, B, C so the correct sequence is NOT 1-A, 2-B, 3-C. Example correct answers: "1-C, 2-A, 3-B" or "1-B, 2-C, 3-A"
 
 ---
 
@@ -355,41 +435,79 @@ ________________________________________________________________________________
 
 ---
 
-#### Step 6: CATEGORIZE THE EFFECT
+#### Step 6: EFFECTS AND INSIGHTS
 
-**Part A: Sort ALL the effects into categories**
+**Part A: Sort the Effects**
 
-Read these possible effects and write EACH ONE in the correct category box below:
+Read these effects and sort them into the three categories below.
+
+**Tip:** Look for signal words:
+- **What I Felt** → feeling words (uneasy, curious, tense, surprised)
+- **What I Understood** → "shows," "reveals," "we learn," "tells us"
+- **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. {{DEVICE_3_EFFECT_1}}
-2. {{DEVICE_3_EFFECT_2}}
-3. {{DEVICE_3_EFFECT_3}}
-4. {{DEVICE_3_EFFECT_4}}
-5. {{DEVICE_3_EFFECT_5}}
-6. {{DEVICE_3_EFFECT_6}}
+1. {{DEVICE_3_EFFECT_1_SIMPLIFIED}}
+2. {{DEVICE_3_EFFECT_2_SIMPLIFIED}}
+3. {{DEVICE_3_EFFECT_3_SIMPLIFIED}}
+4. {{DEVICE_3_EFFECT_4_SIMPLIFIED}}
+5. {{DEVICE_3_EFFECT_5_SIMPLIFIED}}
+6. {{DEVICE_3_EFFECT_6_SIMPLIFIED}}
 
-**Category Definitions:**
-- **Reader Response:** How the device affects what readers feel or experience
-- **Meaning Creation:** How the device builds understanding or reveals ideas
-- **Thematic Impact:** How the device connects to the text's bigger message or theme
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| | | |
+| | | |
 
-**Sort them here (write the effect numbers AND the full effect):**
+---
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
-| Effect #: | Effect #: | Effect #: |
-|  |  |  |
+**Part B: Build an Insight**
 
-**Part B: Now identify which applies to YOUR device**
+Pick TWO categories and combine them using a sentence starter:
 
-Which category best describes how {{DEVICE_3_NAME}} works in THIS text? ____________
+**Feeling → Understanding:**
+"The [feeling] I experienced helped me realize that..."
 
-Which specific effect from that category best fits? (Write the full effect): 
+**Understanding → Feeling:**
+"Once I understood [X], I felt..."
 
-____________________________________________________________
+**Understanding → Big Idea:**
+"This shows [X], which connects to the theme of..."
+
+**Big Idea → Understanding:**
+"The theme of [X] explains why..."
+
+**Feeling → Big Idea:**
+"Feeling [X] connects to the theme of..."
+
+**Big Idea → Feeling:**
+"The theme of [X] is why readers feel..."
+
+My combination: ____________ → ____________
+
+My sentence:
+
+________________________________________________________________________________
+
+---
+
+**Part C: Swap and Compare**
+
+Now write the SAME insight but flip your two categories around.
+
+Flipped combination: ____________ → ____________
+
+Flipped sentence:
+
+________________________________________________________________________________
+
+**Reflection:** How did the insight change when you swapped the order?
+
+________________________________________________________________________________
+
+---
+
+**TVODE Note:** Your sentence from Part B or C becomes your **EFFECT** — the impact on meaning or the reader.
 
 ---
 
@@ -407,4 +525,4 @@ ____________________________________________________________
 
 ---
 
-**END OF WORKSHEET v2.1**
+**END OF WORKSHEET v2.2**

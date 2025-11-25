@@ -1,4 +1,4 @@
-# TEACHER KEY - Literary Analysis & TVODE Construction v2.1
+# TEACHER KEY - Literary Analysis & TVODE Construction v2.2
 
 **Aligned to LEM Stage 1 Logic: Device Recognition & TVODE Sentence Building**
 
@@ -30,9 +30,9 @@
 - Total: 60-90 minutes per device (adjust based on tier)
 
 **Differentiation:**
-- **EAL Tier:** Focus on 1-2 devices, provide more scaffolding in Step 6
+- **EAL Tier:** Focus on 1-2 devices, provide more scaffolding in Step 6 Part A (sorting only)
 - **Standard Tier:** 2 devices, moderate scaffolding
-- **High Tier:** 3 devices, minimal scaffolding in Step 6
+- **High Tier:** 3 devices, complete all parts of Step 6 including Part C comparison
 
 ---
 
@@ -90,6 +90,8 @@ Students should identify major events in chronological order. Check for basic co
 
 **Correct Answer:** {{DEVICE_1_SEQUENCE_ANSWER}}
 
+(e.g., "1-C, 2-A, 3-B" — varies per generated worksheet)
+
 **Explanation:** {{DEVICE_1_SEQUENCE_EXPLANATION}}
 
 **Teaching Note:** If students struggle, guide them to look at the chronology of how the device unfolds in the text.
@@ -113,20 +115,40 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-### Step 6: CATEGORIZE THE EFFECT (STANDARD/HIGH TIER)
+### Step 6: EFFECTS AND INSIGHTS (STANDARD/HIGH TIER)
 
 **Part A: Sorting Effects**
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| {{DEVICE_1_READER_EFFECT_1}} | {{DEVICE_1_MEANING_EFFECT_1}} | {{DEVICE_1_THEMATIC_EFFECT_1}} |
-| {{DEVICE_1_READER_EFFECT_2}} | {{DEVICE_1_MEANING_EFFECT_2}} | {{DEVICE_1_THEMATIC_EFFECT_2}} |
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| {{DEVICE_1_FELT_EFFECT_1}} | {{DEVICE_1_UNDERSTOOD_EFFECT_1}} | {{DEVICE_1_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_1_FELT_EFFECT_2}} | {{DEVICE_1_UNDERSTOOD_EFFECT_2}} | {{DEVICE_1_BIGIDEA_EFFECT_2}} |
 
-**Part B: Correct Category for This Device:** {{DEVICE_1_EFFECT_CATEGORY}}
+**Signal Words to Highlight:**
+- "What I Felt" effects contain: [list feeling words present]
+- "What I Understood" effects contain: [list reveal/show words]
+- "Big Idea" effects contain: [list theme words]
 
-**Correct Effect:** {{DEVICE_1_EFFECT_CORRECT}}
+**Part B: Combination Examples**
 
-**Teaching Note:** Help students distinguish between how they feel (Reader Response), what they understand (Meaning Creation), and what themes emerge (Thematic Impact).
+| Combination | Sample Student Response |
+|-------------|------------------------|
+| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
+| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
+| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
+
+**Part C: What Different Combinations Yield**
+
+| Direction | Type of Insight | Student Learns... |
+|-----------|-----------------|-------------------|
+| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
+| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
+| Understanding → Big Idea | Traditional analysis | Standard literary argument |
+| Big Idea → Understanding | Thematic lens | Reading through theme |
+| Feeling → Big Idea | Affective criticism | Emotion as evidence |
+| Big Idea → Feeling | Author's purpose | Intentional emotional design |
+
+**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
 
 ---
 
@@ -186,18 +208,40 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-### Step 6: CATEGORIZE THE EFFECT (STANDARD/HIGH TIER)
+### Step 6: EFFECTS AND INSIGHTS (STANDARD/HIGH TIER)
 
 **Part A: Sorting Effects**
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| {{DEVICE_2_READER_EFFECT_1}} | {{DEVICE_2_MEANING_EFFECT_1}} | {{DEVICE_2_THEMATIC_EFFECT_1}} |
-| {{DEVICE_2_READER_EFFECT_2}} | {{DEVICE_2_MEANING_EFFECT_2}} | {{DEVICE_2_THEMATIC_EFFECT_2}} |
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| {{DEVICE_2_FELT_EFFECT_1}} | {{DEVICE_2_UNDERSTOOD_EFFECT_1}} | {{DEVICE_2_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_2_FELT_EFFECT_2}} | {{DEVICE_2_UNDERSTOOD_EFFECT_2}} | {{DEVICE_2_BIGIDEA_EFFECT_2}} |
 
-**Part B: Correct Category:** {{DEVICE_2_EFFECT_CATEGORY}}
+**Signal Words to Highlight:**
+- "What I Felt" effects contain: [list feeling words present]
+- "What I Understood" effects contain: [list reveal/show words]
+- "Big Idea" effects contain: [list theme words]
 
-**Correct Effect:** {{DEVICE_2_EFFECT_CORRECT}}
+**Part B: Combination Examples**
+
+| Combination | Sample Student Response |
+|-------------|------------------------|
+| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
+| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
+| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
+
+**Part C: What Different Combinations Yield**
+
+| Direction | Type of Insight | Student Learns... |
+|-----------|-----------------|-------------------|
+| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
+| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
+| Understanding → Big Idea | Traditional analysis | Standard literary argument |
+| Big Idea → Understanding | Thematic lens | Reading through theme |
+| Feeling → Big Idea | Affective criticism | Emotion as evidence |
+| Big Idea → Feeling | Author's purpose | Intentional emotional design |
+
+**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
 
 ---
 
@@ -248,18 +292,40 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-### Step 6: CATEGORIZE THE EFFECT
+### Step 6: EFFECTS AND INSIGHTS
 
 **Part A: Sorting Effects**
 
-| Reader Response | Meaning Creation | Thematic Impact |
-|----------------|------------------|-----------------|
-| {{DEVICE_3_READER_EFFECT_1}} | {{DEVICE_3_MEANING_EFFECT_1}} | {{DEVICE_3_THEMATIC_EFFECT_1}} |
-| {{DEVICE_3_READER_EFFECT_2}} | {{DEVICE_3_MEANING_EFFECT_2}} | {{DEVICE_3_THEMATIC_EFFECT_2}} |
+| What I Felt | What I Understood | Big Idea Connection |
+|-------------|-------------------|---------------------|
+| {{DEVICE_3_FELT_EFFECT_1}} | {{DEVICE_3_UNDERSTOOD_EFFECT_1}} | {{DEVICE_3_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_3_FELT_EFFECT_2}} | {{DEVICE_3_UNDERSTOOD_EFFECT_2}} | {{DEVICE_3_BIGIDEA_EFFECT_2}} |
 
-**Part B: Correct Category:** {{DEVICE_3_EFFECT_CATEGORY}}
+**Signal Words to Highlight:**
+- "What I Felt" effects contain: [list feeling words present]
+- "What I Understood" effects contain: [list reveal/show words]
+- "Big Idea" effects contain: [list theme words]
 
-**Correct Effect:** {{DEVICE_3_EFFECT_CORRECT}}
+**Part B: Combination Examples**
+
+| Combination | Sample Student Response |
+|-------------|------------------------|
+| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
+| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
+| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
+
+**Part C: What Different Combinations Yield**
+
+| Direction | Type of Insight | Student Learns... |
+|-----------|-----------------|-------------------|
+| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
+| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
+| Understanding → Big Idea | Traditional analysis | Standard literary argument |
+| Big Idea → Understanding | Thematic lens | Reading through theme |
+| Feeling → Big Idea | Affective criticism | Emotion as evidence |
+| Big Idea → Feeling | Author's purpose | Intentional emotional design |
+
+**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
 
 ---
 
@@ -408,7 +474,7 @@ Students should identify major events in chronological order. Check for basic co
 ### For Struggling Students (EAL)
 - Pre-teach device definitions before worksheet
 - Provide sentence frames for all activities
-- Allow pair work for Step 6 (Effect categorization)
+- Allow pair work for Step 6 Part B (combination building)
 - Focus on 1 device only, master it completely
 
 ### For Advanced Students (High Tier)
@@ -420,7 +486,7 @@ Students should identify major events in chronological order. Check for basic co
 ### For Students with Identified Needs
 - Provide pre-filled model examples
 - Allow oral responses recorded by teacher/aide
-- Simplify Step 6 to 2 categories instead of 3
+- Simplify Step 6 to Part A only (sorting), skip combination building
 - Use highlighted text with devices pre-identified
 
 ---
@@ -436,4 +502,4 @@ After teaching this unit:
 
 ---
 
-**END OF TEACHER KEY v2.1**
+**END OF TEACHER KEY v2.2**

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-STAGE 2 AUTOMATION - HYBRID TEMPLATE APPROACH
-Generate worksheets by filling templates with data from Stage 1B + AI-generated content
+STAGE 2 AUTOMATION - TEMPLATE-BASED EXTRACTION
+Generate worksheets by extracting data from Stage 1B JSON using pedagogical templates
+NO API CALLS - everything extracted programmatically from Stage 1B data
 
 Usage:
     python3 run_stage2.py outputs/Book_stage1b_v5_0.json --week 1
@@ -13,109 +14,589 @@ import sys
 import os
 from pathlib import Path
 from datetime import datetime
-from anthropic import Anthropic
+import random
+import re
+from collections import Counter
 
-# Configuration
-class Config:
-    API_KEY = os.environ.get("ANTHROPIC_API_KEY")
-    MODEL = "claude-sonnet-4-20250514"
-    MAX_TOKENS = 4000
+# No configuration needed - Stage 2 extracts from Stage 1B data
+
+# ============================================================================
+# DEVICE TYPE CLASSIFICATION SYSTEM
+# ============================================================================
+# Maps specific devices to pedagogical categories for template selection
+
+DEVICE_TYPE_MAP = {
+    # Comparison devices
+    'Metaphor': 'comparison',
+    'Simile': 'comparison',
+    'Extended Metaphor': 'comparison',
+    
+    # Human quality devices
+    'Personification': 'human_quality',
+    'Apostrophe': 'human_quality',
+    
+    # Sensory devices
+    'Imagery': 'sensory',
+    'Synesthesia': 'sensory',
+    
+    # Sound devices
+    'Alliteration': 'sound',
+    'Assonance': 'sound',
+    'Consonance': 'sound',
+    'Onomatopoeia': 'sound',
+    
+    # Representational devices
+    'Symbolism': 'representation',
+    'Allegory': 'representation',
+    'Motif': 'representation',
+    
+    # Structural devices
+    'Juxtaposition': 'contrast',
+    'Parallelism': 'pattern',
+    'Repetition': 'pattern',
+    
+    # Exaggeration devices
+    'Hyperbole': 'exaggeration',
+    'Understatement': 'exaggeration'
+}
+
+def get_device_type(device_name):
+    """Get pedagogical category for a device."""
+    return DEVICE_TYPE_MAP.get(device_name, 'other')
+
+# ============================================================================
+# MULTIPLE CHOICE DISTRACTOR TEMPLATES
+# ============================================================================
+# Templates for generating wrong answers that test understanding, not device recognition
+
+MC_DISTRACTOR_TEMPLATES = {
+    'comparison': [
+        {
+            'pattern': 'Creates musical rhythm in the description of {subject}',
+            'type': 'wrong_device_sound'
+        },
+        {
+            'pattern': 'Uses {subject} as a symbol representing larger themes',
+            'type': 'wrong_device_symbolism'
+        },
+        {
+            'pattern': 'Directly states that {subject} is {quality} without comparison',
+            'type': 'wrong_mechanism'
+        }
+    ],
+    'human_quality': [
+        {
+            'pattern': 'Compares {subject} to something else through metaphor',
+            'type': 'wrong_device_comparison'
+        },
+        {
+            'pattern': 'Describes only the physical appearance of {subject}',
+            'type': 'wrong_mechanism'
+        },
+        {
+            'pattern': 'Uses {subject} as a symbol without giving it human traits',
+            'type': 'wrong_device_symbolism'
+        }
+    ],
+    'sensory': [
+        {
+            'pattern': 'Creates metaphor by comparing {subject} to something else',
+            'type': 'wrong_device_comparison'
+        },
+        {
+            'pattern': 'Gives {subject} human qualities or emotions',
+            'type': 'wrong_device_personification'
+        },
+        {
+            'pattern': 'Uses {subject} to symbolize abstract themes',
+            'type': 'wrong_device_symbolism'
+        }
+    ],
+    'sound': [
+        {
+            'pattern': 'Creates visual imagery of {subject}',
+            'type': 'wrong_device_imagery'
+        },
+        {
+            'pattern': 'Compares the sounds to something else metaphorically',
+            'type': 'wrong_device_comparison'
+        },
+        {
+            'pattern': 'Directly states the meaning without sound patterns',
+            'type': 'wrong_mechanism'
+        }
+    ],
+    'representation': [
+        {
+            'pattern': 'Compares {subject} directly to something else',
+            'type': 'wrong_device_comparison'
+        },
+        {
+            'pattern': 'Describes {subject} using sensory details only',
+            'type': 'wrong_device_imagery'
+        },
+        {
+            'pattern': 'Gives {subject} human qualities without symbolic meaning',
+            'type': 'wrong_device_personification'
+        }
+    ],
+    'contrast': [
+        {
+            'pattern': 'Shows similarity between {subject} and another element',
+            'type': 'opposite_mechanism'
+        },
+        {
+            'pattern': 'Uses {subject} as symbol for larger themes',
+            'type': 'wrong_device_symbolism'
+        },
+        {
+            'pattern': 'Creates sensory imagery of {subject}',
+            'type': 'wrong_device_imagery'
+        }
+    ],
+    'pattern': [
+        {
+            'pattern': 'Creates contrast between different elements',
+            'type': 'wrong_device_contrast'
+        },
+        {
+            'pattern': 'Uses {subject} symbolically without repetition',
+            'type': 'wrong_device_symbolism'
+        },
+        {
+            'pattern': 'Describes {subject} with sensory details',
+            'type': 'wrong_device_imagery'
+        }
+    ],
+    'exaggeration': [
+        {
+            'pattern': 'Describes {subject} accurately without exaggeration',
+            'type': 'opposite_mechanism'
+        },
+        {
+            'pattern': 'Compares {subject} to something else through metaphor',
+            'type': 'wrong_device_comparison'
+        },
+        {
+            'pattern': 'Uses {subject} as symbol representing themes',
+            'type': 'wrong_device_symbolism'
+        }
+    ],
+    'other': [
+        {
+            'pattern': 'Creates vivid sensory imagery',
+            'type': 'generic_imagery'
+        },
+        {
+            'pattern': 'Establishes symbolic meaning',
+            'type': 'generic_symbolism'
+        },
+        {
+            'pattern': 'Shows literal description without literary technique',
+            'type': 'generic_literal'
+        }
+    ]
+}
+
+# ============================================================================
+# CHRONOLOGICAL SEQUENCING TEMPLATES
+# ============================================================================
+# Shows HOW effect unfolds during reading (NOT how to analyze it)
+
+SEQUENCING_TEMPLATES = {
+    'comparison': [
+        'Reader encounters "{quote}" in Chapter {chapter}',
+        '{device_name} transfers {quality} from compared element to {subject}',
+        'This establishes {subject} as defined by {quality} in {macro_focus}'
+    ],
+    'human_quality': [
+        'Reader sees {subject} described as "{quote}" in Chapter {chapter}',
+        '{device_name} attributes human {quality} to non-human {subject}',
+        'This creates impression of {subject} as {quality} during {macro_focus}'
+    ],
+    'sensory': [
+        'Reader experiences sensory language: "{quote}" in Chapter {chapter}',
+        '{device_name} engages the senses to convey {quality}',
+        'This immerses reader in {subject}\'s {quality} within {macro_focus}'
+    ],
+    'sound': [
+        'Reader hears repeated sounds in "{quote}" from Chapter {chapter}',
+        '{device_name} creates auditory pattern emphasizing {quality}',
+        'This reinforces {subject}\'s {quality} through sound in {macro_focus}'
+    ],
+    'representation': [
+        'Reader notices {subject} presented as "{quote}" in Chapter {chapter}',
+        '{device_name} transforms {subject} into representation of {quality}',
+        'This layers symbolic {quality} onto literal {subject} in {macro_focus}'
+    ],
+    'contrast': [
+        'Reader observes {subject} juxtaposed in "{quote}" from Chapter {chapter}',
+        '{device_name} highlights differences to emphasize {quality}',
+        'This sharpens understanding of {subject}\'s {quality} through contrast in {macro_focus}'
+    ],
+    'pattern': [
+        'Reader recognizes repeated element in "{quote}" from Chapter {chapter}',
+        '{device_name} accumulates emphasis on {quality} through repetition',
+        'This intensifies {subject}\'s {quality} via accumulated pattern in {macro_focus}'
+    ],
+    'exaggeration': [
+        'Reader encounters exaggerated claim: "{quote}" in Chapter {chapter}',
+        '{device_name} amplifies {quality} beyond literal reality',
+        'This emphasizes {subject}\'s {quality} through deliberate distortion in {macro_focus}'
+    ],
+    'other': [
+        'Reader encounters "{quote}" in Chapter {chapter}',
+        '{device_name} emphasizes {quality} in the description',
+        'This establishes {subject} through {quality} in {macro_focus}'
+    ]
+}
+
+# ============================================================================
+# EFFECT CATEGORIZATION SYSTEM
+# ============================================================================
+
+def categorize_effect(effect_text, explanation_text):
+    """
+    Categorize an effect into reader_response, meaning_creation, or thematic.
+    """
+    combined = (effect_text + " " + explanation_text).lower()
+    
+    # Reader Response: emotional/sensory/experiential
+    reader_keywords = [
+        'feel', 'sense', 'experience', 'atmosphere', 'mood',
+        'evoke', 'immerse', 'draw', 'engage', 'visceral',
+        'emotional', 'sensory', 'impression'
+    ]
+    
+    # Thematic Impact: message/theme/larger meaning
+    thematic_keywords = [
+        'theme', 'reinforce', 'message', 'comment', 'critique',
+        'reflect', 'larger', 'universal', 'connect to',
+        'represents', 'symbolize', 'allegory'
+    ]
+    
+    # Meaning Creation: reveals/shows/establishes (default)
+    meaning_keywords = [
+        'show', 'reveal', 'tell', 'establish', 'convey',
+        'indicate', 'suggest', 'demonstrate', 'characterize',
+        'describe', 'depict', 'portray'
+    ]
+    
+    # Count keyword matches
+    reader_score = sum(1 for kw in reader_keywords if kw in combined)
+    thematic_score = sum(1 for kw in thematic_keywords if kw in combined)
+    meaning_score = sum(1 for kw in meaning_keywords if kw in combined)
+    
+    # Return highest scoring category
+    scores = {
+        'reader_response': reader_score,
+        'thematic': thematic_score,
+        'meaning_creation': meaning_score
+    }
+    
+    return max(scores, key=scores.get)
+
+def build_effect_for_category(category, subject, effect_core, macro_focus):
+    """Build a complete effect sentence for a specific category."""
+    if category == 'reader_response':
+        return f"Makes readers feel {subject}'s {effect_core}"
+    elif category == 'meaning_creation':
+        return f"Shows {subject} as {effect_core}"
+    elif category == 'thematic':
+        # Try to connect to larger themes
+        theme_hints = {
+            'decay': 'decline of tradition',
+            'weariness': 'burden of history',
+            'strict': 'rigid social order',
+            'harsh': 'severity of justice'
+        }
+        theme = None
+        for keyword, theme_phrase in theme_hints.items():
+            if keyword in effect_core.lower():
+                theme = theme_phrase
+                break
+        if theme:
+            return f"Reinforces theme of {theme} in {macro_focus}"
+        else:
+            return f"Connects {subject}'s {effect_core} to larger themes in {macro_focus}"
+    return f"Shows {subject} as {effect_core}"  # fallback
+
+def simplify_effect(text):
+    """Truncate effect to ~10 words"""
+    if not text:
+        return ''
+    words = text.split()
+    if len(words) <= 10:
+        return text
+    return ' '.join(words[:10]) + '...'
 
 def load_template(template_path):
     """Load template file"""
     with open(template_path, 'r', encoding='utf-8') as f:
         return f.read()
 
-def generate_placeholder_data(device, macro_focus, chapter_num, client):
-    """Generate missing template data for one device using Claude API"""
+# ============================================================================
+# HELPER FUNCTIONS FOR EXTRACTION
+# ============================================================================
+
+def extract_subject_from_device(text, explanation):
+    """Extract subject - PRIORITIZE QUOTE TEXT."""
+    # Strategy 1: Common important nouns in quote (places/objects)
+    important_subjects = ['courthouse', 'town', 'maycomb', 'house', 'street', 'building', 'square']
+    for noun in important_subjects:
+        if noun in text.lower():
+            return noun.capitalize()
     
-    # Build examples text from device data
-    examples_text = ""
-    if device.get('examples'):
-        for i, ex in enumerate(device['examples'][:3], 1):
-            quote = ex.get('text', ex.get('quote_snippet', ''))
-            examples_text += f"\nExample {i}: \"{quote}\"\n"
+    # Strategy 2: Proper nouns in quote
+    proper_nouns = re.findall(r'\b[A-Z][a-z]+\b', text)
+    if proper_nouns:
+        return proper_nouns[0]
     
-    prompt = f"""Generate pedagogical content for a literary device worksheet.
+    # Strategy 3: Possessives in explanation (character names)
+    possessive_match = re.search(r"([A-Z][a-z]+)'s", explanation)
+    if possessive_match:
+        return possessive_match.group(1)
+    
+    # Strategy 4: Subject at start of explanation
+    subject_match = re.search(r'^([A-Z][a-z]+)\s+(?:is|are|given)', explanation)
+    if subject_match:
+        return subject_match.group(1)
+    
+    return "the subject"
 
-DEVICE: {device['name']}
-DEFINITION: {device['definition']}
-MACRO FOCUS: {macro_focus}
-CHAPTER: {chapter_num}
+def extract_quality_from_explanation(explanation):
+    """Extract core quality from explanation."""
+    patterns = [
+        r'suggesting ([^,\.]+)',
+        r'emphasizing ([^,\.]+)',
+        r'revealing ([^,\.]+)',
+        r'conveying ([^,\.]+)',
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, explanation.lower())
+        if match:
+            quality = match.group(1).strip()
+            # Remove possessives
+            quality = re.sub(r'^(?:her|his|their|its|the)\s+', '', quality)
+            return quality
+    
+    return "this quality"
 
-TEXT EXAMPLES:
-{examples_text if examples_text else "No specific examples provided"}
+def extract_comparison_target(explanation):
+    """For comparison devices, extract what's being compared to what."""
+    # Look for "compared to", "like", "as" patterns
+    patterns = [
+        r'compared to ([^,\.]+)',
+        r'like ([^,\.]+)',
+        r'as if ([^,\.]+)',
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, explanation.lower())
+        if match:
+            return match.group(1).strip()
+    
+    return "something else"
 
-Generate the following in JSON format:
+def build_multiple_choice(device_name, device_type, subject, quality, macro_focus):
+    """Build MC with correct answer and 3 distractors."""
+    # Correct answer (no device name)
+    correct_answer = f"Shows {subject} as {quality}"
+    
+    # Get distractors for this device type
+    distractor_templates = MC_DISTRACTOR_TEMPLATES.get(device_type, MC_DISTRACTOR_TEMPLATES['other'])
+    
+    # Build 3 distractors
+    distractors = []
+    for template in distractor_templates[:3]:
+        distractor = template['pattern'].format(subject=subject, quality=quality)
+        distractors.append(distractor)
+    
+    # Randomize order
+    all_options = [correct_answer] + distractors
+    random.shuffle(all_options)
+    
+    # Find correct letter
+    correct_letter = chr(65 + all_options.index(correct_answer))
+    
+    return {
+        'question': f"What does {device_name} DO in this text? What is its purpose or function?",
+        'options': {
+            'A': all_options[0],
+            'B': all_options[1],
+            'C': all_options[2],
+            'D': all_options[3]
+        },
+        'correct': correct_letter
+    }
 
-{{
-  "multiple_choice": {{
-    "option_a": "A plausible wrong answer about this device",
-    "option_b": "The correct identification of this device",
-    "option_c": "Another plausible wrong answer",
-    "option_d": "A third plausible wrong answer",
-    "correct": "B",
-    "distractor_1_explanation": "Why option A is incorrect",
-    "distractor_2_explanation": "Why option C is incorrect"
-  }},
-  "sequencing": {{
-    "item_a": "First step in analyzing this device",
-    "item_b": "Second step in analyzing this device", 
-    "item_c": "Third step in analyzing this device",
-    "correct_order": "A, B, C",
-    "explanation": "Why this order is correct"
-  }},
-  "effects": {{
-    "meaning": "How this device affects meaning in the text",
-    "reader": "How this device affects the reader's experience",
-    "theme": "How this device contributes to theme",
-    "character": "How this device reveals character",
-    "plot": "How this device advances plot",
-    "structure": "How this device affects narrative structure"
-  }},
-  "examples": {{
-    "model_example": "Complete quote from text showing this device",
-    "model_paragraph": "Full TVODE paragraph analyzing the device with T, V, O, D, E components clearly visible",
-    "sample_response": "Expected student answer for device identification",
-    "location_prompt": "Where to find this device (e.g., 'page 23, paragraph 2')"
-  }},
-  "teaching": {{
-    "teaching_note": "Pedagogical tip for teaching this device",
-    "common_error_1": "Common student misconception about this device",
-    "common_error_2": "Another common student error",
-    "scaffolding_tip": "How to support struggling students"
-  }}
-}}
-
-IMPORTANT: 
-- Keep all text student-appropriate for high school level
-- Multiple choice options should be plausible but clearly distinguishable
-- Model paragraph must be a complete TVODE sentence
-- All content should relate to the macro focus: {macro_focus}
-
-Output ONLY valid JSON, no other text."""
-
-    try:
-        response = client.messages.create(
-            model=Config.MODEL,
-            max_tokens=Config.MAX_TOKENS,
-            messages=[{"role": "user", "content": prompt}]
+def build_chronological_sequence(device_name, device_type, subject, quote, chapter, quality, macro_focus):
+    """
+    Build sequencing steps that show HOW EFFECT UNFOLDS during reading.
+    NOT analytical steps - this is the READING EXPERIENCE.
+    """
+    # Get template for device type
+    template = SEQUENCING_TEMPLATES.get(device_type, SEQUENCING_TEMPLATES['other'])
+    
+    # Truncate long quotes for display
+    display_quote = quote[:60] + "..." if len(quote) > 60 else quote
+    
+    # Fill template with actual content
+    steps = []
+    for step_template in template:
+        step = step_template.format(
+            device_name=device_name,
+            subject=subject,
+            quote=display_quote,
+            chapter=chapter,
+            quality=quality,
+            macro_focus=macro_focus
         )
-        
-        result_text = response.content[0].text.strip()
-        # Remove markdown code blocks if present
-        if result_text.startswith("```"):
-            result_text = result_text.split("```")[1]
-            if result_text.startswith("json"):
-                result_text = result_text[4:]
-            result_text = result_text.strip()
-        
-        return json.loads(result_text)
-    except Exception as e:
-        print(f"  ⚠ Error generating data for {device['name']}: {e}")
-        return None
+        steps.append(step)
+    
+    return steps
 
-def fill_worksheet_template(template, week_package, enriched_devices):
+
+def extract_worksheet_data_from_stage1b(device, macro_focus, text_title, chapter_num):
+    """
+    Extract ALL worksheet content from Stage 1B JSON.
+    NO API CALLS - everything extracted from JSON.
+    """
+    
+    device_name = device.get('device_name') or device.get('name', 'Unknown')
+    device_type = get_device_type(device_name)
+    definition = device.get('definition', '')
+    
+    # Get examples for the activity chapter
+    examples = device.get('examples', [])
+    # Handle both string and int chapter numbers
+    chapter_examples = [ex for ex in examples if str(ex.get('chapter', '')) == str(chapter_num)]
+    
+    if not chapter_examples:
+        chapter_examples = examples[:2]  # Fallback to first examples
+    
+    primary_example = chapter_examples[0] if chapter_examples else {}
+    quote = primary_example.get('text', primary_example.get('quote_snippet', ''))
+    explanation = primary_example.get('explanation', '')
+    chapter = primary_example.get('chapter', chapter_num)
+    
+    # Safety check for empty quote
+    if not quote and examples:
+        quote = examples[0].get('text', examples[0].get('quote_snippet', ''))
+    
+    # Extract subject and quality using helper functions
+    subject = extract_subject_from_device(quote, explanation)
+    quality = extract_quality_from_explanation(explanation)
+    
+    # ========================================
+    # MULTIPLE CHOICE - Using templates
+    # ========================================
+    
+    mc_data = build_multiple_choice(device_name, device_type, subject, quality, macro_focus)
+    
+    # ========================================
+    # CHRONOLOGICAL SEQUENCING - Reading experience
+    # ========================================
+    
+    sequence_steps = build_chronological_sequence(
+        device_name=device_name,
+        device_type=device_type,
+        subject=subject,
+        quote=quote,
+        chapter=chapter,
+        quality=quality,
+        macro_focus=macro_focus
+    )
+    
+    # Return steps in correct order - randomization happens in template filling
+    seq_data = {
+        "item_a": sequence_steps[0] if len(sequence_steps) > 0 else "",
+        "item_b": sequence_steps[1] if len(sequence_steps) > 1 else "",
+        "item_c": sequence_steps[2] if len(sequence_steps) > 2 else "",
+        "correct_order": "A, B, C",  # Will be recalculated after randomization
+        "explanation": f"Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established"
+    }
+    
+    # ========================================
+    # EFFECTS - Extract directly from Stage 1B (RANDOMIZED ORDER)
+    # ========================================
+    
+    effects = device.get('effects', [])
+    
+    # Extract effect texts from Stage 1B
+    effect_list = []
+    
+    if len(effects) >= 6:
+        # Extract text from effect objects (handle both dict and string formats)
+        for effect_item in effects[:6]:
+            if isinstance(effect_item, dict):
+                effect_text = effect_item.get('text', str(effect_item))
+            else:
+                effect_text = str(effect_item)
+            effect_list.append(effect_text)
+    elif len(effects) >= 3:
+        # Use available effects
+        for effect_item in effects:
+            if isinstance(effect_item, dict):
+                effect_text = effect_item.get('text', str(effect_item))
+            else:
+                effect_text = str(effect_item)
+            effect_list.append(effect_text)
+        # Fill remaining with simple variations
+        for i in range(len(effects), 6):
+            effect_list.append(f"Effect {i+1} for {device_name}")
+    else:
+        # Fallback if effects missing
+        for i in range(6):
+            effect_list.append(f"Effect {i+1} for {device_name}")
+    
+    # RANDOMIZE ORDER so it's not obvious (not 1→Reader, 2→Meaning, 3→Thematic)
+    randomized_effects = effect_list.copy()
+    random.shuffle(randomized_effects)
+    
+    # Assign to placeholders (first 6 for Step 6)
+    effects_data = {}
+    for i in range(6):
+        effects_data[f"effect_{i+1}_simplified"] = randomized_effects[i]
+    
+    # Also map to old format for compatibility (use original order for categorization)
+    effects_data["reader"] = effect_list[0] if len(effect_list) > 0 else f"Creates sense of {quality} in {subject}"
+    effects_data["reader2"] = effect_list[1] if len(effect_list) > 1 else f"Makes readers feel the {quality}"
+    effects_data["meaning"] = effect_list[2] if len(effect_list) > 2 else f"Shows {subject} as {quality}"
+    effects_data["character"] = effect_list[3] if len(effect_list) > 3 else f"Reveals Scout's view of {subject}"
+    effects_data["theme"] = effect_list[4] if len(effect_list) > 4 else f"Reinforces themes of {quality}"
+    effects_data["structure"] = effect_list[5] if len(effect_list) > 5 else f"Establishes {subject} as foundation for {macro_focus}"
+    
+    # ========================================
+    # EXAMPLES & TEACHING
+    # ========================================
+    
+    quote_display = quote if len(quote) <= 40 else quote[:37] + "..."
+    
+    examples_data = {
+        "model_example": quote,
+        "location_prompt": f"Chapter {chapter}, opening paragraphs describing {subject}",
+        "sample_response": f"In Chapter {chapter}, the author uses {device_name.lower()} to describe {subject}",
+        "detail_sample": f"shown through the description of {subject} as '{quote_display}'"
+    }
+    
+    teaching_data = {
+        "teaching_note": f"Guide students to see how {device_name.lower()} reveals {subject} as {quality} in {macro_focus}",
+        "common_error_1": f"Students may identify {device_name.lower()} but miss what it reveals about {subject}",
+        "common_error_2": f"Students may paraphrase '{quote_display}' without analyzing its effect",
+        "scaffolding_tip": f"Point students to Chapter {chapter} and help them locate '{quote_display}' before analyzing"
+    }
+    
+    return {
+        "multiple_choice": mc_data,
+        "sequencing": seq_data,
+        "effects": effects_data,
+        "examples": examples_data,
+        "teaching": teaching_data
+    }
+
+def fill_worksheet_template(template, week_package, enriched_devices, randomization_states):
     """Fill worksheet template with all data"""
     
     output = template
@@ -146,27 +627,55 @@ def fill_worksheet_template(template, week_package, enriched_devices):
         # Multiple choice
         if 'multiple_choice' in enriched:
             mc = enriched['multiple_choice']
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
+            # New structure uses 'options' dict
+            if 'options' in mc:
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc['options'].get('A', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc['options'].get('B', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc['options'].get('C', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc['options'].get('D', ''))
+            else:
+                # Fallback to old structure
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
         
-        # Sequencing
+        # Sequencing (use stored randomization)
         if 'sequencing' in enriched:
             seq = enriched['sequencing']
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_A}}}}", seq.get('item_a', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_B}}}}", seq.get('item_b', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_C}}}}", seq.get('item_c', ''))
+            indices = randomization_states[i-1] if i-1 < len(randomization_states) else None
+            
+            if indices is None:
+                indices = [0, 1, 2]
+                random.shuffle(indices)
+                while indices == [0, 1, 2]:
+                    random.shuffle(indices)
+            
+            items = [
+                seq.get('item_a', ''),
+                seq.get('item_b', ''),
+                seq.get('item_c', '')
+            ]
+            
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_1}}}}", items[indices[0]])
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_2}}}}", items[indices[1]])
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_3}}}}", items[indices[2]])
+            
+            # DO NOT include correct answer in student worksheet
+            # This line should ONLY be in teacher key, not here
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_CORRECT_ORDER}}}}", "")
         
-        # Effects
+        # Effects (simplified for v2.2) - extracted directly from Stage 1B
         if 'effects' in enriched:
             eff = enriched['effects']
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1}}}}", eff.get('meaning', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2}}}}", eff.get('reader', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3}}}}", eff.get('theme', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4}}}}", eff.get('character', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5}}}}", eff.get('plot', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6}}}}", eff.get('structure', ''))
+            
+            # Use simplified effects structure (extracted from Stage 1B)
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1_SIMPLIFIED}}}}", eff.get('effect_1_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2_SIMPLIFIED}}}}", eff.get('effect_2_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3_SIMPLIFIED}}}}", eff.get('effect_3_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4_SIMPLIFIED}}}}", eff.get('effect_4_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5_SIMPLIFIED}}}}", eff.get('effect_5_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6_SIMPLIFIED}}}}", eff.get('effect_6_simplified', ''))
         
         # Examples
         if 'examples' in enriched:
@@ -176,7 +685,7 @@ def fill_worksheet_template(template, week_package, enriched_devices):
     
     return output
 
-def fill_teacher_key_template(template, week_package, enriched_devices):
+def fill_teacher_key_template(template, week_package, enriched_devices, randomization_states):
     """Fill teacher key template with all data"""
     
     output = template
@@ -203,40 +712,98 @@ def fill_teacher_key_template(template, week_package, enriched_devices):
         # Multiple choice with answers
         if 'multiple_choice' in enriched:
             mc = enriched['multiple_choice']
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_CORRECT_OPTION}}}}", mc.get('correct', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_1}}}}", mc.get('distractor_1_explanation', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_2}}}}", mc.get('distractor_2_explanation', ''))
+            # New structure uses 'options' dict
+            if 'options' in mc:
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc['options'].get('A', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc['options'].get('B', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc['options'].get('C', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc['options'].get('D', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_CORRECT_OPTION}}}}", mc.get('correct', ''))
+            else:
+                # Fallback to old structure
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_A}}}}", mc.get('option_a', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_B}}}}", mc.get('option_b', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_C}}}}", mc.get('option_c', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_OPTION_D}}}}", mc.get('option_d', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_CORRECT_OPTION}}}}", mc.get('correct', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_1}}}}", mc.get('distractor_1_explanation', ''))
+                output = output.replace(f"{{{{DEVICE_{i}_DISTRACTOR_2}}}}", mc.get('distractor_2_explanation', ''))
         
-        # Sequencing with answer
+        # Sequencing with answer (must match worksheet randomization)
         if 'sequencing' in enriched:
             seq = enriched['sequencing']
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_A}}}}", seq.get('item_a', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_B}}}}", seq.get('item_b', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_C}}}}", seq.get('item_c', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_ANSWER}}}}", seq.get('correct_order', ''))
+            indices = randomization_states[i-1] if i-1 < len(randomization_states) else None
+            
+            if indices is None:
+                indices = [0, 1, 2]
+                random.shuffle(indices)
+                while indices == [0, 1, 2]:
+                    random.shuffle(indices)
+            
+            items = [
+                seq.get('item_a', ''),
+                seq.get('item_b', ''),
+                seq.get('item_c', '')
+            ]
+            
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_1}}}}", items[indices[0]])
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_2}}}}", items[indices[1]])
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_STEP_RANDOMIZED_3}}}}", items[indices[2]])
+            
+            # Calculate correct answer format: "1-B, 2-A, 3-C"
+            # indices tells us which original item (0,1,2) is in each position
+            # We need to reverse: which letter (A,B,C) is in position 1, 2, 3?
+            letters = ['A', 'B', 'C']
+            correct_order_parts = []
+            for pos in range(3):
+                # Find which letter corresponds to the original item at this position
+                original_item_idx = indices[pos]
+                letter = letters[original_item_idx]
+                correct_order_parts.append(f"{pos+1}-{letter}")
+            
+            correct_order = ', '.join(correct_order_parts)
+            
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_ANSWER}}}}", correct_order)
             output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_EXPLANATION}}}}", seq.get('explanation', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SEQUENCE_CORRECT_ORDER}}}}", f"**Correct Answer:** {correct_order}")
         
-        # Effects (same as worksheet)
+        # Effects (simplified for v2.2) - extracted directly from Stage 1B
         if 'effects' in enriched:
             eff = enriched['effects']
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1}}}}", eff.get('meaning', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2}}}}", eff.get('reader', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3}}}}", eff.get('theme', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4}}}}", eff.get('character', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5}}}}", eff.get('plot', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6}}}}", eff.get('structure', ''))
+            
+            # Simplified versions for sorting (from Stage 1B)
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_1_SIMPLIFIED}}}}", eff.get('effect_1_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_2_SIMPLIFIED}}}}", eff.get('effect_2_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_3_SIMPLIFIED}}}}", eff.get('effect_3_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_4_SIMPLIFIED}}}}", eff.get('effect_4_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_5_SIMPLIFIED}}}}", eff.get('effect_5_simplified', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EFFECT_6_SIMPLIFIED}}}}", eff.get('effect_6_simplified', ''))
+            
+            # Categorized effects for teacher key answer tables
+            # Use first 2 effects for each category (from Stage 1B with synonym variations)
+            # Reader response effects (feeling-based)
+            output = output.replace(f"{{{{DEVICE_{i}_FELT_EFFECT_1}}}}", eff.get('effect_1_simplified', eff.get('reader', '')))
+            output = output.replace(f"{{{{DEVICE_{i}_FELT_EFFECT_2}}}}", eff.get('effect_2_simplified', eff.get('reader2', '')))
+            
+            # Meaning creation effects (understanding-based)
+            output = output.replace(f"{{{{DEVICE_{i}_UNDERSTOOD_EFFECT_1}}}}", eff.get('effect_3_simplified', eff.get('meaning', '')))
+            output = output.replace(f"{{{{DEVICE_{i}_UNDERSTOOD_EFFECT_2}}}}", eff.get('effect_4_simplified', eff.get('character', '')))
+            
+            # Thematic impact effects (big idea)
+            output = output.replace(f"{{{{DEVICE_{i}_BIGIDEA_EFFECT_1}}}}", eff.get('effect_5_simplified', eff.get('theme', '')))
+            output = output.replace(f"{{{{DEVICE_{i}_BIGIDEA_EFFECT_2}}}}", eff.get('effect_6_simplified', eff.get('structure', '')))
         
         # Examples and teaching
         if 'examples' in enriched:
             ex = enriched['examples']
             output = output.replace(f"{{{{DEVICE_{i}_MODEL_EXAMPLE}}}}", ex.get('model_example', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_MODEL_PARAGRAPH}}}}", ex.get('model_paragraph', ''))
-            output = output.replace(f"{{{{DEVICE_{i}_SAMPLE_RESPONSE}}}}", ex.get('sample_response', ''))
             output = output.replace(f"{{{{DEVICE_{i}_EXAMPLE_LOCATIONS}}}}", ex.get('location_prompt', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_EXAMPLE_LOCATIONS_FULL}}}}", ex.get('location_prompt', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_SAMPLE_RESPONSE}}}}", ex.get('sample_response', ''))
+            output = output.replace(f"{{{{DEVICE_{i}_DETAIL_SAMPLE}}}}", ex.get('detail_sample', ''))
+            
+            # Model paragraph placeholder (if needed)
+            output = output.replace(f"{{{{DEVICE_{i}_MODEL_PARAGRAPH}}}}", "See TVODE Construction Worksheet for complete model paragraph")
         
         if 'teaching' in enriched:
             teach = enriched['teaching']
@@ -244,8 +811,8 @@ def fill_teacher_key_template(template, week_package, enriched_devices):
     
     return output
 
-def process_week(week_package, template_dir, output_dir, client):
-    """Process one week: generate data and fill templates"""
+def process_week(week_package, template_dir, output_dir):
+    """Process one week: extract data from Stage 1B and fill templates"""
     
     week_num = week_package['week']
     macro_focus = week_package['macro_focus']
@@ -255,24 +822,45 @@ def process_week(week_package, template_dir, output_dir, client):
     print(f"   Activity Chapter: {activity_chapter}")
     print(f"   Devices: {len(week_package['micro_devices'])}")
     
-    # Generate enriched data for each device
-    print(f"\n🤖 Generating pedagogical content...")
+    # Extract worksheet data from Stage 1B (NO API CALLS)
+    print(f"\n📊 Extracting worksheet data from Stage 1B...")
     enriched_devices = []
+    randomization_states = []
+    
+    title = week_package.get('text_title', 'Book')
     
     for device in week_package['micro_devices'][:3]:  # Limit to 3 devices per worksheet
         print(f"   - {device['name']}...", end='', flush=True)
-        enriched = generate_placeholder_data(device, macro_focus, activity_chapter, client)
+        
+        # Extract from Stage 1B instead of generating with AI
+        enriched = extract_worksheet_data_from_stage1b(
+            device, 
+            macro_focus, 
+            title,
+            activity_chapter
+        )
         enriched_devices.append(enriched)
-        print(" ✓")
+        
+        # Generate randomization for this device
+        if enriched and 'sequencing' in enriched:
+            indices = [0, 1, 2]
+            random.shuffle(indices)
+            while indices == [0, 1, 2]:
+                random.shuffle(indices)
+            randomization_states.append(indices)
+        else:
+            randomization_states.append(None)
+        
+        print(" ✓ (NO API CALL)")
     
     # Load templates
     print(f"\n📄 Filling templates...")
     worksheet_template = load_template(template_dir / "Template_Literary_Analysis_6Step.md")
     teacher_key_template = load_template(template_dir / "Template_Teacher_Key.md")
     
-    # Fill templates
-    worksheet = fill_worksheet_template(worksheet_template, week_package, enriched_devices)
-    teacher_key = fill_teacher_key_template(teacher_key_template, week_package, enriched_devices)
+    # Fill templates (now passing randomization states)
+    worksheet = fill_worksheet_template(worksheet_template, week_package, enriched_devices, randomization_states)
+    teacher_key = fill_teacher_key_template(teacher_key_template, week_package, enriched_devices, randomization_states)
     
     # Save outputs
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -312,13 +900,6 @@ def main():
         print(f"❌ Error: Stage 1B file not found: {stage1b_path}")
         sys.exit(1)
     
-    # Initialize API client
-    if not Config.API_KEY:
-        print("❌ Error: ANTHROPIC_API_KEY environment variable not set")
-        sys.exit(1)
-    
-    client = Anthropic(api_key=Config.API_KEY)
-    
     print("\n" + "="*80)
     print("STAGE 2: TEMPLATE-BASED WORKSHEET GENERATION")
     print("="*80)
@@ -344,7 +925,7 @@ def main():
         generated_files = []
         
         for week_package in week_packages:
-            files = process_week(week_package, template_dir, output_dir, client)
+            files = process_week(week_package, template_dir, output_dir)
             generated_files.extend(files)
         
         print("\n" + "="*80)
@@ -361,7 +942,7 @@ def main():
             print(f"\n📝 Generating worksheet for Week {week_num}")
         
         week_package = week_packages[week_num - 1]
-        worksheet_path, teacher_key_path = process_week(week_package, template_dir, output_dir, client)
+        worksheet_path, teacher_key_path = process_week(week_package, template_dir, output_dir)
         
         print("\n" + "="*80)
         print("✅ STAGE 2 COMPLETE!")
@@ -371,7 +952,7 @@ def main():
         print(f"  - {teacher_key_path}")
     
     print(f"\n📂 All worksheets saved to: {output_dir}")
-    print(f"\n💰 Estimated API cost: ~${len(week_packages) * 3 * 0.015:.2f}")
+    print(f"\n💰 API cost: $0.00 (extraction only, no generation)")
 
 if __name__ == "__main__":
     main()
