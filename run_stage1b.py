@@ -9,8 +9,283 @@ Usage:
 
 import json
 import sys
+import re
 from pathlib import Path
 from datetime import datetime
+
+# ============================================================================
+# SYNONYM SYSTEM FOR EFFECT VARIATIONS
+# ============================================================================
+# Ensures 3 effects per device use different words but same core meaning
+
+SYNONYM_MAP = {
+    # Decay/decline cluster
+    'decay': ['decline', 'deterioration', 'decay', 'rot', 'erosion'],
+    'decline': ['decay', 'deterioration', 'decline', 'degradation'],
+    'deterioration': ['decay', 'decline', 'deterioration', 'erosion'],
+    'rot': ['decay', 'deterioration', 'rot', 'decomposition'],
+    'erosion': ['decay', 'deterioration', 'erosion', 'degradation'],
+    
+    # Tiredness/exhaustion cluster
+    'weariness': ['exhaustion', 'fatigue', 'weariness', 'tiredness'],
+    'exhaustion': ['weariness', 'fatigue', 'exhaustion', 'depletion'],
+    'fatigue': ['weariness', 'exhaustion', 'fatigue', 'tiredness'],
+    'tiredness': ['weariness', 'exhaustion', 'tiredness', 'fatigue'],
+    'weary': ['tired', 'exhausted', 'weary', 'worn'],
+    'tired': ['weary', 'exhausted', 'tired', 'worn'],
+    
+    # Strictness/harshness cluster
+    'stern': ['strict', 'harsh', 'stern', 'rigid', 'severe'],
+    'strict': ['stern', 'harsh', 'strict', 'rigid'],
+    'harsh': ['stern', 'strict', 'harsh', 'severe'],
+    'rigid': ['stern', 'strict', 'rigid', 'inflexible'],
+    'severe': ['harsh', 'stern', 'severe', 'austere'],
+    
+    # Authority/control cluster
+    'discipline': ['authority', 'control', 'discipline', 'command'],
+    'authority': ['control', 'discipline', 'authority', 'power'],
+    'control': ['authority', 'discipline', 'control', 'command'],
+    'command': ['authority', 'control', 'command', 'dominance'],
+    'power': ['authority', 'control', 'power', 'dominance'],
+    
+    # Age/oldness cluster
+    'old': ['aged', 'ancient', 'old', 'weathered', 'worn'],
+    'aged': ['old', 'ancient', 'aged', 'weathered'],
+    'ancient': ['old', 'aged', 'ancient', 'time-worn'],
+    'weathered': ['aged', 'worn', 'weathered', 'time-worn'],
+    
+    # Softness/delicacy cluster
+    'soft': ['delicate', 'gentle', 'soft', 'tender'],
+    'delicate': ['soft', 'gentle', 'delicate', 'fragile'],
+    'gentle': ['soft', 'delicate', 'gentle', 'tender'],
+    
+    # Hardness/strength cluster
+    'hard': ['firm', 'solid', 'hard', 'rigid'],
+    'firm': ['hard', 'solid', 'firm', 'unyielding'],
+    'solid': ['hard', 'firm', 'solid', 'sturdy'],
+    
+    # Brightness/light cluster
+    'bright': ['luminous', 'radiant', 'bright', 'vivid'],
+    'luminous': ['bright', 'radiant', 'luminous', 'glowing'],
+    'radiant': ['bright', 'luminous', 'radiant', 'shining'],
+    
+    # Darkness cluster
+    'dark': ['shadowy', 'dim', 'dark', 'gloomy'],
+    'shadowy': ['dark', 'dim', 'shadowy', 'murky'],
+    'dim': ['dark', 'shadowy', 'dim', 'faint'],
+    
+    # Speed cluster
+    'slow': ['leisurely', 'unhurried', 'slow', 'gradual'],
+    'fast': ['swift', 'rapid', 'fast', 'quick'],
+    'swift': ['fast', 'rapid', 'swift', 'speedy'],
+    
+    # Size cluster
+    'large': ['big', 'expansive', 'large', 'vast'],
+    'small': ['tiny', 'little', 'small', 'minute'],
+    'vast': ['large', 'expansive', 'vast', 'immense'],
+}
+
+
+def get_synonym_for_word(word, index):
+    """
+    Get a synonym for a word based on index (0, 1, or 2).
+    
+    Args:
+        word: The word to find synonym for
+        index: Which synonym to use (0, 1, or 2)
+    
+    Returns:
+        Synonym at that index, or original word if no synonyms available
+    """
+    word_lower = word.lower()
+    
+    if word_lower in SYNONYM_MAP:
+        synonyms = SYNONYM_MAP[word_lower]
+        return synonyms[index % len(synonyms)]
+    
+    # If no synonym found, return original
+    return word
+
+
+def create_quality_variations(quality_phrase):
+    """
+    Create 3 variations of a quality phrase using synonyms.
+    
+    Example:
+        Input: "decay and weariness"
+        Output: ["decline and exhaustion", "deterioration and fatigue", "decay and weariness"]
+    
+    Args:
+        quality_phrase: The core quality extracted from explanation
+    
+    Returns:
+        List of 3 quality variations with different synonyms
+    """
+    
+    # Handle "X and Y" patterns
+    if ' and ' in quality_phrase:
+        parts = quality_phrase.split(' and ')
+        variations = []
+        
+        for i in range(3):
+            var_parts = [get_synonym_for_word(part.strip(), i) for part in parts]
+            variations.append(' and '.join(var_parts))
+        
+        return variations
+    
+    # Handle single-word or multi-word phrases (no "and")
+    words = quality_phrase.split()
+    variations = []
+    
+    for i in range(3):
+        var_words = [get_synonym_for_word(word, i) for word in words if word not in ['the', 'a', 'an', 'of']]
+        variations.append(' '.join(var_words))
+    
+    return variations
+
+# ============================================================================
+# EFFECT EXTRACTION AND SYNTHESIS
+# ============================================================================
+
+
+def extract_subject_from_device(text, explanation):
+    """
+    Extract the subject (who/what the device is about).
+    Priority: character names > place names > objects
+    
+    Args:
+        text: The quote text
+        explanation: The device explanation
+    
+    Returns:
+        Subject as a string (e.g., "Town", "Calpurnia", "Courthouse")
+    """
+    
+    # Strategy 1: Possessives in explanation (highest priority for character names)
+    # Example: "Calpurnia's hand" → extract "Calpurnia"
+    possessive_match = re.search(r"([A-Z][a-z]+)'s", explanation)
+    if possessive_match:
+        return possessive_match.group(1)
+    
+    # Strategy 2: Important place/object nouns in quote text
+    # These are significant settings/objects worth naming
+    important_subjects = ['courthouse', 'town', 'maycomb', 'house', 'street', 'building', 'square']
+    for noun in important_subjects:
+        if noun in text.lower():
+            return noun.capitalize()
+    
+    # Strategy 3: Proper nouns (capitalized words) in quote
+    proper_nouns = re.findall(r'\b[A-Z][a-z]+\b', text)
+    if proper_nouns:
+        return proper_nouns[0]
+    
+    # Strategy 4: Subject at start of explanation
+    # Example: "Town is implicitly compared..." → extract "Town"
+    subject_match = re.search(r'^([A-Z][a-z]+)\s+(?:is|are|given)', explanation)
+    if subject_match:
+        return subject_match.group(1)
+    
+    return "the subject"  # fallback
+
+
+def extract_quality_from_explanation(explanation):
+    """
+    Extract the core quality/effect from explanation.
+    Removes possessive pronouns to avoid grammar errors.
+    
+    Args:
+        explanation: The device explanation text
+    
+    Returns:
+        Core quality as string (e.g., "decay and weariness", "stern discipline")
+    """
+    
+    # Look for key patterns that introduce the quality
+    patterns = [
+        r'suggesting ([^,\.]+)',
+        r'emphasizing ([^,\.]+)',
+        r'revealing ([^,\.]+)',
+        r'conveying ([^,\.]+)',
+        r'showing ([^,\.]+)',
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, explanation.lower())
+        if match:
+            quality = match.group(1).strip()
+            # Remove possessive pronouns that cause grammar errors
+            quality = re.sub(r'^(?:her|his|their|its|the)\s+', '', quality)
+            return quality
+    
+    # Fallback: take last clause after comma
+    clauses = explanation.split(',')
+    if len(clauses) > 1:
+        quality = clauses[-1].strip().lower()
+        quality = re.sub(r'^(?:her|his|their|its|the)\s+', '', quality)
+        return quality
+    
+    return "this quality"  # fallback
+
+
+def generate_effects_for_device(device, macro_focus):
+    """
+    Generate 3 effects for a device using synonym variations.
+    CRITICAL: Effects must contain SIGNAL WORDS so students can categorize them.
+    
+    Args:
+        device: Device dictionary with 'examples' field
+        macro_focus: The week's macro focus (e.g., "Exposition")
+    
+    Returns:
+        List of 3 effect dictionaries with 'text' and 'category' keys
+    """
+    
+    # Get first example
+    examples = device.get('examples', [])
+    if not examples:
+        return [
+            {"text": "This creates an emotional response in readers.", "category": "reader_response"},
+            {"text": "This reveals meaning in the text.", "category": "meaning_creation"},
+            {"text": "This reinforces a theme in the narrative.", "category": "thematic_impact"}
+        ]
+    
+    example = examples[0]
+    text = example.get('text', '')
+    explanation = example.get('explanation', '')
+    
+    # Extract components
+    subject = extract_subject_from_device(text, explanation)
+    quality = extract_quality_from_explanation(explanation)
+    
+    # Create 3 quality variations using synonyms
+    quality_variations = create_quality_variations(quality)
+    
+    # Handle subject possessive form correctly
+    if subject == "the subject":
+        subject_possessive = "the subject's"
+        subject_plain = "the subject"
+    else:
+        subject_possessive = f"{subject}'s"
+        subject_plain = subject
+    
+    # Build 3 effects with EXPLICIT SIGNAL WORDS
+    # Each effect template includes words students should look for
+    effects = [
+        {
+            "text": f"This makes readers feel {subject_possessive} {quality_variations[0]}.",
+            "category": "reader_response"
+        },
+        {
+            "text": f"This reveals {subject_plain} as characterized by {quality_variations[1]}.",
+            "category": "meaning_creation"
+        },
+        {
+            "text": f"This reinforces the theme of {quality_variations[2]} in {macro_focus}.",
+            "category": "thematic_impact"
+        }
+    ]
+    
+    return effects
 
 def create_week_package(week_data, week_num):
     """Create detailed week package with pedagogical scaffolding"""
@@ -91,6 +366,7 @@ def create_week_package(week_data, week_num):
             "executes_macro": device.get("executes_macro", ""),
             "tvode_components": device.get("tvode_components", {}),
             "examples": device.get("examples", []),
+            "effects": generate_effects_for_device(device, package['macro_focus']),
             "teaching_notes": {
                 "introduce_as": device.get("executes_macro", ""),
                 "macro_connection": f"This device is one way {package['macro_focus']} works",

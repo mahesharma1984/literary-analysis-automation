@@ -15,6 +15,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+### [Stage 1B v5.2] - 2025-11-25
+
+#### Added
+- **Effect Synthesis System** for generating device effects
+  - Synonym library system with 10+ word clusters (decay/decline, tiredness/exhaustion, strictness/harshness, etc.)
+  - Automatic quality extraction from device explanations
+  - Subject extraction (characters, places, objects) from device examples
+  - Three-effect generation per device using synonym variations
+- **Effect format:**
+  - Dictionary structure with `text` and `category` keys
+  - Three categories: `reader_response`, `meaning_creation`, `thematic_impact`
+  - Explicit signal words: "feel", "reveals", "theme" for student categorization
+  - Complete sentences ready for worksheet integration
+- **Extraction functions:**
+  - `extract_subject_from_device()` - Extracts subject with priority (character names > place names > objects)
+  - `extract_quality_from_explanation()` - Extracts core quality from device explanations
+  - `generate_effects_for_device()` - Synthesizes 3 categorized effects with synonym variations
+  - `create_quality_variations()` - Creates 3 quality variations using synonym mapping
+  - `get_synonym_for_word()` - Synonym selection based on index
+
+#### Changed
+- **Effects field structure:** Plain strings → Dictionaries with text/category
+- Each device now has `effects` array with 3 categorized effect objects
+- Effects include signal words for pedagogical categorization
+
+#### Benefits
+- **No API costs:** All effect generation is rule-based (synonym system)
+- **No keyword repetition:** Synonym variations ensure diverse vocabulary
+- **Student-ready:** Complete sentences with clear categorization signals
+- **Contextual:** Effects reference actual subjects and qualities from device examples
+
+#### Technical Details
+- Synonym mapping covers 10+ semantic clusters
+- Handles compound qualities ("X and Y" patterns)
+- Grammar-aware (removes possessive pronouns, handles subject forms)
+- Fallback cases for edge scenarios
+
+#### Dependencies
+- Requires Stage 1A v5.0+ output with device examples
+- No breaking changes to existing output structure (additive feature)
+- Compatible with Stage 2 v4.1+ worksheet generation
+
+---
+
 ### [Kernel v3.5] - 2025-11-25
 
 #### Added
