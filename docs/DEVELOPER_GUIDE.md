@@ -2,8 +2,9 @@
 
 **Purpose:** Instructions for AI assistants (Claude) or developers on how to safely modify this codebase without creating cascading errors.
 
-**Last Updated:** November 18, 2025  
-**System Version:** 5.1 (5-week progression with device taxonomy mapping)
+**Last Updated:** November 25, 2025  
+**System Version:** 5.1 (5-week progression with device taxonomy mapping)  
+**Kernel Version:** 3.5 (includes Book Structure Alignment Protocol v1.1)
 
 ---
 
@@ -12,7 +13,7 @@
 ### Pipeline Overview
 
 ```
-Kernel JSON (v3.3)
+Kernel JSON (v3.5)
     ↓
 [Stage 1A] run_stage1a.py
     ↓

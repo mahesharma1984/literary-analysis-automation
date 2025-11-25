@@ -1,6 +1,6 @@
 # Kernel Creation Automation - Version 2
 
-Semi-automated literary analysis kernel creation following the **Kernel Validation Protocol v3.3**.
+Semi-automated literary analysis kernel creation following the **Kernel Validation Protocol v3.3** and **Book Structure Alignment Protocol v1.1**.
 
 ## Overview
 
@@ -36,6 +36,7 @@ mkdir -p protocols books kernels outputs
 ### 3. Add Your Protocol Files
 
 Place these files in the `protocols/` directory:
+- `Book_Structure_Alignment_Protocol_v1.md` (v1.1)
 - `Kernel_Validation_Protocol_v3_3.md`
 - `Kernel_Protocol_Enhancement_v3_3.md`
 - `Artifact_1_-_Device_Taxonomy_by_Alignment_Function`
@@ -64,8 +65,10 @@ echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.bashrc
 ### Basic Command
 
 ```bash
-python create_kernel.py <book_path> <title> <author> <edition>
+python create_kernel.py <book_path> <title> <author> <edition> <total_chapters>
 ```
+
+**Note:** The `total_chapters` parameter is required for structure alignment (Stage 0).
 
 ### Example: To Kill a Mockingbird
 
@@ -74,7 +77,8 @@ python create_kernel.py \
   books/TKAM.pdf \
   "To Kill a Mockingbird" \
   "Harper Lee" \
-  "Harper Perennial Modern Classics, 2006"
+  "Harper Perennial Modern Classics, 2006" \
+  31
 ```
 
 ### Example: The Giver
@@ -84,16 +88,25 @@ python create_kernel.py \
   books/The_Giver.pdf \
   "The Giver" \
   "Lois Lowry" \
-  "Houghton Mifflin, 1993"
+  "Houghton Mifflin, 1993" \
+  23
 ```
 
 ## Workflow
 
-The script runs through 4 stages with review gates:
+The script runs through 5 stages with review gates:
+
+### Stage 0: Book Structure Alignment (NEW in v3.5)
+- Detects book structure type (NUM/NAME/NEST/UNMARK/HYBRID)
+- Applies conventional distribution formula
+- Identifies actual climax chapter(s) through content verification
+- Validates chapter-to-Freytag alignment
+- You review and approve the alignment
 
 ### Stage 1: Freytag Extract Selection
-- Claude analyzes the full book
+- Uses validated chapter alignment from Stage 0
 - Extracts 5 key sections (Exposition, Rising Action, Climax, Falling Action, Resolution)
+- Provides text extracts and rationales for each section
 - You review and approve the extracts
 
 ### Stage 2A: Macro Alignment Tagging
@@ -162,10 +175,12 @@ At each review gate, you have these options:
 
 Kernels are automatically saved as:
 ```
-kernels/<Title>_kernel_v3.3.json
+kernels/<Title>_kernel_v3_5.json
 ```
 
-Example: `kernels/To_Kill_a_Mockingbird_kernel_v3.3.json`
+Example: `kernels/To_Kill_a_Mockingbird_kernel_v3_5.json`
+
+**Note:** Kernel version 3.5 includes structure alignment protocol integration. Older v3.4 kernels remain compatible.
 
 ## Version Control with Git
 
@@ -253,11 +268,11 @@ This repository contains a complete automation pipeline for literary analysis:
 ### Quick Start
 
 ```bash
-# 1. Create kernel
-python3 create_kernel.py books/TKAM.pdf "To Kill a Mockingbird" "Harper Lee" "1960"
+# 1. Create kernel (now includes Stage 0: Structure Alignment)
+python3 create_kernel.py books/TKAM.pdf "To Kill a Mockingbird" "Harper Lee" "1960" 31
 
 # 2. Run Stage 1A (instant, free)
-python3 run_stage1a.py kernels/To_Kill_a_Mockingbird_kernel_v3.3.json
+python3 run_stage1a.py kernels/To_Kill_a_Mockingbird_kernel_v3_5.json
 
 # 3. Run Stage 1B (instant, free)
 python3 run_stage1b.py outputs/To_Kill_a_Mockingbird_stage1a_v5.0.json
@@ -296,7 +311,7 @@ For issues or questions:
 - Review [Developer Guide](docs/DEVELOPER_GUIDE.md) for making changes
 - Check [Changelog](docs/CHANGELOG.md) for version compatibility
 - Review example kernels in `kernels/`
-- Verify your protocol versions match (v3.3)
+- Verify your protocol versions match (Kernel Validation v3.3, Structure Alignment v1.1)
 
 ## License
 

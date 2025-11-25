@@ -35,6 +35,7 @@ class Config:
     OUTPUTS_DIR = Path("outputs")
     
     # Protocol files
+    STRUCTURE_ALIGNMENT = "Book_Structure_Alignment_Protocol_v1.md"
     KERNEL_VALIDATION = "Kernel_Validation_Protocol_v3_3.md"
     KERNEL_ENHANCEMENT = "Kernel_Protocol_Enhancement_v3_3.md"
     ARTIFACT_1 = "Artifact_1_-_Device_Taxonomy_by_Alignment_Function"
@@ -64,6 +65,7 @@ class KernelCreator:
         self.book_words = self.book_text.split()
         
         # Storage for stage outputs
+        self.structure_alignment = None
         self.stage1_extracts = None
         self.stage2a_macro = None
         self.stage2b_devices = None
@@ -75,6 +77,7 @@ class KernelCreator:
         protocols = {}
         
         protocol_files = {
+            "structure_alignment": Config.STRUCTURE_ALIGNMENT,
             "kernel_validation": Config.KERNEL_VALIDATION,
             "kernel_enhancement": Config.KERNEL_ENHANCEMENT,
             "artifact_1": Config.ARTIFACT_1,
@@ -172,6 +175,30 @@ class KernelCreator:
         
         return sample
     
+    def _create_chapter_samples(self) -> str:
+        """Create targeted samples from validated chapter alignment (Stage 0)
+        
+        Instead of beginning/middle/end, extract ~1000 words from each 
+        of the 5 primary chapters identified in Stage 0.
+        Total: ~5K words instead of 45K words
+        """
+        if not self.structure_alignment:
+            return self._create_book_sample()  # Fallback
+        
+        chapter_alignment = self.structure_alignment.get('chapter_alignment', {})
+        samples = []
+        
+        for stage_name, data in chapter_alignment.items():
+            primary_chapter = data.get('primary_chapter', 1)
+            extract = self._extract_text_from_chapter_range(
+                str(primary_chapter), 
+                primary_chapter, 
+                word_count=1000
+            )
+            samples.append(f"=== {stage_name.upper()} (Chapter {primary_chapter}) ===\n{extract}")
+        
+        return "\n\n".join(samples)
+    
     def _extract_text_from_chapter_range(self, chapter_range: str, primary_chapter: int, word_count: int = 400) -> str:
         """Extract representative text from a chapter range
         
@@ -205,15 +232,224 @@ class KernelCreator:
         extracted_text = ' '.join(self.book_words[extract_start:extract_end])
         return extracted_text
     
+    def stage0_structure_alignment(self):
+        """Stage 0: Book Structure Alignment Protocol v1.1"""
+        print("\n" + "="*80)
+        print("STAGE 0: BOOK STRUCTURE ALIGNMENT")
+        print("="*80)
+        
+        # Apply conventional distribution formula
+        n = self.total_chapters
+        
+        # Formula from v1.1
+        exp_end = max(1, int(n * 0.12))
+        ra_end = int(n * 0.50) - 1
+        climax_start = int(n * 0.50)
+        climax_end = int(n * 0.55)
+        
+        # Climax refinement: if >3 chapters, narrow to primary ±1
+        climax_chapters = climax_end - climax_start + 1
+        if climax_chapters > 3:
+            primary_climax = int(n * 0.50)
+            climax_start = max(1, primary_climax - 1)
+            climax_end = min(n, primary_climax + 1)
+        
+        formula_alignment = {
+            'exposition': {
+                'start': 1,
+                'end': exp_end,
+            },
+            'rising_action': {
+                'start': exp_end + 1,
+                'end': ra_end,
+            },
+            'climax': {
+                'start': climax_start,
+                'end': climax_end,
+            },
+            'falling_action': {
+                'start': climax_end + 1,
+                'end': int(n * 0.85),
+            },
+            'resolution': {
+                'start': int(n * 0.85) + 1,
+                'end': n,
+            }
+        }
+        
+        print(f"\n📊 Formula-based alignment (N={n}):")
+        for stage, ranges in formula_alignment.items():
+            count = ranges['end'] - ranges['start'] + 1
+            pct = round(count / n * 100)
+            print(f"  {stage}: Chapters {ranges['start']}-{ranges['end']} ({count} chapters, {pct}%)")
+        
+        # Create book sample for climax identification
+        book_sample = self._create_book_sample()
+        
+        # Use Claude to identify actual climax and validate alignment
+        prompt = f"""You are performing the Book Structure Alignment Protocol v1.1.
+
+TASK: Identify the actual climax chapter(s) and validate/refine the proposed alignment.
+
+BOOK METADATA:
+- Title: {self.title}
+- Author: {self.author}
+- Edition: {self.edition}
+- Total Chapters: {self.total_chapters}
+
+PROTOCOL TO FOLLOW:
+{self.protocols['structure_alignment']}
+
+PROPOSED FORMULA ALIGNMENT:
+- Exposition: Chapters {formula_alignment['exposition']['start']}-{formula_alignment['exposition']['end']}
+- Rising Action: Chapters {formula_alignment['rising_action']['start']}-{formula_alignment['rising_action']['end']}
+- Climax: Chapters {formula_alignment['climax']['start']}-{formula_alignment['climax']['end']}
+- Falling Action: Chapters {formula_alignment['falling_action']['start']}-{formula_alignment['falling_action']['end']}
+- Resolution: Chapters {formula_alignment['resolution']['start']}-{formula_alignment['resolution']['end']}
+
+BOOK SAMPLE (beginning, middle, end):
+{book_sample}
+
+CRITICAL TASKS:
+
+1. IDENTIFY THE ACTUAL CLIMAX:
+   - Find THE pivotal moment: highest tension, irreversible change, key decision/revelation
+   - Determine which chapter(s) contain this moment (1-3 chapters maximum)
+   - If climax differs from formula by >3 chapters, note this
+
+2. VALIDATE AND REFINE ALIGNMENT:
+   - Check if formula boundaries match narrative content
+   - Adjust boundaries if needed (especially for extended rising action)
+   - Ensure climax is tight (1-3 chapters)
+   - Ensure all chapters 1-{n} are covered with no gaps
+
+3. OUTPUT VALIDATED ALIGNMENT:
+   Provide a JSON object with this structure:
+   {{
+     "structure_detection": {{
+       "structure_type": "NUM",
+       "total_units": {n},
+       "special_elements": [],
+       "notes": "Numbered chapters detected"
+     }},
+     "chapter_alignment": {{
+       "exposition": {{
+         "chapter_range": "1-X",
+         "chapters": [1, 2, ...],
+         "primary_chapter": 1,
+         "percentage": 15
+       }},
+       "rising_action": {{
+         "chapter_range": "X-Y",
+         "chapters": [...],
+         "primary_chapter": X,
+         "percentage": 35
+       }},
+       "climax": {{
+         "chapter_range": "Y",
+         "chapters": [Y],
+         "primary_chapter": Y,
+         "percentage": 5
+       }},
+       "falling_action": {{
+         "chapter_range": "Y+1-Z",
+         "chapters": [...],
+         "primary_chapter": X,
+         "percentage": 30
+       }},
+       "resolution": {{
+         "chapter_range": "Z+1-{n}",
+         "chapters": [...],
+         "primary_chapter": {n},
+         "percentage": 15
+       }}
+     }},
+     "validation": {{
+       "method": "conventional_distribution_with_verification",
+       "fit_score": 95,
+       "status": "VERIFIED",
+       "notes": "Climax identified at chapter X. Alignment adjusted for extended rising action."
+     }}
+   }}
+
+VERIFICATION REQUIREMENTS:
+✓ All chapters 1-{n} must be included (no gaps, no overlaps)
+✓ Climax must be 1-3 chapters
+✓ Chapter ranges must be sequential
+✓ Each stage must have primary_chapter specified
+✓ Fit score must be ≥90% for VERIFIED status
+
+CRITICAL: Output ONLY valid JSON. No additional text before or after.
+"""
+        
+        system_prompt = "You are a literary analysis expert following the Book Structure Alignment Protocol v1.1 to establish validated chapter-to-Freytag mapping."
+        
+        result = self._call_claude(prompt, system_prompt)
+        
+        # Clean markdown formatting if present
+        result = result.replace('```json\n', '').replace('```\n', '').replace('```', '').strip()
+        
+        # Validate JSON
+        try:
+            alignment_json = json.loads(result)
+        except json.JSONDecodeError as e:
+            print(f"\n❌ Error: Invalid JSON response from Claude")
+            print(f"Error details: {e}")
+            return False
+        
+        # Validate required fields
+        if 'chapter_alignment' not in alignment_json:
+            print(f"\n❌ Error: Missing 'chapter_alignment' in response")
+            return False
+        
+        # Validate all chapters are covered
+        all_chapters = set()
+        for stage, data in alignment_json['chapter_alignment'].items():
+            chapters = data.get('chapters', [])
+            all_chapters.update(chapters)
+        
+        expected_chapters = set(range(1, n + 1))
+        missing = expected_chapters - all_chapters
+        extra = all_chapters - expected_chapters
+        
+        if missing:
+            print(f"\n⚠️  Warning: Missing chapters: {sorted(missing)}")
+        if extra:
+            print(f"\n⚠️  Warning: Extra chapters: {sorted(extra)}")
+        
+        # Review
+        result_formatted = json.dumps(alignment_json, indent=2)
+        if self._review_and_approve("Stage 0: Structure Alignment", result_formatted):
+            self.structure_alignment = alignment_json
+            return True
+        return False
+    
     def stage1_extract_freytag(self):
         """Stage 1: Extract 5 Freytag sections with chapter ranges"""
         print("\n" + "="*80)
         print("STAGE 1: FREYTAG EXTRACT SELECTION (with chapter mapping)")
         print("="*80)
         
-        book_sample = self._create_book_sample()
+        if not self.structure_alignment:
+            print("❌ Error: Stage 0 structure alignment not completed")
+            return False
+        
+        # Get validated chapter alignment
+        chapter_alignment = self.structure_alignment.get('chapter_alignment', {})
+        
+        book_sample = self._create_chapter_samples()
+        
+        # Build chapter range context from validated alignment
+        alignment_context = ""
+        for stage, data in chapter_alignment.items():
+            chapter_range = data.get('chapter_range', '')
+            primary_chapter = data.get('primary_chapter', 1)
+            alignment_context += f"- {stage}: {chapter_range} (primary: {primary_chapter})\n"
         
         prompt = f"""You are performing Stage 1 of the Kernel Validation Protocol v3.3.
+
+IMPORTANT: Use the VALIDATED chapter alignment from Stage 0 (Book Structure Alignment Protocol).
+Do NOT create new chapter ranges - use the provided alignment.
 
 TASK: Extract the 5 Freytag dramatic structure sections from this book:
 1. Exposition - Initial character/setting establishment
@@ -229,37 +465,22 @@ BOOK METADATA:
 - Total Chapters: {self.total_chapters}
 
 ==================================================================================
-CRITICAL CHAPTER RANGE REQUIREMENTS:
+VALIDATED CHAPTER ALIGNMENT (from Stage 0):
 ==================================================================================
-1. Chapter ranges MUST be sequential (no gaps, no overlap)
-2. Chapter ranges MUST cover the ENTIRE book from Chapter 1 to Chapter {self.total_chapters}
-3. Chapter ranges should reflect actual narrative distribution throughout the book
-4. Do NOT concentrate all sections in one part of the book - distribute across full text
-5. Each section needs a "primary_chapter" - the single best representative chapter
-6. Analyze where climax actually occurs in the narrative - this anchors the structure
-
-EXAMPLE DISTRIBUTION (for a 31-chapter book):
-- exposition:      chapters 1-3    (primary: 1)   ← Beginning
-- rising_action:   chapters 4-14   (primary: 8)   ← First half to middle
-- climax:          chapter 15      (primary: 15)  ← Middle turning point
-- falling_action:  chapters 16-25  (primary: 20)  ← Second half
-- resolution:      chapters 26-31  (primary: 28)  ← End
-
-EXAMPLE DISTRIBUTION (for a 23-chapter book):
-- exposition:      chapters 1-4    (primary: 2)
-- rising_action:   chapters 5-11   (primary: 8)
-- climax:          chapter 12      (primary: 12)
-- falling_action:  chapters 13-19  (primary: 16)
-- resolution:      chapters 20-23  (primary: 21)
+{alignment_context}
 ==================================================================================
 
-PROTOCOL TO FOLLOW:
-{self.protocols['kernel_validation']}
+CRITICAL: You MUST use these exact chapter ranges. Do NOT create new ranges.
+The alignment has been validated through the Book Structure Alignment Protocol v1.1.
 
-ADDITIONAL CONTEXT:
-{self.protocols['lem']}
+PROTOCOL REFERENCE: Kernel Validation Protocol v3.3 - Stage 1 (Freytag Section Identification)
 
-BOOK SAMPLE (beginning, middle, end sections):
+The chapter alignment has already been validated. Your task is to:
+1. Use the EXACT chapter ranges provided above
+2. Provide rationale for each section (2-3 sentences)
+3. Extract representative text (400-600 words) from each primary chapter
+
+BOOK SAMPLE (extracts from primary chapters):
 {book_sample}
 
 OUTPUT FORMAT:
@@ -274,39 +495,49 @@ Provide a JSON object with this structure:
   }},
   "extracts": {{
     "exposition": {{
-      "chapter_range": "1-3",
-      "primary_chapter": 1,
-      "rationale": "why this represents exposition (2-3 sentences)"
+      "chapter_range": "[use validated range from Stage 0]",
+      "primary_chapter": [use validated primary from Stage 0],
+      "rationale": "why this represents exposition (2-3 sentences)",
+      "text": "extract 400-600 words from primary chapter"
     }},
     "rising_action": {{
-      "chapter_range": "4-14",
-      "primary_chapter": 8,
-      "rationale": "why this represents rising action (2-3 sentences)"
+      "chapter_range": "[use validated range from Stage 0]",
+      "primary_chapter": [use validated primary from Stage 0],
+      "rationale": "why this represents rising action (2-3 sentences)",
+      "text": "extract 400-600 words from primary chapter"
     }},
     "climax": {{
-      "chapter_range": "15",
-      "primary_chapter": 15,
-      "rationale": "why this represents climax (2-3 sentences)"
+      "chapter_range": "[use validated range from Stage 0]",
+      "primary_chapter": [use validated primary from Stage 0],
+      "rationale": "why this represents climax (2-3 sentences)",
+      "text": "extract 400-600 words from primary chapter"
     }},
     "falling_action": {{
-      "chapter_range": "16-25",
-      "primary_chapter": 20,
-      "rationale": "why this represents falling action (2-3 sentences)"
+      "chapter_range": "[use validated range from Stage 0]",
+      "primary_chapter": [use validated primary from Stage 0],
+      "rationale": "why this represents falling action (2-3 sentences)",
+      "text": "extract 400-600 words from primary chapter"
     }},
     "resolution": {{
-      "chapter_range": "26-31",
-      "primary_chapter": 28,
-      "rationale": "why this represents resolution (2-3 sentences)"
+      "chapter_range": "[use validated range from Stage 0]",
+      "primary_chapter": [use validated primary from Stage 0],
+      "rationale": "why this represents resolution (2-3 sentences)",
+      "text": "extract 400-600 words from primary chapter"
     }}
   }}
 }}
 
-VERIFICATION CHECKLIST BEFORE SUBMITTING:
-✓ All chapter ranges are sequential (no gaps like 1-3, then 8-10)
-✓ Chapter ranges cover from 1 to {self.total_chapters} exactly
-✓ Each section has primary_chapter specified
-✓ Chapter ranges distribute across full book length
+VERIFICATION CHECKLIST:
+✓ Chapter ranges match the validated alignment from Stage 0 exactly
+✓ Each section has primary_chapter matching Stage 0 alignment
+✓ Each section has text extract (400-600 words) from primary chapter
 ✓ Each section has a clear, specific rationale
+✓ Chapter ranges use numeric-only format: "1-3" NOT "Chapters 1-3"
+
+CRITICAL FORMAT REQUIREMENT:
+- chapter_range MUST be numeric-only: "1-3", "15", "4-14"
+- Do NOT include "Chapters " prefix in chapter_range values
+- Example: "chapter_range": "1-3" ✅ NOT "chapter_range": "Chapters 1-3" ❌
 
 CRITICAL: Output ONLY valid JSON. No additional text before or after the JSON.
 DO NOT extract or reproduce any text passages from the book.
@@ -347,6 +578,30 @@ DO NOT extract or reproduce any text passages from the book.
                 print(f"  - {field}")
             print("\nStage 1 must include chapter_range and primary_chapter for each section.")
             return False
+        
+        # Normalize chapter_range format: remove "Chapters " prefix if present
+        # Expected format: "1-3" not "Chapters 1-3"
+        normalized = False
+        for section_name, section_data in narrative_sections.items():
+            chapter_range = section_data.get('chapter_range', '')
+            if chapter_range:
+                original = chapter_range
+                # Remove "Chapters " prefix if present
+                if chapter_range.startswith('Chapters '):
+                    chapter_range = chapter_range.replace('Chapters ', '', 1).strip()
+                    normalized = True
+                elif chapter_range.startswith('Chapter '):
+                    chapter_range = chapter_range.replace('Chapter ', '', 1).strip()
+                    normalized = True
+                # Update the normalized value
+                if chapter_range != original:
+                    section_data['chapter_range'] = chapter_range
+                    normalized = True
+        
+        if normalized:
+            print("\n✓ Normalized chapter_range format (removed 'Chapters ' prefix)")
+            # Re-format JSON with normalized values
+            result_formatted = json.dumps(extracts_json, indent=2)
         
         # Review
         if self._review_and_approve("Stage 1: Freytag Extracts", result_formatted):
@@ -743,14 +998,17 @@ CRITICAL RULES:
                 "edition": self.edition,
                 "creation_date": datetime.now().isoformat(),
                 "protocol_version": "3.3",
-                "kernel_version": "3.4",
-                "chapter_aware": True
+                "kernel_version": "3.5",
+                "chapter_aware": True,
+                "structure_alignment_protocol": "v1.1"
             },
             "text_structure": {
                 "has_chapters": True,
                 "total_chapters_estimate": self.total_chapters,
                 "notes": "Chapter breaks identified during kernel creation"
             },
+            "structure_detection": self.structure_alignment.get('structure_detection', {}) if self.structure_alignment else {},
+            "chapter_alignment": self.structure_alignment.get('chapter_alignment', {}) if self.structure_alignment else {},
             "narrative_position_mapping": narrative_position_mapping,
             "extracts": self.stage1_extracts.get('extracts', {}),
             "macro_variables": {
@@ -779,7 +1037,7 @@ CRITICAL RULES:
             # Generate default filename
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_kernel_v3_4.json"
+            filename = f"{safe_title}_kernel_v3_5.json"
             output_path = Config.KERNELS_DIR / filename
         
         # Ensure directory exists
@@ -802,7 +1060,7 @@ CRITICAL RULES:
         if not output_path:
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_ReasoningDoc_v3.3.md"
+            filename = f"{safe_title}_ReasoningDoc_v3.5.md"
             output_path = Config.KERNELS_DIR / filename
     
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -836,6 +1094,15 @@ CRITICAL RULES:
         print(f"Book: {self.book_path.name}")
         print(f"Author: {self.author}")
         print(f"Edition: {self.edition}")
+        
+        # Stage 0: Structure Alignment (NEW)
+        if not self.stage0_structure_alignment():
+            print("\n❌ Pipeline failed at Stage 0")
+            return False
+        
+        # Rate limit protection: wait 60 seconds before Stage 1
+        print("\n⏳ Waiting 60 seconds to avoid rate limits...")
+        time.sleep(60)
         
         # Stage 1
         if not self.stage1_extract_freytag():

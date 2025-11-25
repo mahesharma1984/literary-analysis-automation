@@ -8,10 +8,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Kernel Protocol v3.4: Confidence scores for device identifications
+- Kernel Protocol v3.6: Confidence scores for device identifications
 - Stage 1A v5.2: Automated macro-micro relationship validation
 - Stage 2 v4.2: Differentiated instruction versions
 - Template v3.0: Multi-text comparison worksheets
+
+---
+
+### [Kernel v3.5] - 2025-11-25
+
+#### Added
+- **Book Structure Alignment Protocol v1.1** integration
+  - New Stage 0: Structure detection and chapter-to-Freytag alignment
+  - Structure detection (NUM/NAME/NEST/UNMARK/HYBRID)
+  - Conventional distribution formula with climax refinement
+  - Content verification and validation step
+  - Protocol file: `protocols/Book_Structure_Alignment_Protocol_v1.md`
+- **New kernel fields:**
+  - `structure_detection` - Structure type, total units, special elements
+  - `chapter_alignment` - Validated chapter-to-Freytag mapping with percentages
+  - `structure_alignment_protocol: "v1.1"` in metadata
+- **Chapter range format normalization:**
+  - Extracts now include `chapter_range` in numeric format ("1-3" not "Chapters 1-3")
+  - Fixes compatibility with `run_stage1a.py` parser
+
+#### Changed
+- **create_kernel.py:**
+  - Added Stage 0 before Stage 1 (structure alignment)
+  - Stage 1 now uses validated chapter alignment from Stage 0
+  - Reduced Stage 1 token usage (targeted chapter samples instead of full book)
+  - Automatic normalization of chapter_range format
+  - Kernel version updated to 3.5
+- **Updated TKAM kernel to v3.5:**
+  - Added structure_detection and chapter_alignment sections
+  - Preserved all existing data (backward compatible)
+
+#### Fixed
+- Chapter range format inconsistency between `extracts` and `narrative_position_mapping`
+- Stage 1 token limit issues (reduced from ~70K to ~8K tokens)
+
+#### Documentation
+- Updated README.md with Stage 0 workflow
+- Updated QUICKSTART.md with v3.5 examples
+- Added integration summary and protocol update documentation
+
+#### Migration Notes
+- **Backward compatible:** v3.4 kernels still work with all downstream tools
+- **New kernels:** Will be created as v3.5 by default
+- **Upgrade path:** Existing kernels can be manually upgraded (see TKAM example)
 
 ---
 

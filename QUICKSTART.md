@@ -26,6 +26,7 @@ This creates directories and checks everything is ready.
 ### Step 4: Add Your Files (2 min)
 
 **Add protocol files to `protocols/` folder:**
+- Book_Structure_Alignment_Protocol_v1.md (v1.1)
 - Kernel_Validation_Protocol_v3_3.md
 - Kernel_Protocol_Enhancement_v3_3.md
 - Artifact_1_-_Device_Taxonomy_by_Alignment_Function
@@ -42,15 +43,17 @@ python create_kernel.py \
   books/TKAM.pdf \
   "To Kill a Mockingbird" \
   "Harper Lee" \
-  "Harper Perennial Modern Classics, 2006"
+  "Harper Perennial Modern Classics, 2006" \
+  31
 ```
 
 **The script will:**
-1. Extract 5 Freytag sections → You review & approve
-2. Tag 84 macro variables → You review & approve
-3. Tag 15-20 micro devices → You review & approve
-4. Assemble kernel JSON → You review & approve
-5. Save to `kernels/To_Kill_a_Mockingbird_kernel_v3.3.json`
+1. **Stage 0:** Detect structure & validate chapter alignment → You review & approve
+2. **Stage 1:** Extract 5 Freytag sections → You review & approve
+3. **Stage 2A:** Tag 84 macro variables → You review & approve
+4. **Stage 2B:** Tag 15-20 micro devices → You review & approve
+5. Assemble kernel JSON → You review & approve
+6. Save to `kernels/To_Kill_a_Mockingbird_kernel_v3_5.json`
 
 **Done!** Your kernel is ready.
 
