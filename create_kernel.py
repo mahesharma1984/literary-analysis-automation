@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
-KERNEL CREATION AUTOMATION - VERSION 2
+KERNEL CREATION AUTOMATION - VERSION 2.1
 Semi-automated kernel creation with review gates
 
-This script automates the Kernel Validation Protocol v3.3:
+This script automates the Kernel Validation Protocol v3.4:
 - Stage 1: Extract 5 Freytag sections
 - Stage 2A: Tag 84 macro alignment variables
 - Stage 2B: Identify 15-20+ micro devices with examples
+- Stage 3: Generate reasoning document with alignment pattern derivation
+
+v2.1 Changes:
+- Stage 3: Reasoning document derives alignment pattern from code synthesis (CPEA methodology)
+- ReasoningDoc output version: v4.1
 
 User reviews and approves each stage before continuing.
 """
@@ -38,7 +43,7 @@ class Config:
     
     # Protocol files
     STRUCTURE_ALIGNMENT = "Book_Structure_Alignment_Protocol_v1.md"
-    KERNEL_VALIDATION = "Kernel_Validation_Protocol_v3_3.md"
+    KERNEL_VALIDATION = "Kernel_Validation_Protocol_v3_4.md"
     KERNEL_ENHANCEMENT = "Kernel_Protocol_Enhancement_v3_3.md"
     ARTIFACT_1 = "Artifact_1_-_Device_Taxonomy_by_Alignment_Function"
     ARTIFACT_2 = "Artifact_2_-_Text_Tagging_Protocol"
@@ -684,7 +689,7 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after.
             primary_chapter = data.get('primary_chapter', 1)
             alignment_context += f"- {stage}: {chapter_range} (primary: {primary_chapter})\n"
         
-        prompt = f"""You are performing Stage 1 of the Kernel Validation Protocol v3.3.
+        prompt = f"""You are performing Stage 1 of the Kernel Validation Protocol v3.4.
 
 IMPORTANT: Use the VALIDATED chapter alignment from Stage 0 (Book Structure Alignment Protocol).
 Do NOT create new chapter ranges - use the provided alignment.
@@ -711,7 +716,7 @@ VALIDATED CHAPTER ALIGNMENT (from Stage 0):
 CRITICAL: You MUST use these exact chapter ranges. Do NOT create new ranges.
 The alignment has been validated through the Book Structure Alignment Protocol v1.1.
 
-PROTOCOL REFERENCE: Kernel Validation Protocol v3.3 - Stage 1 (Freytag Section Identification)
+PROTOCOL REFERENCE: Kernel Validation Protocol v3.4 - Stage 1 (Freytag Section Identification)
 
 The chapter alignment has already been validated. Your task is to:
 1. Use the EXACT chapter ranges provided above
@@ -775,7 +780,7 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after the JSON.
 DO NOT extract or reproduce any text passages from the book.
 """
         
-        system_prompt = "You are a literary analysis expert following the Kernel Validation Protocol v3.3 for extracting Freytag dramatic structure sections from novels."
+        system_prompt = "You are a literary analysis expert following the Kernel Validation Protocol v3.4 for extracting Freytag dramatic structure sections from novels."
         
         result = self._call_claude(prompt, system_prompt)
         
@@ -872,7 +877,7 @@ DO NOT extract or reproduce any text passages from the book.
             )
             extracts_text += f"\n### {section.upper()}\n{section_text}\n"
         
-        prompt = f"""You are performing Stage 2A of the Kernel Validation Protocol v3.3.
+        prompt = f"""You are performing Stage 2A of the Kernel Validation Protocol v3.4.
 
 TASK: Analyze the 5 Freytag extracts and tag all 84 macro alignment variables:
 - Narrative variables (voice, structure, etc.)
@@ -929,7 +934,7 @@ Provide a JSON object with this structure:
 CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
 """
         
-        system_prompt = "You are a literary analysis expert tagging macro alignment variables according to Kernel Validation Protocol v3.3."
+        system_prompt = "You are a literary analysis expert tagging macro alignment variables according to Kernel Validation Protocol v3.4."
         
         result = self._call_claude(prompt, system_prompt)
         
@@ -1469,7 +1474,7 @@ CRITICAL RULES:
         return True
 
     def save_reasoning_document(self, output_path: Optional[Path] = None):
-        """Generate narrative reasoning document"""
+        """Generate reasoning document following Stage 3 protocol (CPEA methodology)."""
         if not self.kernel:
             print("âŒ Error: No kernel to save reasoning for")
             return False
@@ -1477,23 +1482,79 @@ CRITICAL RULES:
         if not output_path:
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_ReasoningDoc_v4_0.md"
+            filename = f"{safe_title}_ReasoningDoc_v4_1.md"
             output_path = Config.KERNELS_DIR / filename
     
         output_path.parent.mkdir(parents=True, exist_ok=True)
     
-        # Generate reasoning doc
-        prompt = f"""Create a narrative reasoning document explaining the literary analysis decisions for "{self.title}" by {self.author}.
+        # Format kernel data
+        macro_text = self._format_macro_for_prompt(self.kernel.get('macro_variables', {}))
+        devices_text = self._format_devices_for_prompt(self.kernel.get('micro_devices', []))
+        chapter_text = self._format_chapter_alignment(self.kernel.get('chapter_alignment', {}))
 
-    STRUCTURE:
-    1. Overview of text and alignment pattern
-    2. Justification for macro variable selections (Stage 2A)
-    3. Explanation of device selections and their alignment functions (Stage 2B)
-    4. Summary of how devices mediate the macro alignment
-    
-    Be clear and pedagogical - explain WHY these analytical choices were made."""
-    
-        system_prompt = "You are documenting literary analysis decisions."
+        prompt = f"""Create a reasoning document for "{self.title}" by {self.author}.
+
+KERNEL DATA:
+
+{chapter_text}
+
+{macro_text}
+
+{devices_text}
+
+---
+
+CRITICAL: Derive the alignment pattern from code synthesis. Do not invent a thematic frame separately.
+
+Examples:
+
+- TPL + INT + RETRO + OBJ + SIT → "Stoic Retrospection"
+
+- TPO + ZERO + HEAVY + ADV + VERB → "Intrusive Advocacy"
+
+STRUCTURE:
+
+## 1. Alignment Pattern
+
+**Pattern**: [2-3 word name derived from codes]
+
+**Core Dynamic**: [One sentence: how narrative access + rhetorical intent combine]
+
+**Reader Effect**: [One sentence: what this produces for the reader]
+
+## 2. Macro Variable Justifications
+
+Explain WHY each code fits this text:
+
+**Narrative Voice**: POV, Focalization, Reliability, Temporal, Intrusion
+
+**Narrative Structure**: Chronology, Architecture, Pacing, Beginning
+
+**Rhetorical Voice**: Stance, Tone, Register, Irony
+
+**Rhetorical Structure**: Alignment type, N-R relationship, Mechanism, Mediation
+
+## 3. Device Selections by Freytag Section
+
+For each section, explain how devices EXECUTE the pattern:
+
+**Exposition**: [devices] — establish the pattern
+
+**Rising Action**: [devices] — develop it
+
+**Climax**: [devices] — intensify it
+
+**Falling Action**: [devices] — pivot/resolve
+
+**Resolution**: [devices] — complete it
+
+## 4. Alignment Effect
+
+One paragraph: What does this alignment achieve? How do codes + devices combine to produce the reader experience?
+
+Reference actual codes and device names throughout."""
+
+        system_prompt = "You are documenting literary analysis using CPEA methodology. Derive patterns from code synthesis—do not invent frames independently."
         result = self._call_claude(prompt, system_prompt)
     
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -1502,6 +1563,71 @@ CRITICAL RULES:
         print(f"\nâœ… Reasoning document saved: {output_path}")
         print(f"   Size: {output_path.stat().st_size:,} bytes")
         return True
+    
+    def _format_macro_for_prompt(self, macro_vars: dict) -> str:
+        """Format macro variables for Stage 3 prompt."""
+        lines = []
+        
+        nv = macro_vars.get('narrative', {}).get('voice', {})
+        lines.append("NARRATIVE VOICE:")
+        lines.append(f"  POV: {nv.get('pov')} - {nv.get('pov_description', '')}")
+        lines.append(f"  Focalization: {nv.get('focalization')} - {nv.get('focalization_description', '')}")
+        lines.append(f"  Reliability: {nv.get('reliability')}")
+        lines.append(f"  Temporal Distance: {nv.get('temporal_distance')}")
+        lines.append(f"  Intrusion: {nv.get('narrative_intrusion')}")
+        
+        ns = macro_vars.get('narrative', {}).get('structure', {})
+        lines.append("\nNARRATIVE STRUCTURE:")
+        lines.append(f"  Chronology: {ns.get('chronology')}")
+        lines.append(f"  Architecture: {ns.get('plot_architecture')} - {ns.get('plot_architecture_description', '')}")
+        lines.append(f"  Pacing: {ns.get('pacing')}")
+        lines.append(f"  Beginning: {ns.get('beginning_type')}")
+        lines.append(f"  Ending: {ns.get('ending_type')}")
+        
+        rv = macro_vars.get('rhetoric', {}).get('voice', {})
+        lines.append("\nRHETORICAL VOICE:")
+        lines.append(f"  Stance: {rv.get('stance')}")
+        lines.append(f"  Tone: {rv.get('tone')}")
+        lines.append(f"  Register: {rv.get('register')}")
+        lines.append(f"  Irony: {rv.get('irony')}")
+        lines.append(f"  Pathos: {rv.get('pathos')}")
+        
+        rs = macro_vars.get('rhetoric', {}).get('structure', {})
+        lines.append("\nRHETORICAL STRUCTURE:")
+        lines.append(f"  Alignment: {rs.get('alignment_type')}")
+        lines.append(f"  N-R Relationship: {rs.get('narrative_rhetoric_relationship')}")
+        lines.append(f"  Mechanism: {rs.get('primary_mechanism')}")
+        lines.append(f"  Mediation: {rs.get('mediation_strategy')}")
+        
+        return "\n".join(lines)
+
+    def _format_devices_for_prompt(self, devices: list) -> str:
+        """Format micro devices for Stage 3 prompt."""
+        lines = [f"MICRO DEVICES ({len(devices)} total):"]
+        
+        by_section = {}
+        for d in devices:
+            section = d.get('assigned_section', 'unknown')
+            if section not in by_section:
+                by_section[section] = []
+            by_section[section].append(d)
+        
+        for section in ['exposition', 'rising_action', 'climax', 'falling_action', 'resolution']:
+            if section in by_section:
+                lines.append(f"\n{section.upper().replace('_', ' ')}:")
+                for d in by_section[section]:
+                    lines.append(f"  - {d['name']} ({d.get('classification', '')})")
+        
+        return "\n".join(lines)
+
+    def _format_chapter_alignment(self, chapter_align: dict) -> str:
+        """Format chapter alignment for Stage 3 prompt."""
+        lines = ["CHAPTER ALIGNMENT:"]
+        for section in ['exposition', 'rising_action', 'climax', 'falling_action', 'resolution']:
+            if section in chapter_align:
+                data = chapter_align[section]
+                lines.append(f"  {section.upper().replace('_', ' ')}: Ch.{data.get('chapter_range')} (primary: {data.get('primary_chapter')})")
+        return "\n".join(lines)
     
     def run(self):
         """Run the complete kernel creation pipeline"""
