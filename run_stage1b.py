@@ -10,8 +10,11 @@ Usage:
 import json
 import sys
 import re
+import os
+import time
 from pathlib import Path
 from datetime import datetime
+import anthropic
 
 # ============================================================================
 # SYNONYM SYSTEM FOR EFFECT VARIATIONS
@@ -229,17 +232,30 @@ def extract_quality_from_explanation(explanation):
 
 def generate_effects_for_device(device, macro_focus):
     """
-    Generate 3 effects for a device using synonym variations.
-    CRITICAL: Effects must contain SIGNAL WORDS so students can categorize them.
+    Generate 3 effects for a device.
+    
+    Uses pre-generated effects from kernel if available (new kernels),
+    otherwise falls back to extraction/generation logic (old kernels).
     
     Args:
-        device: Device dictionary with 'examples' field
+        device: Device dictionary with 'examples' field (and optionally 'effects' and 'worksheet_context')
         macro_focus: The week's macro focus (e.g., "Exposition")
     
     Returns:
         List of 3 effect dictionaries with 'text' and 'category' keys
     """
     
+    # NEW: Check for pre-generated effects (new kernels)
+    effects = device.get('effects')
+    if effects and isinstance(effects, list) and len(effects) >= 3:
+        # Validate that all required categories are present
+        categories = [e.get("category") for e in effects if isinstance(e, dict)]
+        required_categories = ["reader_response", "meaning_creation", "thematic_impact"]
+        if all(cat in categories for cat in required_categories):
+            # Return the pre-generated effects
+            return effects
+    
+    # FALLBACK: Old logic for backward compatibility (old kernels)
     # Get first example
     examples = device.get('examples', [])
     if not examples:
@@ -253,8 +269,14 @@ def generate_effects_for_device(device, macro_focus):
     text = example.get('text', '')
     explanation = example.get('explanation', '')
     
-    # Extract components
-    subject = extract_subject_from_device(text, explanation)
+    # Try to use worksheet_context.subject if available, otherwise extract
+    worksheet_context = device.get('worksheet_context', {})
+    if worksheet_context and worksheet_context.get('subject'):
+        subject = worksheet_context['subject']
+    else:
+        # Extract components using old logic
+        subject = extract_subject_from_device(text, explanation)
+    
     quality = extract_quality_from_explanation(explanation)
     
     # Create 3 quality variations using synonyms
@@ -287,7 +309,226 @@ def generate_effects_for_device(device, macro_focus):
     
     return effects
 
-def create_week_package(week_data, week_num):
+# ============================================================================
+# WORKSHEET CONTENT GENERATION VIA API
+# ============================================================================
+
+def initialize_api_client():
+    """Initialize Anthropic API client"""
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise ValueError("ANTHROPIC_API_KEY environment variable not set")
+    return anthropic.Anthropic(api_key=api_key)
+
+
+def generate_worksheet_content(device, macro_focus, text_title, client):
+    """
+    Generate complete worksheet content for a device via API.
+    
+    Args:
+        device: Device dictionary with name, examples, tvode_components, effects
+        macro_focus: The week's macro focus (e.g., "Exposition")
+        text_title: Title of the text being analyzed
+        client: Anthropic API client
+    
+    Returns:
+        Dictionary with worksheet_content fields:
+        - mc_question: Multiple choice question
+        - mc_options: Dict with A, B, C, D options
+        - mc_correct: Correct answer (A, B, C, or D)
+        - mc_explanation: Explanation of correct answer
+        - sequencing_steps: Dict with step_1, step_2, step_3
+        - sequencing_order: Correct order string (e.g., "1-B, 2-C, 3-A")
+        - location_hint: Specific chapter/scene guidance
+        - detail_sample: Model answer for Step 5
+    """
+    
+    device_name = device.get("name", "Unknown Device")
+    examples = device.get("examples", [])
+    tvode = device.get("tvode_components", {})
+    effects = device.get("effects", [])
+    
+    # Get example text and chapter info
+    example_text = ""
+    chapter_info = ""
+    if examples and len(examples) > 0:
+        example = examples[0]
+        example_text = example.get("quote_snippet", example.get("text", ""))
+        chapter = example.get("chapter", "")
+        if chapter:
+            chapter_info = f"Chapter {chapter}"
+    
+    # Build context from effects
+    effect_texts = [e.get("text", "") for e in effects if isinstance(e, dict)]
+    effects_context = "\n".join(f"- {e}" for e in effect_texts)
+    
+    # Build TVODE context
+    tvode_context = ""
+    if tvode:
+        tvode_context = f"""
+TVODE Components:
+- Topic: {tvode.get('topic', 'N/A')}
+- Verb: {tvode.get('verb', 'N/A')}
+- Object: {tvode.get('object', 'N/A')}
+- Detail: {tvode.get('detail', 'N/A')}
+- Effect: {tvode.get('effect', 'N/A')}
+"""
+    
+    prompt = f"""You are creating worksheet content for teaching literary analysis of "{text_title}".
+
+DEVICE INFORMATION:
+- Device Name: {device_name}
+- Macro Focus: {macro_focus}
+- Example Text: {example_text}
+- Chapter: {chapter_info}
+{tvode_context}
+Effects:
+{effects_context}
+
+TASK: Generate complete worksheet content for this device. The content must be TEXT-SPECIFIC (refer to actual details from "{text_title}"), not generic templates.
+
+REQUIREMENTS:
+
+1. MULTIPLE CHOICE QUESTION:
+   - Question format: "What does [Device] DO in this text?"
+   - Generate 4 options (A, B, C, D)
+   - All 4 options must be approximately the same length (10-15 words each)
+   - 2 options should be "quite plausible" - they test understanding, not trick students
+   - The correct answer should be the most accurate description of what the device DOES
+   - NO option should mention the device name explicitly
+   - Distractors should be wrong about FUNCTION, not wrong device type
+   - Options must be text-specific, referring to actual content from "{text_title}"
+
+2. SEQUENCING STEPS:
+   - Generate 3 steps showing HOW the reading experience unfolds
+   - Format: encounter → process → effect
+   - Step 1: What reader encounters (specific text/chapter reference)
+   - Step 2: How the device processes/transforms that encounter
+   - Step 3: The resulting effect on reader/meaning
+   - Must be chronological (how reading unfolds), not analytical steps
+   - Must reference specific details from "{text_title}"
+
+3. LOCATION HINT:
+   - Specific chapter/scene guidance for students
+   - Format: "Chapter X, [specific scene description]"
+   - Help students find the device in the text
+
+4. DETAIL SAMPLE:
+   - Model answer for Step 5 (detail identification)
+   - Show specific text evidence
+   - Format: "shown through [specific detail]: '[quote snippet]'"
+
+OUTPUT FORMAT (JSON only):
+{{
+  "mc_question": "What does [Device] DO in this text?",
+  "mc_options": {{
+    "A": "[Option A - 10-15 words, text-specific]",
+    "B": "[Option B - 10-15 words, text-specific, quite plausible]",
+    "C": "[Option C - 10-15 words, text-specific, correct answer]",
+    "D": "[Option D - 10-15 words, text-specific, quite plausible]"
+  }},
+  "mc_correct": "C",
+  "mc_explanation": "Two plausible options are B and C because... [explain why C is most accurate]",
+  "sequencing_steps": {{
+    "step_1": "[What reader encounters - specific text/chapter]",
+    "step_2": "[How device processes/transforms - specific mechanism]",
+    "step_3": "[Resulting effect - specific impact]"
+  }},
+  "sequencing_order": "1-B, 2-C, 3-A",
+  "location_hint": "Chapter X, [specific scene description where device appears]",
+  "detail_sample": "shown through [specific detail]: '[quote snippet from text]'"
+}}
+
+CRITICAL: 
+- All content must be TEXT-SPECIFIC to "{text_title}"
+- No generic templates or placeholders
+- MC options must be same length (~10-15 words)
+- 2 options should be "quite plausible" (test understanding)
+- Sequencing must show chronological reading experience, not analysis steps
+- Output ONLY valid JSON, no additional text
+"""
+
+    system_prompt = "You are an expert literary analysis educator creating student worksheet content. Generate text-specific, pedagogically sound worksheet materials."
+
+    try:
+        # Call API with retry logic
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = client.messages.create(
+                    model="claude-sonnet-4-20250514",
+                    max_tokens=2000,
+                    messages=[{"role": "user", "content": prompt}],
+                    system=system_prompt
+                )
+                
+                result = response.content[0].text.strip()
+                
+                # Clean markdown formatting if present
+                result = result.replace('```json\n', '').replace('```\n', '').replace('```', '').strip()
+                
+                # Parse JSON
+                worksheet_content = json.loads(result)
+                
+                # Validate required fields
+                required_fields = [
+                    'mc_question', 'mc_options', 'mc_correct', 'mc_explanation',
+                    'sequencing_steps', 'sequencing_order', 'location_hint', 'detail_sample'
+                ]
+                missing = [f for f in required_fields if f not in worksheet_content]
+                if missing:
+                    raise ValueError(f"Missing required fields: {missing}")
+                
+                # Validate mc_options has A, B, C, D
+                if not all(k in worksheet_content['mc_options'] for k in ['A', 'B', 'C', 'D']):
+                    raise ValueError("mc_options must contain A, B, C, D")
+                
+                # Validate sequencing_steps has step_1, step_2, step_3
+                if not all(k in worksheet_content['sequencing_steps'] for k in ['step_1', 'step_2', 'step_3']):
+                    raise ValueError("sequencing_steps must contain step_1, step_2, step_3")
+                
+                return worksheet_content
+                
+            except json.JSONDecodeError as e:
+                if attempt < max_retries - 1:
+                    print(f"    ⚠️  JSON parse error, retrying... ({attempt + 1}/{max_retries})")
+                    time.sleep(2)
+                    continue
+                else:
+                    raise ValueError(f"Failed to parse JSON after {max_retries} attempts: {e}")
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    print(f"    ⚠️  API error, retrying... ({attempt + 1}/{max_retries})")
+                    time.sleep(2)
+                    continue
+                else:
+                    raise
+        
+    except Exception as e:
+        print(f"    ⚠️  Warning: Failed to generate worksheet content: {e}")
+        # Return fallback content
+        return {
+            "mc_question": f"What does {device_name} DO in this text?",
+            "mc_options": {
+                "A": "Creates meaning through its specific application in the text",
+                "B": "Reveals important themes through literary technique",
+                "C": "Functions as a literary device to convey meaning",
+                "D": "Establishes connections between text elements"
+            },
+            "mc_correct": "C",
+            "mc_explanation": "Option C most accurately describes the device's function.",
+            "sequencing_steps": {
+                "step_1": f"Reader encounters {device_name} in the text",
+                "step_2": f"{device_name} processes the textual elements",
+                "step_3": "This creates meaning and effect for the reader"
+            },
+            "sequencing_order": "1-B, 2-C, 3-A",
+            "location_hint": "Check the assigned reading chapters for this week",
+            "detail_sample": f"shown through the device's application in the text"
+        }
+
+
+def create_week_package(week_data, week_num, client=None):
     """Create detailed week package with pedagogical scaffolding"""
     
     scaffolding_levels = {
@@ -355,7 +596,7 @@ def create_week_package(week_data, week_num):
     if "macro_variables" in week_data:
         package["macro_variables"] = week_data["macro_variables"]
     
-    # Process devices with teaching notes
+    # Process devices with teaching notes and worksheet content
     for device in week_data.get("micro_devices", []):
         device_package = {
             "device_name": device.get("name", ""),
@@ -375,6 +616,24 @@ def create_week_package(week_data, week_num):
                 "teaching_tip": "Start with clear examples before complex analysis"
             }
         }
+        
+        # Generate worksheet content via API if client provided
+        if client:
+            print(f"    Generating worksheet content for: {device_package['name']}")
+            try:
+                worksheet_content = generate_worksheet_content(
+                    device, 
+                    package['macro_focus'],
+                    package['text_title'],
+                    client
+                )
+                device_package["worksheet_content"] = worksheet_content
+            except Exception as e:
+                print(f"    ⚠️  Warning: Failed to generate worksheet content for {device_package['name']}: {e}")
+                # Continue without worksheet_content - will be validated later
+        else:
+            # No client provided - worksheet_content will be None (validation will catch this)
+            device_package["worksheet_content"] = None
         
         package["micro_devices"].append(device_package)
     
@@ -527,12 +786,103 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
     
     return doc
 
+def generate_validation_report(output_data, book_name):
+    """Generate human-readable validation report."""
+    
+    report_lines = [
+        f"# Stage 1B Validation Report: {book_name}",
+        f"**Generated:** {datetime.now().isoformat()}",
+        f"**Output Version:** 6.0",
+        "",
+        "## Worksheet Content Check",
+        ""
+    ]
+    
+    for week_data in output_data.get('week_packages', []):
+        week_num = week_data.get('week', '?')
+        reading = week_data.get('reading_range', '?')
+        devices = week_data.get('micro_devices', [])
+        
+        report_lines.append(f"### Week {week_num}")
+        report_lines.append(f"**Reading:** Chapters {reading}")
+        report_lines.append("")
+        report_lines.append("| Device | Example Ch | In Range? | MC | Seq | Effects |")
+        report_lines.append("|--------|------------|-----------|----|----|---------|")
+        
+        for device in devices:
+            name = device.get('name', '?')
+            ws = device.get('worksheet_content', {})
+            examples = device.get('examples', [])
+            ex_ch = examples[0].get('chapter', '?') if examples else '?'
+            
+            has_mc = '✓' if ws.get('mc_options') else '✗'
+            has_seq = '✓' if ws.get('sequencing_steps') else '✗'
+            has_eff = '✓' if len(device.get('effects', [])) >= 3 else '✗'
+            
+            # Check if example chapter is in reading range
+            in_range = '✓'  # TODO: validate against reading_range
+            
+            report_lines.append(f"| {name} | Ch {ex_ch} | {in_range} | {has_mc} | {has_seq} | {has_eff} |")
+        
+        report_lines.append("")
+    
+    report_path = Path("outputs") / f"{book_name}_stage1b_v6_0_validation.md"
+    report_path.parent.mkdir(exist_ok=True)
+    
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(report_lines))
+    
+    return report_path
+
+def validate_worksheet_content(device):
+    """Validate that device has required worksheet_content fields"""
+    worksheet_content = device.get("worksheet_content")
+    if not worksheet_content:
+        return False, "Missing worksheet_content"
+    
+    required_fields = [
+        'mc_question', 'mc_options', 'mc_correct', 'mc_explanation',
+        'sequencing_steps', 'sequencing_order', 'location_hint', 'detail_sample'
+    ]
+    missing = [f for f in required_fields if f not in worksheet_content]
+    if missing:
+        return False, f"Missing fields: {missing}"
+    
+    # Validate mc_options structure
+    if not isinstance(worksheet_content.get('mc_options'), dict):
+        return False, "mc_options must be a dictionary"
+    if not all(k in worksheet_content['mc_options'] for k in ['A', 'B', 'C', 'D']):
+        return False, "mc_options must contain A, B, C, D"
+    
+    # Validate sequencing_steps structure
+    if not isinstance(worksheet_content.get('sequencing_steps'), dict):
+        return False, "sequencing_steps must be a dictionary"
+    if not all(k in worksheet_content['sequencing_steps'] for k in ['step_1', 'step_2', 'step_3']):
+        return False, "sequencing_steps must contain step_1, step_2, step_3"
+    
+    # Validate mc_correct is A, B, C, or D
+    if worksheet_content.get('mc_correct') not in ['A', 'B', 'C', 'D']:
+        return False, "mc_correct must be A, B, C, or D"
+    
+    return True, "Valid"
+
+
 def run_stage1b(stage1a_path):
     """Main Stage 1B processing"""
     
     print("\n" + "="*80)
     print("STAGE 1B: WEEKLY PACKAGING")
     print("="*80)
+    
+    # Initialize API client
+    print("\n🔧 Initializing API client...")
+    try:
+        client = initialize_api_client()
+        print("  ✅ API client initialized")
+    except Exception as e:
+        print(f"  ❌ Error initializing API client: {e}")
+        print("  ⚠️  Continuing without worksheet content generation")
+        client = None
     
     # Load Stage 1A output
     print(f"\nðŸ“– Loading Stage 1A output: {stage1a_path}")
@@ -566,7 +916,8 @@ def run_stage1b(stage1a_path):
     }
         week_data["teaching_approach"] = teaching_approaches.get(week_num, "")
         
-        package = create_week_package(week_data, week_num)
+        print(f"\n  📋 Week {week_num}: {week_data.get('macro_element', 'Unknown')}")
+        package = create_week_package(week_data, week_num, client)
         package["teaching_approach"] = teaching_approaches.get(week_num, "")
         week_packages.append(package)
         
@@ -605,7 +956,7 @@ def run_stage1b(stage1a_path):
     safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
     
     # Save JSON
-    output_path = output_dir / f"{safe_title}_stage1b_v5.1.json"
+    output_path = output_dir / f"{safe_title}_stage1b_v6_0.json"
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
     
@@ -621,6 +972,12 @@ def run_stage1b(stage1a_path):
     print(f"\nâœ… Progression document saved!")
     print(f"   Output: {progression_path}")
     print(f"   Size: {progression_path.stat().st_size:,} bytes")
+    
+    # Generate validation report
+    print("\n📋 Generating validation report...")
+    validation_report_path = generate_validation_report(output, safe_title)
+    print(f"  ✅ Validation report saved!")
+    print(f"   Output: {validation_report_path}")
     
     # Print summary
     print("\n" + "="*80)

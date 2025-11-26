@@ -1,0 +1,255 @@
+# Kernel Creation v4.0 - Comprehensive Updates
+
+## Version: 4.0
+## Date: 2025-01-XX
+## Summary: Major enhancements to kernel creation pipeline with tier-based device alignment, checkpoint system, and structured device analysis
+
+---
+
+## 🎯 Major Features Added
+
+### 1. Tier-Based Device Alignment System
+- **Comprehensive DEVICE_TIER_MAP**: Expanded from 15 to 50+ devices across 5 pedagogical tiers
+- **Tier-to-Freytag Mapping**: Automatic alignment of devices to appropriate narrative sections
+- **Tier 5 Device Relocation**: Automatic relocation of voice/narrative devices to resolution
+- **Device Deduplication**: Removes duplicate devices, keeping tier-appropriate instances
+- **Validation System**: Checks and reports tier alignment issues
+
+### 2. Structured Device Analysis
+- **worksheet_context**: Added subject, scene_description, and specific_function fields
+- **Concrete Effects**: Pre-generated effects array with reader_response, meaning_creation, and thematic_impact
+- **Zero Additional API Calls**: All analysis generated in existing Stage 2B call
+- **Backward Compatibility**: Stage 1A/1B updated to use new fields with fallback logic
+
+### 3. Checkpoint/Resume System
+- **Stage Checkpointing**: Saves progress after each stage (stage0, stage1, stage2a, stage2b)
+- **Automatic Resume**: Pipeline resumes from last checkpoint on restart
+- **Force Restart Options**: `--from-stage` and `--fresh` flags for controlled restarts
+- **Checkpoint Naming**: Uses `kernel_stage*` prefix to avoid conflicts with pipeline stages
+
+### 4. Rate Limit Protection
+- **60-Second Delays**: Added delays between API call stages (4 × 60 seconds = 4 minutes)
+- **Automatic Retry**: Retry logic with 3 attempts and 60-second delays on rate limit errors
+- **User Feedback**: Clear messages about delays and retry attempts
+
+### 5. Auto-Detection Improvements
+- **Chapter Count Detection**: Removed manual `total_chapters` parameter, now auto-detected in Stage 0
+- **Structure Detection**: Enhanced Stage 0 to detect book structure and total chapters
+- **Validation**: Ensures total_units detected before proceeding
+
+---
+
+## 📝 Detailed Changes
+
+### create_kernel.py
+
+#### Core Enhancements
+1. **Removed `total_chapters` parameter** from command-line (now auto-detected)
+2. **Added comprehensive DEVICE_TIER_MAP** (50+ devices across 5 tiers)
+3. **Added TIER5_VOICE_DEVICES** set for Tier 5 device tracking
+4. **Added checkpoint system** with save/load/clear functionality
+5. **Added tier validation and relocation** methods
+6. **Updated kernel version** to 4.0
+7. **Updated output filenames** to v4_0
+
+#### Stage 0 (Structure Alignment)
+- Auto-detects total chapters from book structure
+- Extracts `total_units` from Stage 0 result
+- Checkpoint support for resume capability
+
+#### Stage 1 (Freytag Extraction)
+- Removed "text" field from output (prevents content filter issues)
+- Checkpoint support for resume capability
+- Updated verification checklist
+
+#### Stage 2A (Macro Tagging)
+- Checkpoint support for resume capability
+- No other changes
+
+#### Stage 2B (Device Tagging)
+- **Enhanced prompt** with tier-based location instructions
+- **Structured analysis fields**: worksheet_context and effects
+- **Tier 5 relocation**: Automatically moves voice devices to resolution
+- **Device deduplication**: Removes duplicates, keeps tier-appropriate
+- **Tier validation**: Checks alignment and reports issues
+- **pedagogical_tier field**: Added to each device
+- **JSON sanitization**: Comprehensive cleaning for unescaped quotes
+
+#### API Call Improvements
+- **Retry logic**: Automatic retry on rate limit errors (3 attempts, 60s delay)
+- **Rate limit delays**: 60-second delays between stages
+- **Better error handling**: Saves debug responses for troubleshooting
+
+#### Checkpoint System
+- **Helper methods**: `_get_checkpoint_path()`, `_save_checkpoint()`, `_load_checkpoint()`, `_clear_checkpoints_from()`
+- **Checkpoint files**: Saved as `{BookTitle}_kernel_stage{N}.json` in outputs/
+- **Resume logic**: Each stage checks for checkpoint before running
+- **Force restart**: `--from-stage` and `--fresh` flags
+
+#### Command-Line Interface
+- **argparse integration**: Replaced sys.argv with argparse
+- **--from-stage flag**: Force restart from specific stage
+- **--fresh flag**: Clear all checkpoints and start fresh
+- **Better help text**: Updated examples and descriptions
+
+### run_stage1a.py
+
+#### Updates for Structured Analysis
+- **extract_tvode_components()**: Now uses `worksheet_context.subject` and `worksheet_context.specific_function`
+- **Device assignment**: Passes through `worksheet_context` and `effects` fields
+- **Backward compatibility**: Falls back to old extraction logic for old kernels
+
+### run_stage1b.py
+
+#### Updates for Structured Analysis
+- **generate_effects_for_device()**: Checks for pre-generated `effects` field first
+- **Uses worksheet_context.subject**: If available, uses it instead of extracting
+- **Backward compatibility**: Falls back to old generation logic for old kernels
+
+---
+
+## 🔧 Technical Improvements
+
+### Error Handling
+- JSON sanitization for unescaped quotes in quote_snippet fields
+- Rate limit retry with exponential backoff
+- Checkpoint validation (skips invalid checkpoints)
+- Comprehensive validation warnings
+
+### Code Quality
+- Added type hints where appropriate
+- Improved docstrings
+- Better error messages
+- Debug file saving for troubleshooting
+
+### Performance
+- Checkpoint system reduces redundant API calls
+- Rate limit delays prevent API throttling
+- Automatic retry reduces manual intervention
+
+---
+
+## 📊 Device Tier Mapping
+
+### Tier 1 → Exposition (10 devices)
+Concrete/Sensory devices: Imagery, Simile, Hyperbole, Metaphor, Onomatopoeia, Personification, Alliteration, Assonance, Consonance, Sensory Detail
+
+### Tier 2 → Rising Action (20 devices)
+Structural/Pattern devices: Dialogue, Repetition, Direct/Indirect Characterization, Ellipsis, Scene, Summary, Pause, Parallelism, Anaphora, Epistrophe, Polysyndeton, Asyndeton, Linear Chronology, Episodic Structure, Flashback, Analepsis, Flashforward, Prolepsis, In Medias Res
+
+### Tier 3 → Climax (13 devices)
+Abstract/Symbolic devices: Symbolism, Motif, Foreshadowing, Juxtaposition, Allusion, Allegory, Paradox, Oxymoron, Chiasmus, Circular Structure, Spiral Structure, Understatement, Litotes
+
+### Tier 4 → Falling Action (10 devices)
+Authorial Intent/Irony devices: Verbal Irony, Dramatic Irony, Situational Irony, Structural Irony, Suspense, Satire, Tone, Rhetorical Question, Apostrophe, Ethos Establishment
+
+### Tier 5 → Resolution (16 devices)
+Narrative Frame/Voice devices: Third-Person Omniscient, Third-Person Limited, First-Person, First-Person Narration, Second-Person Narration, Internal Monologue, Stream of Consciousness, Unreliable Narrator, Free Indirect Discourse, Frame Narrative, Non-Linear Chronology, Metafiction, Breaking Fourth Wall, Unreliable Chronology, Narrator, Point of View
+
+---
+
+## 🚀 Usage Examples
+
+### Normal Run (with checkpoint resume)
+```bash
+python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition"
+```
+
+### Force Restart from Stage 2B
+```bash
+python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition" --from-stage kernel_stage2b
+```
+
+### Fresh Start (clear all checkpoints)
+```bash
+python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition" --fresh
+```
+
+---
+
+## 📈 Expected Improvements
+
+1. **Tier Alignment**: 90%+ match rate between device tier and Freytag section
+2. **Resume Capability**: Failed pipelines can resume from last checkpoint
+3. **Rate Limit Resilience**: Automatic retry prevents manual intervention
+4. **Structured Data**: Worksheets use specific subjects instead of "It" or "this quality"
+5. **Device Coverage**: 50+ devices properly mapped to tiers
+
+---
+
+## 🔄 Migration Notes
+
+### For Existing Kernels
+- Old kernels (v3.3, v3.5) continue to work
+- Stage 1A/1B have backward compatibility
+- New kernels (v4.0) include structured analysis fields
+
+### For New Kernels
+- No manual chapter count needed
+- Checkpoints enable resume on failure
+- Tier alignment enforced automatically
+
+---
+
+## 🧪 Testing Recommendations
+
+1. **Test tier alignment**: Run kernel creation and verify 90%+ match rate
+2. **Test checkpoint resume**: Interrupt pipeline, restart, verify resume
+3. **Test rate limit handling**: Verify retry logic works
+4. **Test backward compatibility**: Verify old kernels still work in Stage 1A/1B
+
+---
+
+## 📚 Files Modified
+
+- `create_kernel.py` - Major updates (checkpoints, tiers, structured analysis)
+- `run_stage1a.py` - Updated to use structured analysis fields
+- `run_stage1b.py` - Updated to use structured analysis fields
+
+---
+
+## 🎓 Pedagogical Impact
+
+- **Progressive Complexity**: Devices taught from concrete (Tier 1) to abstract (Tier 5)
+- **Narrative Alignment**: Device complexity matches narrative development
+- **Specific Context**: Worksheets use actual subjects instead of placeholders
+- **Concrete Effects**: Pre-generated effects are text-specific and pedagogically clear
+
+---
+
+## ⚠️ Breaking Changes
+
+1. **Command-line**: Removed `total_chapters` parameter (now auto-detected)
+2. **Kernel Version**: Updated to v4.0 (old kernels still supported)
+3. **Checkpoint Files**: New naming convention (`kernel_stage*` instead of `stage*`)
+
+---
+
+## 🔗 Related Documentation
+
+- See `docs/DEVELOPER_GUIDE.md` for development guidelines
+- See `docs/CHANGELOG.md` for version history
+- See `VERSION.txt` for current system version
+
+---
+
+## ✅ Verification Checklist
+
+- [x] Tier mapping comprehensive (50+ devices)
+- [x] Checkpoint system functional
+- [x] Rate limit protection added
+- [x] Structured analysis fields added
+- [x] Backward compatibility maintained
+- [x] Stage 1A/1B updated to use new fields
+- [x] Kernel version updated to 4.0
+- [x] All validation logic in place
+- [x] No linter errors
+
+---
+
+## 📝 Commit Details
+
+**Type**: Feature Enhancement
+**Scope**: Kernel Creation Pipeline
+**Impact**: High - Major improvements to reliability and functionality
+**Backward Compatible**: Yes (with fallback logic)

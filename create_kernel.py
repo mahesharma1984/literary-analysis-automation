@@ -12,8 +12,10 @@ User reviews and approves each stage before continuing.
 """
 
 import anthropic
+import argparse
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -42,15 +44,129 @@ class Config:
     ARTIFACT_2 = "Artifact_2_-_Text_Tagging_Protocol"
     LEM = "LEM_-_Stage_1_-_Narrative-Rhetoric_Triangulation"
 
+# Device tier mapping for pedagogical progression
+DEVICE_TIER_MAP = {
+    # =========================================================================
+    # TIER 1 - Concrete/Sensory → EXPOSITION
+    # Easiest to identify, visual/auditory, students can point to examples
+    # =========================================================================
+    'Imagery': 1,
+    'Simile': 1,
+    'Hyperbole': 1,
+    'Metaphor': 1,
+    'Onomatopoeia': 1,
+    'Personification': 1,
+    'Alliteration': 1,
+    'Assonance': 1,
+    'Consonance': 1,
+    'Sensory Detail': 1,
+    
+    # =========================================================================
+    # TIER 2 - Structural/Pattern → RISING ACTION
+    # Pattern recognition, structural elements, how text is organized
+    # =========================================================================
+    'Dialogue': 2,
+    'Repetition': 2,
+    'Direct Characterization': 2,
+    'Indirect Characterization': 2,
+    'Ellipsis': 2,
+    'Scene': 2,
+    'Summary': 2,
+    'Pause': 2,
+    'Parallelism': 2,
+    'Anaphora': 2,
+    'Epistrophe': 2,
+    'Polysyndeton': 2,
+    'Asyndeton': 2,
+    'Linear Chronology': 2,
+    'Episodic Structure': 2,
+    'Flashback': 2,
+    'Analepsis': 2,
+    'Flashforward': 2,
+    'Prolepsis': 2,
+    'In Medias Res': 2,
+    
+    # =========================================================================
+    # TIER 3 - Abstract/Symbolic → CLIMAX
+    # Requires inference, abstract connections, symbolic thinking
+    # =========================================================================
+    'Symbolism': 3,
+    'Motif': 3,
+    'Foreshadowing': 3,
+    'Juxtaposition': 3,
+    'Allusion': 3,
+    'Allegory': 3,
+    'Paradox': 3,
+    'Oxymoron': 3,
+    'Chiasmus': 3,
+    'Circular Structure': 3,
+    'Spiral Structure': 3,
+    'Understatement': 3,
+    'Litotes': 3,
+    
+    # =========================================================================
+    # TIER 4 - Authorial Intent/Irony → FALLING ACTION
+    # Requires perspective-taking, understanding author's purpose
+    # =========================================================================
+    'Verbal Irony': 4,
+    'Dramatic Irony': 4,
+    'Situational Irony': 4,
+    'Structural Irony': 4,
+    'Suspense': 4,
+    'Satire': 4,
+    'Tone': 4,
+    'Rhetorical Question': 4,
+    'Apostrophe': 4,
+    'Ethos Establishment': 4,
+    
+    # =========================================================================
+    # TIER 5 - Narrative Frame/Voice → RESOLUTION
+    # Meta-level, narrative perspective, framing devices
+    # =========================================================================
+    'Third-Person Omniscient': 5,
+    'Third-Person Limited': 5,
+    'First-Person': 5,
+    'First-Person Narration': 5,
+    'Second-Person Narration': 5,
+    'Internal Monologue': 5,
+    'Stream of Consciousness': 5,
+    'Unreliable Narrator': 5,
+    'Free Indirect Discourse': 5,
+    'Frame Narrative': 5,
+    'Non-Linear Chronology': 5,
+    'Metafiction': 5,
+    'Breaking Fourth Wall': 5,
+    'Unreliable Chronology': 5,
+    'Narrator': 5,
+    'Point of View': 5,
+}
+
+# Tier 5 devices that need relocation if found in wrong section
+TIER5_VOICE_DEVICES = {
+    'Third-Person Omniscient', 'Third-Person Limited', 'First-Person',
+    'First-Person Narration', 'Second-Person Narration', 'Internal Monologue',
+    'Stream of Consciousness', 'Unreliable Narrator', 'Free Indirect Discourse',
+    'Frame Narrative', 'Non-Linear Chronology', 'Metafiction',
+    'Breaking Fourth Wall', 'Unreliable Chronology', 'Narrator', 'Point of View'
+}
+
+TIER_TO_FREYTAG = {
+    1: 'exposition',
+    2: 'rising_action',
+    3: 'climax',
+    4: 'falling_action',
+    5: 'resolution'
+}
+
 class KernelCreator:
     """Main class for creating kernel JSONs"""
     
-    def __init__(self, book_path: str, title: str, author: str, edition: str, total_chapters: int):
+    def __init__(self, book_path: str, title: str, author: str, edition: str):
         self.book_path = Path(book_path)
         self.title = title
         self.author = author
         self.edition = edition
-        self.total_chapters = total_chapters
+        self.total_chapters = None  # Will be set by Stage 0
         
         # Initialize API client
         if not Config.API_KEY:
@@ -70,6 +186,44 @@ class KernelCreator:
         self.stage2a_macro = None
         self.stage2b_devices = None
         self.kernel = None
+    
+    def _get_checkpoint_path(self, stage_name: str) -> Path:
+        """Get checkpoint file path for a stage."""
+        safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
+        safe_title = safe_title.replace(' ', '_')
+        return Config.OUTPUTS_DIR / f"{safe_title}_{stage_name}.json"
+    
+    def _save_checkpoint(self, stage_name: str, data: dict):
+        """Save stage output as checkpoint."""
+        path = self._get_checkpoint_path(stage_name)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+        print(f"  💾 Checkpoint saved: {path.name}")
+    
+    def _load_checkpoint(self, stage_name: str) -> dict | None:
+        """Load checkpoint if exists and valid."""
+        path = self._get_checkpoint_path(stage_name)
+        if not path.exists():
+            return None
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            print(f"  ✅ Loaded checkpoint: {path.name}")
+            return data
+        except json.JSONDecodeError:
+            print(f"  ⚠️ Invalid checkpoint, will regenerate: {path.name}")
+            return None
+    
+    def _clear_checkpoints_from(self, stage_name: str):
+        """Clear this and all later checkpoints (for force restart)."""
+        stages = ['kernel_stage0', 'kernel_stage1', 'kernel_stage2a', 'kernel_stage2b']
+        start_idx = stages.index(stage_name) if stage_name in stages else 0
+        for stage in stages[start_idx:]:
+            path = self._get_checkpoint_path(stage)
+            if path.exists():
+                path.unlink()
+                print(f"  🗑️ Cleared checkpoint: {path.name}")
         
     def _load_protocols(self) -> Dict[str, str]:
         """Load all protocol markdown files"""
@@ -127,7 +281,7 @@ class KernelCreator:
         return text
     
     def _call_claude(self, prompt: str, system_prompt: str = "") -> str:
-        """Call Claude API with given prompt"""
+        """Call Claude API with given prompt, with automatic retry on rate limit"""
         print("\nðŸ¤– Calling Claude API...")
         
         messages = [{"role": "user", "content": prompt}]
@@ -141,6 +295,83 @@ class KernelCreator:
         
         result = response.content[0].text
         print(f"  âœ“ Received {len(result):,} characters")
+        return result
+    
+    def _validate_tier_alignment(self, devices):
+        """Check that device examples are in tier-appropriate Freytag sections."""
+        misaligned = []
+        unmapped = []
+        
+        for device in devices:
+            name = device.get('name', '')
+            tier = DEVICE_TIER_MAP.get(name, None)
+            
+            if tier is None:
+                unmapped.append(name)
+                continue
+                
+            expected_section = TIER_TO_FREYTAG.get(tier, None)
+            
+            for example in device.get('examples', []):
+                actual_section = example.get('freytag_section', '')
+                if expected_section and actual_section != expected_section:
+                    misaligned.append({
+                        'device': name,
+                        'tier': tier,
+                        'expected': expected_section,
+                        'actual': actual_section
+                    })
+        
+        if unmapped:
+            print(f"\n⚠️  Warning: {len(unmapped)} device(s) not in DEVICE_TIER_MAP (assigned Tier 0):")
+            for name in unmapped:
+                print(f"    - {name}")
+        
+        return misaligned
+    
+    def _relocate_tier5_devices(self, devices):
+        """
+        Tier 5 (Voice) devices are pervasive - they exist throughout the text.
+        If API placed them in wrong section, relocate to resolution.
+        """
+        for device in devices:
+            name = device.get('name', '')
+            if name in TIER5_VOICE_DEVICES:
+                assigned = device.get('assigned_section', '')
+                if assigned != 'resolution':
+                    print(f"  ⚠️ Relocating {name} from {assigned} to resolution (Tier 5 device)")
+                    device['assigned_section'] = 'resolution'
+                    # Update example freytag_section too
+                    for example in device.get('examples', []):
+                        example['freytag_section'] = 'resolution'
+        
+        return devices
+    
+    def _deduplicate_devices(self, devices):
+        """
+        If same device appears multiple times, keep only the tier-appropriate one.
+        """
+        seen = {}
+        result = []
+        
+        for device in devices:
+            name = device.get('name', '')
+            tier = DEVICE_TIER_MAP.get(name, 0)
+            expected_section = TIER_TO_FREYTAG.get(tier, None)
+            actual_section = device.get('assigned_section', '')
+            
+            if name not in seen:
+                seen[name] = device
+                result.append(device)
+            else:
+                # Keep the one in correct section
+                if actual_section == expected_section:
+                    # Replace previous with this one
+                    result = [d for d in result if d.get('name') != name]
+                    result.append(device)
+                    seen[name] = device
+                    print(f"  ⚠️ Deduplicating {name}: keeping {actual_section} (correct tier)")
+        
         return result
     
     def _review_and_approve(self, stage_name: str, output: str) -> bool:
@@ -234,101 +465,60 @@ class KernelCreator:
     
     def stage0_structure_alignment(self):
         """Stage 0: Book Structure Alignment Protocol v1.1"""
+        # Check for existing checkpoint
+        cached = self._load_checkpoint('kernel_stage0')
+        if cached:
+            self.structure_alignment = cached
+            if 'structure_detection' in cached and 'total_units' in cached['structure_detection']:
+                self.total_chapters = cached['structure_detection']['total_units']
+            return True
+        
         print("\n" + "="*80)
         print("STAGE 0: BOOK STRUCTURE ALIGNMENT")
         print("="*80)
         
-        # Apply conventional distribution formula
-        n = self.total_chapters
-        
-        # Formula from v1.1
-        exp_end = max(1, int(n * 0.12))
-        ra_end = int(n * 0.50) - 1
-        climax_start = int(n * 0.50)
-        climax_end = int(n * 0.55)
-        
-        # Climax refinement: if >3 chapters, narrow to primary ±1
-        climax_chapters = climax_end - climax_start + 1
-        if climax_chapters > 3:
-            primary_climax = int(n * 0.50)
-            climax_start = max(1, primary_climax - 1)
-            climax_end = min(n, primary_climax + 1)
-        
-        formula_alignment = {
-            'exposition': {
-                'start': 1,
-                'end': exp_end,
-            },
-            'rising_action': {
-                'start': exp_end + 1,
-                'end': ra_end,
-            },
-            'climax': {
-                'start': climax_start,
-                'end': climax_end,
-            },
-            'falling_action': {
-                'start': climax_end + 1,
-                'end': int(n * 0.85),
-            },
-            'resolution': {
-                'start': int(n * 0.85) + 1,
-                'end': n,
-            }
-        }
-        
-        print(f"\n📊 Formula-based alignment (N={n}):")
-        for stage, ranges in formula_alignment.items():
-            count = ranges['end'] - ranges['start'] + 1
-            pct = round(count / n * 100)
-            print(f"  {stage}: Chapters {ranges['start']}-{ranges['end']} ({count} chapters, {pct}%)")
-        
-        # Create book sample for climax identification
+        # Create book sample for structure detection
         book_sample = self._create_book_sample()
         
-        # Use Claude to identify actual climax and validate alignment
+        # Use Claude to detect structure and identify actual climax
         prompt = f"""You are performing the Book Structure Alignment Protocol v1.1.
 
-TASK: Identify the actual climax chapter(s) and validate/refine the proposed alignment.
+TASK: Detect the book structure (total chapters) and identify the actual climax chapter(s), then create a validated alignment.
 
 BOOK METADATA:
 - Title: {self.title}
 - Author: {self.author}
 - Edition: {self.edition}
-- Total Chapters: {self.total_chapters}
 
 PROTOCOL TO FOLLOW:
 {self.protocols['structure_alignment']}
-
-PROPOSED FORMULA ALIGNMENT:
-- Exposition: Chapters {formula_alignment['exposition']['start']}-{formula_alignment['exposition']['end']}
-- Rising Action: Chapters {formula_alignment['rising_action']['start']}-{formula_alignment['rising_action']['end']}
-- Climax: Chapters {formula_alignment['climax']['start']}-{formula_alignment['climax']['end']}
-- Falling Action: Chapters {formula_alignment['falling_action']['start']}-{formula_alignment['falling_action']['end']}
-- Resolution: Chapters {formula_alignment['resolution']['start']}-{formula_alignment['resolution']['end']}
 
 BOOK SAMPLE (beginning, middle, end):
 {book_sample}
 
 CRITICAL TASKS:
 
-1. IDENTIFY THE ACTUAL CLIMAX:
+1. DETECT BOOK STRUCTURE:
+   - Analyze the book sample to determine the total number of chapters
+   - Identify the structure type (numbered chapters, parts, etc.)
+   - Set total_units to the total chapter count
+
+2. IDENTIFY THE ACTUAL CLIMAX:
    - Find THE pivotal moment: highest tension, irreversible change, key decision/revelation
    - Determine which chapter(s) contain this moment (1-3 chapters maximum)
-   - If climax differs from formula by >3 chapters, note this
 
-2. VALIDATE AND REFINE ALIGNMENT:
-   - Check if formula boundaries match narrative content
+3. CREATE VALIDATED ALIGNMENT:
+   - Apply conventional distribution formula based on detected total chapters
    - Adjust boundaries if needed (especially for extended rising action)
    - Ensure climax is tight (1-3 chapters)
-   - Ensure all chapters 1-{n} are covered with no gaps
+   - Ensure all chapters are covered with no gaps
 
-3. OUTPUT VALIDATED ALIGNMENT:
+4. OUTPUT VALIDATED ALIGNMENT:
    Provide a JSON object with this structure:
    {{
      "structure_detection": {{
        "structure_type": "NUM",
-       "total_units": {n},
+       "total_units": <detected_total_chapters>,
        "special_elements": [],
        "notes": "Numbered chapters detected"
      }},
@@ -358,9 +548,9 @@ CRITICAL TASKS:
          "percentage": 30
        }},
        "resolution": {{
-         "chapter_range": "Z+1-{n}",
+         "chapter_range": "Z+1-<total_chapters>",
          "chapters": [...],
-         "primary_chapter": {n},
+         "primary_chapter": <total_chapters>,
          "percentage": 15
        }}
      }},
@@ -373,7 +563,7 @@ CRITICAL TASKS:
    }}
 
 VERIFICATION REQUIREMENTS:
-✓ All chapters 1-{n} must be included (no gaps, no overlaps)
+✓ All chapters must be included (no gaps, no overlaps)
 ✓ Climax must be 1-3 chapters
 ✓ Chapter ranges must be sequential
 ✓ Each stage must have primary_chapter specified
@@ -397,6 +587,13 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after.
             print(f"Error details: {e}")
             return False
         
+        # Extract total_units and set as total_chapters
+        if 'structure_detection' in alignment_json and 'total_units' in alignment_json['structure_detection']:
+            self.total_chapters = alignment_json['structure_detection']['total_units']
+            print(f"✓ Detected {self.total_chapters} chapters from book structure")
+        else:
+            raise ValueError("Stage 0 failed to detect total_units")
+        
         # Validate required fields
         if 'chapter_alignment' not in alignment_json:
             print(f"\n❌ Error: Missing 'chapter_alignment' in response")
@@ -408,7 +605,7 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after.
             chapters = data.get('chapters', [])
             all_chapters.update(chapters)
         
-        expected_chapters = set(range(1, n + 1))
+        expected_chapters = set(range(1, self.total_chapters + 1))
         missing = expected_chapters - all_chapters
         extra = all_chapters - expected_chapters
         
@@ -421,11 +618,18 @@ CRITICAL: Output ONLY valid JSON. No additional text before or after.
         result_formatted = json.dumps(alignment_json, indent=2)
         if self._review_and_approve("Stage 0: Structure Alignment", result_formatted):
             self.structure_alignment = alignment_json
+            self._save_checkpoint('kernel_stage0', self.structure_alignment)
             return True
         return False
     
     def stage1_extract_freytag(self):
         """Stage 1: Extract 5 Freytag sections with chapter ranges"""
+        # Check for existing checkpoint
+        cached = self._load_checkpoint('kernel_stage1')
+        if cached:
+            self.stage1_extracts = cached
+            return True
+        
         print("\n" + "="*80)
         print("STAGE 1: FREYTAG EXTRACT SELECTION (with chapter mapping)")
         print("="*80)
@@ -497,32 +701,27 @@ Provide a JSON object with this structure:
     "exposition": {{
       "chapter_range": "[use validated range from Stage 0]",
       "primary_chapter": [use validated primary from Stage 0],
-      "rationale": "why this represents exposition (2-3 sentences)",
-      "text": "extract 400-600 words from primary chapter"
+      "rationale": "why this represents exposition (2-3 sentences)"
     }},
     "rising_action": {{
       "chapter_range": "[use validated range from Stage 0]",
       "primary_chapter": [use validated primary from Stage 0],
-      "rationale": "why this represents rising action (2-3 sentences)",
-      "text": "extract 400-600 words from primary chapter"
+      "rationale": "why this represents rising action (2-3 sentences)"
     }},
     "climax": {{
       "chapter_range": "[use validated range from Stage 0]",
       "primary_chapter": [use validated primary from Stage 0],
-      "rationale": "why this represents climax (2-3 sentences)",
-      "text": "extract 400-600 words from primary chapter"
+      "rationale": "why this represents climax (2-3 sentences)"
     }},
     "falling_action": {{
       "chapter_range": "[use validated range from Stage 0]",
       "primary_chapter": [use validated primary from Stage 0],
-      "rationale": "why this represents falling action (2-3 sentences)",
-      "text": "extract 400-600 words from primary chapter"
+      "rationale": "why this represents falling action (2-3 sentences)"
     }},
     "resolution": {{
       "chapter_range": "[use validated range from Stage 0]",
       "primary_chapter": [use validated primary from Stage 0],
-      "rationale": "why this represents resolution (2-3 sentences)",
-      "text": "extract 400-600 words from primary chapter"
+      "rationale": "why this represents resolution (2-3 sentences)"
     }}
   }}
 }}
@@ -530,7 +729,6 @@ Provide a JSON object with this structure:
 VERIFICATION CHECKLIST:
 ✓ Chapter ranges match the validated alignment from Stage 0 exactly
 ✓ Each section has primary_chapter matching Stage 0 alignment
-✓ Each section has text extract (400-600 words) from primary chapter
 ✓ Each section has a clear, specific rationale
 ✓ Chapter ranges use numeric-only format: "1-3" NOT "Chapters 1-3"
 
@@ -606,11 +804,18 @@ DO NOT extract or reproduce any text passages from the book.
         # Review
         if self._review_and_approve("Stage 1: Freytag Extracts", result_formatted):
             self.stage1_extracts = extracts_json
+            self._save_checkpoint('kernel_stage1', self.stage1_extracts)
             return True
         return False
     
     def stage2a_tag_macro(self):
         """Stage 2A: Tag 84 macro alignment variables"""
+        # Check for existing checkpoint
+        cached = self._load_checkpoint('kernel_stage2a')
+        if cached:
+            self.stage2a_macro = cached
+            return True
+        
         print("\n" + "="*80)
         print("STAGE 2A: MACRO ALIGNMENT TAGGING")
         print("="*80)
@@ -708,11 +913,18 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         # Review
         if self._review_and_approve("Stage 2A: Macro Variables", result_formatted):
             self.stage2a_macro = macro_json
+            self._save_checkpoint('kernel_stage2a', self.stage2a_macro)
             return True
         return False
     
     def stage2b_tag_devices(self):
         """Stage 2B: Tag 8-12 micro devices with examples"""
+        # Check for existing checkpoint
+        cached = self._load_checkpoint('kernel_stage2b')
+        if cached:
+            self.stage2b_devices = cached
+            return True
+        
         print("\n" + "="*80)
         print("STAGE 2B: MICRO DEVICE INVENTORY")
         print("="*80)
@@ -817,6 +1029,20 @@ For each section, choose devices that BEST demonstrate the macro-micro alignment
 
 - Resolution devices: How closure is achieved
 
+TIER-BASED EXAMPLE LOCATION:
+
+When finding examples for each device, locate them in the Freytag section that matches their pedagogical tier:
+
+- Tier 1 devices (Imagery, Simile, Hyperbole, Metaphor): find in EXPOSITION chapters
+- Tier 2 devices (Dialogue, Repetition, Direct Characterization): find in RISING ACTION chapters
+- Tier 3 devices (Symbolism, Motif, Foreshadowing, Juxtaposition): find in CLIMAX chapters
+- Tier 4 devices (Verbal Irony, Dramatic Irony, Suspense): find in FALLING ACTION chapters
+- Tier 5 devices (Third-Person Omniscient, Third-Person Limited, First-Person, First-Person Narration, Internal Monologue, Stream of Consciousness, Unreliable Narrator, Free Indirect Discourse, Frame Narrative, Narrator, Point of View): find in RESOLUTION chapters
+
+CRITICAL FOR TIER 5: Voice/narrative devices exist throughout the text, but you MUST find examples from RESOLUTION chapters specifically. These devices frame the entire narrative, so find where they are most evident in the story's conclusion. Do NOT use exposition examples for Tier 5 devices.
+
+This ensures pedagogical progression from concrete to abstract, matching device complexity to narrative development.
+
 BOOK METADATA:
 
 - Title: {self.title}
@@ -833,9 +1059,55 @@ FREYTAG EXTRACTS:
 
 {extracts_text}
 
+CRITICAL: STRUCTURED DEVICE ANALYSIS REQUIRED
+
+For EACH device you identify, you must provide:
+
+1. **worksheet_context** - Contextual data for worksheet generation:
+
+   a) **subject**: What does this device operate on in THIS specific text?
+      - NOT a generic object like "characters" or "setting"
+      - BUT a specific concept/theme/element from THIS book
+      - Examples: "parental delusion", "Matilda's intellectual isolation", "Miss Trunchbull's tyranny"
+      - Extract from the actual scenes/quotes where the device appears
+
+   b) **scene_description**: Brief description of where this device appears
+      - Will be used in worksheet "Where to look" prompts
+      - Should reference specific scene/moment
+      - Examples: "opening commentary on parents' blind admiration", "description of Miss Trunchbull's office", "Matilda's first library visit"
+
+   c) **specific_function**: What does this device DO in this text?
+      - NOT the generic definition of the device
+      - BUT its specific purpose/role in THIS narrative
+      - Start with action verbs: "establishes", "reveals", "creates", "emphasizes", "contrasts"
+      - Examples: "establishes narrator's satirical perspective on parental bias", "creates immediate threat through vivid sensory detail"
+
+2. **effects** - Three concrete effects (one per category):
+
+   a) **reader_response** (category): How does this device affect what readers FEEL or EXPERIENCE?
+      - Focus on emotional/sensory/experiential impact
+      - Examples: "Makes readers recognize the absurdity of parental bias", "Creates visceral discomfort at institutional cruelty"
+
+   b) **meaning_creation** (category): How does this device build UNDERSTANDING or reveal IDEAS?
+      - Focus on what readers learn/understand/perceive
+      - Examples: "Reveals how universal parental delusion blinds judgment", "Shows the systematic nature of educational abuse"
+
+   c) **thematic_impact** (category): How does this device connect to the text's BIGGER MESSAGE or THEME?
+      - Focus on thematic significance and broader meaning
+      - Examples: "Establishes theme of adults systematically failing children", "Reinforces message about intellectual empowerment"
+
+ANALYSIS QUALITY REQUIREMENTS:
+
+- All analysis must be TEXT-SPECIFIC (not generic device descriptions)
+- Subject must be a concrete concept/element from THIS book
+- Function must describe THIS device's role in THIS narrative
+- Effects must be substantive (not vague like "creates meaning" or "affects reader")
+- Draw from actual examples in the text
+- Be pedagogically clear (students will read these)
+
 OUTPUT FORMAT:
 
-Provide a JSON array of devices. Each device must be from the taxonomy above:
+Provide a JSON array of devices. Each device must be from the taxonomy above AND include structured analysis:
 
 [
 
@@ -860,6 +1132,27 @@ Provide a JSON array of devices. Each device must be from the taxonomy above:
     "position_code": "DIST/CLUST-BEG/CLUST-MID/CLUST-END",
 
     "assigned_section": "exposition/rising_action/climax/falling_action/resolution",
+
+    "worksheet_context": {{
+      "subject": "What this device operates on in THIS text (e.g., 'parental delusion', 'Matilda's genius', 'institutional cruelty')",
+      "scene_description": "Brief scene description for worksheet 'Where to look' prompts (e.g., 'opening commentary on parents' blind admiration')",
+      "specific_function": "What this device SPECIFICALLY does in this text (NOT generic definition - e.g., 'establishes narrator's satirical perspective on parental bias')"
+    }},
+
+    "effects": [
+      {{
+        "text": "Specific reader response effect (e.g., 'Makes readers recognize the absurdity of parental bias')",
+        "category": "reader_response"
+      }},
+      {{
+        "text": "Specific meaning creation effect (e.g., 'Reveals how universal parental delusion blinds judgment')",
+        "category": "meaning_creation"
+      }},
+      {{
+        "text": "Specific thematic impact effect (e.g., 'Establishes theme of adults systematically failing children')",
+        "category": "thematic_impact"
+      }}
+    ],
 
     "examples": [
 
@@ -901,14 +1194,31 @@ CRITICAL RULES:
 
 8. Always specify irony type (Verbal/Situational/Dramatic/Structural)
 
+9. EVERY device must have complete worksheet_context with subject, scene_description, and specific_function
+
+10. EVERY device must have 3 effects (one per category: reader_response, meaning_creation, thematic_impact)
+
+11. All analysis fields must be TEXT-SPECIFIC (not generic device descriptions)
+
+12. Subject must reference actual concepts/themes/elements from THIS book
+
 """
         
-        system_prompt = "You are a literary analysis expert identifying and cataloging micro literary devices according to Kernel Protocol Enhancement v3.3."
+        system_prompt = "You are a literary analysis expert identifying and cataloging micro literary devices with structured pedagogical analysis according to Kernel Protocol Enhancement v3.3. For each device, provide text-specific contextual analysis including subject, function, and concrete effects."
         
         result = self._call_claude(prompt, system_prompt)
         
         # Clean and validate
         result = result.replace('```json\n', '').replace('```\n', '').replace('```', '').strip()
+        
+        # Comprehensive JSON sanitization
+        def clean_json_string(match):
+            content = match.group(1)
+            content = content.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
+            content = re.sub(r'(?<!\\)"', '\\"', content)  # escape unescaped quotes
+            return f'"{content}"'
+        
+        result = re.sub(r'"((?:[^"\\]|\\.)*?)"', clean_json_string, result)
         
         try:
             devices_json = json.loads(result)
@@ -950,6 +1260,52 @@ CRITICAL RULES:
         if missing_assigned_section:
             print(f"\n⚠️  Warning: {len(missing_assigned_section)} device(s) missing 'assigned_section' field")
         
+        # Validate structured analysis fields
+        missing_worksheet_context = []
+        missing_effects = []
+        incomplete_worksheet_context = []
+        incomplete_effects = []
+        
+        for device in devices_json:
+            device_name = device.get("name", "Unknown")
+            
+            # Check worksheet_context
+            worksheet_context = device.get("worksheet_context")
+            if not worksheet_context:
+                missing_worksheet_context.append(device_name)
+            else:
+                required_fields = ["subject", "scene_description", "specific_function"]
+                missing_fields = [field for field in required_fields if not worksheet_context.get(field)]
+                if missing_fields:
+                    incomplete_worksheet_context.append(f"{device_name}: missing {', '.join(missing_fields)}")
+            
+            # Check effects
+            effects = device.get("effects")
+            if not effects:
+                missing_effects.append(device_name)
+            else:
+                if len(effects) < 3:
+                    incomplete_effects.append(f"{device_name}: only {len(effects)} effect(s) (need 3)")
+                else:
+                    categories = [e.get("category") for e in effects]
+                    required_categories = ["reader_response", "meaning_creation", "thematic_impact"]
+                    missing_categories = [cat for cat in required_categories if cat not in categories]
+                    if missing_categories:
+                        incomplete_effects.append(f"{device_name}: missing categories {', '.join(missing_categories)}")
+        
+        if missing_worksheet_context:
+            print(f"\n⚠️  Warning: {len(missing_worksheet_context)} device(s) missing 'worksheet_context' field")
+        if incomplete_worksheet_context:
+            print(f"\n⚠️  Warning: Incomplete worksheet_context:")
+            for info in incomplete_worksheet_context:
+                print(f"  - {info}")
+        if missing_effects:
+            print(f"\n⚠️  Warning: {len(missing_effects)} device(s) missing 'effects' field")
+        if incomplete_effects:
+            print(f"\n⚠️  Warning: Incomplete effects:")
+            for info in incomplete_effects:
+                print(f"  - {info}")
+        
         # Check section distribution
         sections_with_few_devices = []
         for section, count in section_counts.items():
@@ -965,10 +1321,33 @@ CRITICAL RULES:
         for section, count in section_counts.items():
             print(f"  - {section}: {count} devices")
         
+        # Relocate Tier 5 devices to resolution (they're pervasive but should be taught last)
+        devices_json = self._relocate_tier5_devices(devices_json)
+        
+        # Remove duplicate devices, keeping tier-appropriate ones
+        devices_json = self._deduplicate_devices(devices_json)
+        
+        # Validate tier alignment
+        misaligned = self._validate_tier_alignment(devices_json)
+        if misaligned:
+            print(f"\n⚠️  Warning: {len(misaligned)} device example(s) not in tier-appropriate section:")
+            for item in misaligned[:5]:
+                print(f"  - {item['device']} (Tier {item['tier']}): expected {item['expected']}, found in {item['actual']}")
+            if len(misaligned) > 5:
+                print(f"  ... and {len(misaligned) - 5} more")
+        
+        # Add pedagogical_tier to each device
+        for device in devices_json:
+            device_name = device.get("name", "")
+            device["pedagogical_tier"] = DEVICE_TIER_MAP.get(device_name, 0)
+        
+        # Update result_formatted with pedagogical_tier added
+        result_formatted = json.dumps(devices_json, indent=2)
 
         # Review
         if self._review_and_approve("Stage 2B: Micro Devices", result_formatted):
             self.stage2b_devices = devices_json
+            self._save_checkpoint('kernel_stage2b', self.stage2b_devices)
             return True
         return False
     
@@ -998,7 +1377,7 @@ CRITICAL RULES:
                 "edition": self.edition,
                 "creation_date": datetime.now().isoformat(),
                 "protocol_version": "3.3",
-                "kernel_version": "3.5",
+                "kernel_version": "4.0",
                 "chapter_aware": True,
                 "structure_alignment_protocol": "v1.1"
             },
@@ -1037,7 +1416,7 @@ CRITICAL RULES:
             # Generate default filename
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_kernel_v3_5.json"
+            filename = f"{safe_title}_kernel_v4_0.json"
             output_path = Config.KERNELS_DIR / filename
         
         # Ensure directory exists
@@ -1060,7 +1439,7 @@ CRITICAL RULES:
         if not output_path:
             safe_title = "".join(c for c in self.title if c.isalnum() or c in (' ', '-', '_')).strip()
             safe_title = safe_title.replace(' ', '_')
-            filename = f"{safe_title}_ReasoningDoc_v3.5.md"
+            filename = f"{safe_title}_ReasoningDoc_v4_0.md"
             output_path = Config.KERNELS_DIR / filename
     
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1095,13 +1474,13 @@ CRITICAL RULES:
         print(f"Author: {self.author}")
         print(f"Edition: {self.edition}")
         
-        # Stage 0: Structure Alignment (NEW)
+        # Stage 0: Structure Alignment
         if not self.stage0_structure_alignment():
             print("\n❌ Pipeline failed at Stage 0")
             return False
         
-        # Rate limit protection: wait 60 seconds before Stage 1
-        print("\n⏳ Waiting 60 seconds to avoid rate limits...")
+        # Rate limit protection: wait between API calls
+        print("\n⏳ Waiting 60 seconds (rate limit protection)...")
         time.sleep(60)
         
         # Stage 1
@@ -1109,8 +1488,7 @@ CRITICAL RULES:
             print("\nâŒ Pipeline failed at Stage 1")
             return False
         
-        # Rate limit protection: wait 60 seconds before Stage 2A
-        print("\n⏳ Waiting 60 seconds to avoid rate limits...")
+        print("\n⏳ Waiting 60 seconds (rate limit protection)...")
         time.sleep(60)
 
         # Stage 2A
@@ -1118,8 +1496,7 @@ CRITICAL RULES:
             print("\nâŒ Pipeline failed at Stage 2A")
             return False
         
-        # Rate limit protection: wait 60 seconds before Stage 2B
-        print("\n⏳ Waiting 60 seconds to avoid rate limits...")
+        print("\n⏳ Waiting 60 seconds (rate limit protection)...")
         time.sleep(60)
 
         # Stage 2B
@@ -1127,16 +1504,20 @@ CRITICAL RULES:
             print("\nâŒ Pipeline failed at Stage 2B")
             return False
         
-        # Assemble
+        print("\n⏳ Waiting 60 seconds (rate limit protection)...")
+        time.sleep(60)
+        
+        # Assemble (no API call - no delay needed)
         if not self.assemble_kernel():
             print("\nâŒ Pipeline failed at assembly")
             return False
         
-        # Save
+        # Save (no API call - no delay needed)
         if not self.save_kernel():
             print("\nâŒ Pipeline failed at save")
             return False
 
+        # ReasoningDoc generation (final API call)
         if not self.save_reasoning_document():
             print("\nÃ¢Å’ Pipeline failed at reasoning document")
             return False
@@ -1149,19 +1530,37 @@ CRITICAL RULES:
 
 def main():
     """Main entry point"""
-    if len(sys.argv) < 6:
-        print("Usage: python create_kernel.py <book_path> <title> <author> <edition> <total_chapters>")
-        print("Example: python create_kernel.py books/TKAM.pdf 'To Kill a Mockingbird' 'Harper Lee' 'Harper Perennial Modern Classics, 2006' 31")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description='Create kernel JSON for literary analysis',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python create_kernel.py books/TKAM.pdf 'To Kill a Mockingbird' 'Harper Lee' 'Harper Perennial Modern Classics, 2006'
+  python create_kernel.py books/TKAM.pdf 'To Kill a Mockingbird' 'Harper Lee' 'Harper Perennial Modern Classics, 2006' --from-stage kernel_stage2b
+  python create_kernel.py books/TKAM.pdf 'To Kill a Mockingbird' 'Harper Lee' 'Harper Perennial Modern Classics, 2006' --fresh
+  
+Note: Chapter count is now auto-detected in Stage 0
+        """
+    )
+    parser.add_argument('book_path', help='Path to book PDF or text file')
+    parser.add_argument('title', help='Book title')
+    parser.add_argument('author', help='Book author')
+    parser.add_argument('edition', help='Book edition')
+    parser.add_argument('--from-stage', type=str, choices=['kernel_stage0', 'kernel_stage1', 'kernel_stage2a', 'kernel_stage2b'],
+                        help='Force restart from this stage (clears later checkpoints)')
+    parser.add_argument('--fresh', action='store_true',
+                        help='Clear all checkpoints and start fresh')
     
-    book_path = sys.argv[1]
-    title = sys.argv[2]
-    author = sys.argv[3]
-    edition = sys.argv[4]
-    total_chapters = int(sys.argv[5])
+    args = parser.parse_args()
     
     # Create kernel creator
-    creator = KernelCreator(book_path, title, author, edition, total_chapters)
+    creator = KernelCreator(args.book_path, args.title, args.author, args.edition)
+    
+    # Clear checkpoints if --fresh or --from-stage specified
+    if args.fresh:
+        creator._clear_checkpoints_from('kernel_stage0')
+    elif args.from_stage:
+        creator._clear_checkpoints_from(args.from_stage)
     
     # Run pipeline
     success = creator.run()

@@ -102,7 +102,9 @@ def assign_devices_by_location(kernel):
                 "examples": device.get("examples", []),
                 "appears_in_chapters": [ex.get("chapter") for ex in device.get("examples", []) if ex.get("chapter")],
                 "section_chapters": narrative_ranges.get(assigned_section, []),
-                "tvode_components": extract_tvode_components(device)
+                "tvode_components": extract_tvode_components(device),
+                "worksheet_context": device.get("worksheet_context"),  # Pass through if available
+                "effects": device.get("effects")  # Pass through if available
             }
             device_assignment[assigned_section].append(device_data)
             continue  # Move to next device
@@ -129,7 +131,9 @@ def assign_devices_by_location(kernel):
                     "examples": device.get("examples", []),
                     "appears_in_chapters": sorted(list(device_chapters)),
                     "section_chapters": section_chapters,
-                    "tvode_components": extract_tvode_components(device)
+                    "tvode_components": extract_tvode_components(device),
+                    "worksheet_context": device.get("worksheet_context"),  # Pass through if available
+                    "effects": device.get("effects")  # Pass through if available
                 }
                 device_assignment[section_name].append(device_data)
                 break  # Assign to first matching section only
@@ -138,11 +142,43 @@ def assign_devices_by_location(kernel):
 
 
 def extract_tvode_components(device):
-    """Extract or generate TVODE components from device data"""
+    """Extract or generate TVODE components from device data
+    
+    Uses structured worksheet_context if available (new kernels),
+    otherwise falls back to extraction from examples (old kernels).
+    """
     
     name = device.get("name", "Unknown Device")
     examples = device.get("examples", [])
     
+    # NEW: Check for structured worksheet_context (new kernels)
+    worksheet_context = device.get("worksheet_context")
+    if worksheet_context:
+        subject = worksheet_context.get("subject", "")
+        specific_function = worksheet_context.get("specific_function", "")
+        
+        # Use structured data for TVODE
+        if examples and len(examples) > 0:
+            example = examples[0]
+            detail = example.get("quote_snippet", example.get("text", ""))
+        else:
+            detail = ""
+        
+        # Use specific_function for effect, or fallback to generic
+        effect = specific_function if specific_function else "creates meaning in text"
+        
+        # Use subject for object if available, otherwise use device name
+        object_text = subject if subject else name
+        
+        return {
+            "topic": name,
+            "verb": "demonstrates",
+            "object": object_text,
+            "detail": detail,
+            "effect": effect
+        }
+    
+    # FALLBACK: Old logic for backward compatibility (old kernels)
     # If examples exist, use first one
     if examples and len(examples) > 0:
         example = examples[0]
@@ -352,7 +388,7 @@ def run_stage1a(kernel_path):
         "metadata": {
             "text_title": title,
             "author": kernel.get("metadata", {}).get("author", "Unknown"),
-            "extraction_version": "5.0",
+            "extraction_version": "6.0",
             "extraction_date": datetime.now().isoformat(),
             "source_kernel": str(kernel_path)
         },
@@ -367,7 +403,7 @@ def run_stage1a(kernel_path):
     output_dir.mkdir(exist_ok=True)
     
     safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
-    output_path = output_dir / f"{safe_title}_stage1a_v5.0.json"
+    output_path = output_dir / f"{safe_title}_stage1a_v6_0.json"
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
@@ -376,7 +412,128 @@ def run_stage1a(kernel_path):
     print(f"   Output: {output_path}")
     print(f"   Size: {output_path.stat().st_size:,} bytes")
     
-    return output_path
+    return output_path, output
+
+
+def generate_validation_report(output_data, book_name):
+    """Generate human-readable validation report."""
+    
+    report_lines = [
+        f"# Stage 1A Validation Report: {book_name}",
+        f"**Generated:** {datetime.now().isoformat()}",
+        f"**Output Version:** 6.0",
+        "",
+        "## Week-Device Alignment Check",
+        "",
+        "| Week | Freytag | Expected Tier | Devices Assigned | Status |",
+        "|------|---------|---------------|------------------|--------|"
+    ]
+    
+    tier_expectations = {
+        1: (1, 'Exposition'),
+        2: (2, 'Rising Action'),
+        3: (3, 'Climax'),
+        4: (4, 'Falling Action'),
+        5: (5, 'Resolution')
+    }
+    
+    # Get macro_micro_packages from output
+    packages = output_data.get("macro_micro_packages", {})
+    
+    # Week mapping to package keys
+    week_package_map = {
+        1: "week1_exposition",
+        2: "week2_rising_action",
+        3: "week3_climax",
+        4: "week4_falling_action",
+        5: "week5_resolution"
+    }
+    
+    # Check each week's devices against expected tiers
+    for week_num in range(1, 6):
+        expected_tier, expected_freytag = tier_expectations[week_num]
+        package_key = week_package_map.get(week_num)
+        
+        if not package_key or package_key not in packages:
+            report_lines.append(
+                f"| {week_num} | {expected_freytag} | Tier {expected_tier} | "
+                f"*Package missing* | ❌ ERROR |"
+            )
+            continue
+        
+        package = packages[package_key]
+        macro_element = package.get("macro_element", "")
+        devices = package.get("micro_devices", [])
+        device_count = len(devices)
+        
+        # Check alignment
+        # Week 1 should be Exposition
+        # Week 2 should be Rising Action
+        # Week 3 should be Climax/Structure
+        # Week 4 should be Falling Action/Voice
+        # Week 5 should be Resolution
+        
+        status = "✅ OK"
+        if week_num == 1 and "Exposition" not in macro_element:
+            status = "⚠️ MISMATCH"
+        elif week_num == 2 and "Rising Action" not in macro_element:
+            status = "⚠️ MISMATCH"
+        elif week_num == 3 and "Climax" not in macro_element and "Structure" not in macro_element:
+            status = "⚠️ MISMATCH"
+        elif week_num == 4 and "Falling Action" not in macro_element and "Voice" not in macro_element:
+            status = "⚠️ MISMATCH"
+        elif week_num == 5 and "Resolution" not in macro_element:
+            status = "⚠️ MISMATCH"
+        
+        device_names = ", ".join([d.get("name", "Unknown") for d in devices[:3]])
+        if device_count > 3:
+            device_names += f" (+{device_count - 3} more)"
+        
+        report_lines.append(
+            f"| {week_num} | {expected_freytag} | Tier {expected_tier} | "
+            f"{device_count} devices ({device_names}) | {status} |"
+        )
+    
+    # Add summary section
+    report_lines.extend([
+        "",
+        "## Summary",
+        "",
+        "### Validation Criteria:",
+        "- Week 1 should align with **Exposition** (Tier 1)",
+        "- Week 2 should align with **Rising Action** (Tier 2)",
+        "- Week 3 should align with **Climax/Structure** (Tier 3)",
+        "- Week 4 should align with **Falling Action/Voice** (Tier 4)",
+        "- Week 5 should align with **Resolution** (Tier 5)",
+        "",
+        "### Device Distribution:",
+        ""
+    ])
+    
+    # Add device distribution details
+    for week_num in range(1, 6):
+        package_key = week_package_map.get(week_num)
+        if package_key and package_key in packages:
+            package = packages[package_key]
+            devices = package.get("micro_devices", [])
+            report_lines.append(f"**Week {week_num}:** {len(devices)} devices")
+            for device in devices:
+                device_name = device.get("name", "Unknown")
+                device_layer = device.get("layer", "")
+                report_lines.append(f"  - {device_name} ({device_layer})")
+            report_lines.append("")
+    
+    # Write report
+    output_dir = Path("outputs")
+    output_dir.mkdir(exist_ok=True)
+    
+    safe_book_name = "".join(c for c in book_name if c.isalnum() or c in (' ', '-', '_')).strip().replace(' ', '_')
+    report_path = output_dir / f"{safe_book_name}_stage1a_v6_0_validation.md"
+    
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(report_lines))
+    
+    return report_path
 
 
 def main():
@@ -390,7 +547,12 @@ def main():
         print(f"âŒ Error: Kernel file not found: {kernel_path}")
         sys.exit(1)
     
-    output_path = run_stage1a(kernel_path)
+    output_path, output_data = run_stage1a(kernel_path)
+    
+    # Generate validation report
+    book_name = output_data.get("metadata", {}).get("text_title", "Unknown")
+    validation_path = generate_validation_report(output_data, book_name)
+    print(f"Validation report: {validation_path}")
     
     print("\n" + "="*80)
     print("NEXT STEP:")
