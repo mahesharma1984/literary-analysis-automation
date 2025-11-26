@@ -150,6 +150,20 @@ TIER5_VOICE_DEVICES = {
     'Breaking Fourth Wall', 'Unreliable Chronology', 'Narrator', 'Point of View'
 }
 
+# Mutually exclusive POV devices - only ONE can exist in any text
+MUTUALLY_EXCLUSIVE_POV = {
+    'First-Person', 'First-Person Narration', 'Second-Person Narration',
+    'Third-Person Omniscient', 'Third-Person Limited'
+}
+
+# Map macro POV codes to device names
+POV_CODE_TO_DEVICE = {
+    'FP': {'First-Person', 'First-Person Narration'},
+    'TPO': {'Third-Person Omniscient'},
+    'TPL': {'Third-Person Limited'},
+    'SP': {'Second-Person Narration'}
+}
+
 TIER_TO_FREYTAG = {
     1: 'exposition',
     2: 'rising_action',
@@ -373,6 +387,26 @@ class KernelCreator:
                     print(f"  ⚠️ Deduplicating {name}: keeping {actual_section} (correct tier)")
         
         return result
+    
+    def _filter_contradictory_pov_devices(self, devices, macro_pov):
+        """
+        Remove POV devices that contradict the text's actual POV.
+        A text can only have ONE narrative POV - can't be both first-person and third-person.
+        """
+        allowed_pov_devices = POV_CODE_TO_DEVICE.get(macro_pov, set())
+        
+        filtered = []
+        for device in devices:
+            name = device.get('name', '')
+            if name in MUTUALLY_EXCLUSIVE_POV:
+                if name in allowed_pov_devices:
+                    filtered.append(device)
+                else:
+                    print(f"  ⚠️ Removing {name} (contradicts text's {macro_pov} POV)")
+            else:
+                filtered.append(device)
+        
+        return filtered
     
     def _review_and_approve(self, stage_name: str, output: str) -> bool:
         """Present output to user for review (automatically approved)"""
@@ -1326,6 +1360,10 @@ CRITICAL RULES:
         
         # Remove duplicate devices, keeping tier-appropriate ones
         devices_json = self._deduplicate_devices(devices_json)
+        
+        # Filter out POV devices that contradict the text's actual POV
+        macro_pov = self.stage2a_macro.get('narrative', {}).get('voice', {}).get('pov', 'TPO')
+        devices_json = self._filter_contradictory_pov_devices(devices_json, macro_pov)
         
         # Validate tier alignment
         misaligned = self._validate_tier_alignment(devices_json)
