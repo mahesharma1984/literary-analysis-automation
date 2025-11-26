@@ -1,4 +1,4 @@
-# TEACHER KEY - Literary Analysis & TVODE Construction v2.2
+# TEACHER KEY - Literary Analysis & TVODE Construction v2.1
 
 **Aligned to LEM Stage 1 Logic: Device Recognition & TVODE Sentence Building**
 
@@ -30,9 +30,9 @@
 - Total: 60-90 minutes per device (adjust based on tier)
 
 **Differentiation:**
-- **EAL Tier:** Focus on 1-2 devices, provide more scaffolding in Step 6 Part A (sorting only)
+- **EAL Tier:** Focus on 1-2 devices, provide more scaffolding in Step 6
 - **Standard Tier:** 2 devices, moderate scaffolding
-- **High Tier:** 3 devices, complete all parts of Step 6 including Part C comparison
+- **High Tier:** 3 devices, minimal scaffolding in Step 6
 
 ---
 
@@ -56,7 +56,7 @@ Students should identify major events in chronological order. Check for basic co
 
 **Definition:** Implicit comparison between unlike things without using 'like' or 'as'
 
-**Model Example:** tired old town
+**Model Example:** Ladies bathed before noon, after their three-o'clock naps, and by nightfall were like soft teacakes with frostings of sweat and sweet talcum
 
 ---
 
@@ -65,34 +65,32 @@ Students should identify major events in chronological order. Check for basic co
 **Correct Answer:** Metaphor
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Town
+{{DEVICE_1_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses metaphor to describe Town
+The phrase 'tired old town' is a metaphor that compares the town to something exhausted and aged
 
-**Teaching Note:** Guide students to see how metaphor reveals Town as decay and weariness in Exposition
+**Teaching Note:** Emphasize that metaphors in exposition serve dual purposes: creating vivid imagery and efficiently establishing mood and setting
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** A
+**Correct Answer:** B
 
 **Rationale:** {{DEVICE_1_OPTION_RATIONALE}}
 
 **Common Student Errors:**
-- Selecting Option {{DEVICE_1_DISTRACTOR_1}}: Students may confuse function with effect
-- Selecting Option {{DEVICE_1_DISTRACTOR_2}}: Students may focus on literal content rather than device purpose
+- Selecting Option Option A is incorrect because there is no use of 'like' or 'as' to create a simile; this is an implicit comparison characteristic of metaphor: Students may confuse function with effect
+- Selecting Option Option C is incorrect because while 'tired' could suggest human qualities, the primary function here is metaphorical comparison rather than giving the town human actions or emotions: Students may focus on literal content rather than device purpose
 
 ---
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-C, 2-A, 3-B
+**Correct Answer:** A, B, C
 
-(e.g., "1-C, 2-A, 3-B" — varies per generated worksheet)
-
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** This order moves from basic identification of the metaphor's components, to understanding the comparison being made, to analyzing its function in exposition
 
 **Teaching Note:** If students struggle, guide them to look at the chronology of how the device unfolds in the text.
 
@@ -101,7 +99,7 @@ In Chapter 1, the author uses metaphor to describe Town
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Town as 'tired old town'"
+"{{DEVICE_1_DETAIL_SAMPLE}}"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text (not vague)
@@ -115,40 +113,20 @@ In Chapter 1, the author uses metaphor to describe Town
 
 ---
 
-### Step 6: EFFECTS AND INSIGHTS (STANDARD/HIGH TIER)
+### Step 6: CATEGORIZE THE EFFECT (STANDARD/HIGH TIER)
 
 **Part A: Sorting Effects**
 
-| What I Felt | What I Understood | Big Idea Connection |
-|-------------|-------------------|---------------------|
-| This reinforces the theme of decay and weariness in Exposition. | Effect 5 for Metaphor | This makes readers feel Town's decline and exhaustion. |
-| Effect 4 for Metaphor | This reveals Town as characterized by deterioration and fatigue. | Effect 6 for Metaphor |
+| Reader Response | Meaning Creation | Thematic Impact |
+|----------------|------------------|-----------------|
+| {{DEVICE_1_READER_EFFECT_1}} | {{DEVICE_1_MEANING_EFFECT_1}} | {{DEVICE_1_THEMATIC_EFFECT_1}} |
+| {{DEVICE_1_READER_EFFECT_2}} | {{DEVICE_1_MEANING_EFFECT_2}} | {{DEVICE_1_THEMATIC_EFFECT_2}} |
 
-**Signal Words to Highlight:**
-- "What I Felt" effects contain: [list feeling words present]
-- "What I Understood" effects contain: [list reveal/show words]
-- "Big Idea" effects contain: [list theme words]
+**Part B: Correct Category for This Device:** {{DEVICE_1_EFFECT_CATEGORY}}
 
-**Part B: Combination Examples**
+**Correct Effect:** {{DEVICE_1_EFFECT_CORRECT}}
 
-| Combination | Sample Student Response |
-|-------------|------------------------|
-| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
-| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
-| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
-
-**Part C: What Different Combinations Yield**
-
-| Direction | Type of Insight | Student Learns... |
-|-----------|-----------------|-------------------|
-| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
-| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
-| Understanding → Big Idea | Traditional analysis | Standard literary argument |
-| Big Idea → Understanding | Thematic lens | Reading through theme |
-| Feeling → Big Idea | Affective criticism | Emotion as evidence |
-| Big Idea → Feeling | Author's purpose | Intentional emotional design |
-
-**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
+**Teaching Note:** Help students distinguish between how they feel (Reader Response), what they understand (Meaning Creation), and what themes emerge (Thematic Impact).
 
 ---
 
@@ -167,12 +145,12 @@ In Chapter 1, the author uses metaphor to describe Town
 **Correct Answer:** Simile
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Calpurnia
+{{DEVICE_2_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses simile to describe Calpurnia
+This is a simile because it compares the woman's hand to a bed slat using 'as' to show how wide and hard her hand is
 
-**Teaching Note:** Guide students to see how simile reveals Calpurnia as stern discipline in Exposition
+**Teaching Note:** Have students visualize the comparisons by drawing or acting them out to make the imagery more concrete and memorable
 
 ---
 
@@ -183,23 +161,23 @@ In Chapter 1, the author uses simile to describe Calpurnia
 **Rationale:** {{DEVICE_2_OPTION_RATIONALE}}
 
 **Common Student Errors:**
-- Selecting Option {{DEVICE_2_DISTRACTOR_1}}: {{DEVICE_2_ERROR_1}}
-- Selecting Option {{DEVICE_2_DISTRACTOR_2}}: {{DEVICE_2_ERROR_2}}
+- Selecting Option Option A is incorrect because metaphor makes direct comparisons without using 'like' or 'as': {{DEVICE_2_ERROR_1}}
+- Selecting Option Option C is incorrect because personification involves giving human characteristics to non-human things, not making comparisons: {{DEVICE_2_ERROR_2}}
 
 ---
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-B, 2-A, 3-C
+**Correct Answer:** A, B, C
 
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** This order is correct because students must first recognize what is being compared, then identify the connecting word that signals the simile, and finally interpret the deeper meaning of the comparison
 
 ---
 
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Calpurnia as 'her hand was wide as a bed slat and t...'"
+"{{DEVICE_2_DETAIL_SAMPLE}}"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text
@@ -208,40 +186,18 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 ---
 
-### Step 6: EFFECTS AND INSIGHTS (STANDARD/HIGH TIER)
+### Step 6: CATEGORIZE THE EFFECT (STANDARD/HIGH TIER)
 
 **Part A: Sorting Effects**
 
-| What I Felt | What I Understood | Big Idea Connection |
-|-------------|-------------------|---------------------|
-| This makes readers feel Calpurnia's strict authority. | Effect 6 for Simile | Effect 4 for Simile |
-| This reveals Calpurnia as characterized by harsh control. | Effect 5 for Simile | This reinforces the theme of stern discipline in Exposition. |
+| Reader Response | Meaning Creation | Thematic Impact |
+|----------------|------------------|-----------------|
+| {{DEVICE_2_READER_EFFECT_1}} | {{DEVICE_2_MEANING_EFFECT_1}} | {{DEVICE_2_THEMATIC_EFFECT_1}} |
+| {{DEVICE_2_READER_EFFECT_2}} | {{DEVICE_2_MEANING_EFFECT_2}} | {{DEVICE_2_THEMATIC_EFFECT_2}} |
 
-**Signal Words to Highlight:**
-- "What I Felt" effects contain: [list feeling words present]
-- "What I Understood" effects contain: [list reveal/show words]
-- "Big Idea" effects contain: [list theme words]
+**Part B: Correct Category:** {{DEVICE_2_EFFECT_CATEGORY}}
 
-**Part B: Combination Examples**
-
-| Combination | Sample Student Response |
-|-------------|------------------------|
-| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
-| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
-| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
-
-**Part C: What Different Combinations Yield**
-
-| Direction | Type of Insight | Student Learns... |
-|-----------|-----------------|-------------------|
-| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
-| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
-| Understanding → Big Idea | Traditional analysis | Standard literary argument |
-| Big Idea → Understanding | Thematic lens | Reading through theme |
-| Feeling → Big Idea | Affective criticism | Emotion as evidence |
-| Big Idea → Feeling | Author's purpose | Intentional emotional design |
-
-**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
+**Correct Effect:** {{DEVICE_2_EFFECT_CORRECT}}
 
 ---
 
@@ -260,18 +216,18 @@ In Chapter 1, the author uses simile to describe Calpurnia
 **Correct Answer:** Personification
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Courthouse
+{{DEVICE_3_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses personification to describe Courthouse
+The courthouse is given the human action of sagging, as if it's tired or weighed down
 
-**Teaching Note:** Guide students to see how personification reveals Courthouse as weariness and decline in Exposition
+**Teaching Note:** Emphasize that personification involves giving human traits to non-human things, not just describing things that look human-like
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** D
+**Correct Answer:** B
 
 **Rationale:** {{DEVICE_3_OPTION_RATIONALE}}
 
@@ -279,53 +235,31 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-A, 2-C, 3-B
+**Correct Answer:** A, B, C
 
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** This order moves from basic identification to deeper analysis, first recognizing what is being personified, then how it's being personified, and finally understanding the author's purpose
 
 ---
 
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Courthouse as 'the courthouse sagged in the square'"
+"{{DEVICE_3_DETAIL_SAMPLE}}"
 
 ---
 
-### Step 6: EFFECTS AND INSIGHTS
+### Step 6: CATEGORIZE THE EFFECT
 
 **Part A: Sorting Effects**
 
-| What I Felt | What I Understood | Big Idea Connection |
-|-------------|-------------------|---------------------|
-| This makes readers feel Courthouse's exhaustion and decay. | Effect 6 for Personification | This reveals Courthouse as characterized by fatigue and deterioration. |
-| Effect 4 for Personification | Effect 5 for Personification | This reinforces the theme of weariness and decline in Exposition. |
+| Reader Response | Meaning Creation | Thematic Impact |
+|----------------|------------------|-----------------|
+| {{DEVICE_3_READER_EFFECT_1}} | {{DEVICE_3_MEANING_EFFECT_1}} | {{DEVICE_3_THEMATIC_EFFECT_1}} |
+| {{DEVICE_3_READER_EFFECT_2}} | {{DEVICE_3_MEANING_EFFECT_2}} | {{DEVICE_3_THEMATIC_EFFECT_2}} |
 
-**Signal Words to Highlight:**
-- "What I Felt" effects contain: [list feeling words present]
-- "What I Understood" effects contain: [list reveal/show words]
-- "Big Idea" effects contain: [list theme words]
+**Part B: Correct Category:** {{DEVICE_3_EFFECT_CATEGORY}}
 
-**Part B: Combination Examples**
-
-| Combination | Sample Student Response |
-|-------------|------------------------|
-| Feeling → Understanding | "The unease I felt helped me realize that Jonas's society controls everything, even language." |
-| Understanding → Big Idea | "This shows that words have power, which connects to the theme of control through language." |
-| Big Idea → Feeling | "The theme of lost freedom is why readers feel uncomfortable about the 'precision of language' rule." |
-
-**Part C: What Different Combinations Yield**
-
-| Direction | Type of Insight | Student Learns... |
-|-----------|-----------------|-------------------|
-| Feeling → Understanding | Personal discovery | How emotions unlock meaning |
-| Understanding → Feeling | Craft appreciation | How authors manipulate readers |
-| Understanding → Big Idea | Traditional analysis | Standard literary argument |
-| Big Idea → Understanding | Thematic lens | Reading through theme |
-| Feeling → Big Idea | Affective criticism | Emotion as evidence |
-| Big Idea → Feeling | Author's purpose | Intentional emotional design |
-
-**Teaching Note:** Accept any valid combination. The goal is showing students that effect analysis isn't one "right answer" but multiple valid angles. Swapping order changes the TYPE of insight, not its correctness.
+**Correct Effect:** {{DEVICE_3_EFFECT_CORRECT}}
 
 ---
 
@@ -392,7 +326,7 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 **Device 1 Model Response:**
 
-See TVODE Construction Worksheet for complete model paragraph
+The author uses the metaphor 'tired old town' to immediately establish the setting's weary, stagnant atmosphere, comparing the town to something worn down by age and fatigue, which creates a vivid impression of a place where little changes and life moves slowly, effectively setting up the story's exploration of tradition and resistance to change in a small Southern community.
 
 **Evaluation Criteria:**
 - ✓ Begins with T+V+O sentence
@@ -410,7 +344,7 @@ See TVODE Construction Worksheet for complete model paragraph
 
 **Device 2 Model Response:**
 
-See TVODE Construction Worksheet for complete model paragraph
+The author uses simile when describing "her hand was wide as a bed slat and twice as hard" to compare the woman's hand to wooden bed slats, emphasizing both the impressive size and the callused, tough nature of hands shaped by years of physical labor, which establishes her as a strong, hardworking character in the exposition.
 
 **Evaluation Criteria:** Same as Device 1
 
@@ -418,7 +352,7 @@ See TVODE Construction Worksheet for complete model paragraph
 
 **Device 3 Model Response (High Tier):**
 
-See TVODE Construction Worksheet for complete model paragraph
+The personification in 'the courthouse sagged in the square' gives the building human characteristics of weariness and exhaustion, creating a vivid image of institutional decline that establishes the town's atmosphere of neglect and sets the stage for the story's exploration of social decay.
 
 **Evaluation Criteria:** Same as Device 1
 
@@ -474,7 +408,7 @@ See TVODE Construction Worksheet for complete model paragraph
 ### For Struggling Students (EAL)
 - Pre-teach device definitions before worksheet
 - Provide sentence frames for all activities
-- Allow pair work for Step 6 Part B (combination building)
+- Allow pair work for Step 6 (Effect categorization)
 - Focus on 1 device only, master it completely
 
 ### For Advanced Students (High Tier)
@@ -486,7 +420,7 @@ See TVODE Construction Worksheet for complete model paragraph
 ### For Students with Identified Needs
 - Provide pre-filled model examples
 - Allow oral responses recorded by teacher/aide
-- Simplify Step 6 to Part A only (sorting), skip combination building
+- Simplify Step 6 to 2 categories instead of 3
 - Use highlighted text with devices pre-identified
 
 ---
@@ -502,4 +436,4 @@ After teaching this unit:
 
 ---
 
-**END OF TEACHER KEY v2.2**
+**END OF TEACHER KEY v2.1**

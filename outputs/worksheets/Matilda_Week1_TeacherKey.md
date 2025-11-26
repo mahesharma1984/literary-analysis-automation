@@ -6,8 +6,8 @@
 
 ## METADATA SECTION
 
-**Text Title:** To Kill a Mockingbird  
-**Author:** Harper Lee  
+**Text Title:** Matilda  
+**Author:** Roald Dahl  
 **Edition:** 2003 edition  
 **Week Number:** 1  
 **Week Focus:** Exposition  
@@ -50,33 +50,33 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-## DEVICE 1: Metaphor
+## DEVICE 1: Third-Person Omniscient
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Implicit comparison between unlike things without using 'like' or 'as'
+**Definition:** A narrative voice that knows the thoughts, feelings, and motivations of all characters and can comment on the story's events
 
-**Model Example:** tired old town
+**Model Example:** It's a funny thing about mothers and fathers. Even when their own child is the most disgusting little blister
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Metaphor
+**Correct Answer:** Third-Person Omniscient
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Town
+Chapter 1, opening paragraphs describing It
 
 **Sample Student Response:**
-In Chapter 1, the author uses metaphor to describe Town
+In Chapter 1, the author uses third-person omniscient to describe It
 
-**Teaching Note:** Guide students to see how metaphor reveals Town as decay and weariness in Exposition
+**Teaching Note:** Guide students to see how third-person omniscient reveals It as parental delusion and society's tolerance of it in Exposition
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** A
+**Correct Answer:** C
 
 **Rationale:** {{DEVICE_1_OPTION_RATIONALE}}
 
@@ -88,7 +88,7 @@ In Chapter 1, the author uses metaphor to describe Town
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-C, 2-A, 3-B
+**Correct Answer:** 1-B, 2-C, 3-A
 
 (e.g., "1-C, 2-A, 3-B" — varies per generated worksheet)
 
@@ -101,7 +101,7 @@ In Chapter 1, the author uses metaphor to describe Town
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Town as 'tired old town'"
+"shown through the description of It as 'It's a funny thing about mothers and ...'"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text (not vague)
@@ -121,8 +121,8 @@ In Chapter 1, the author uses metaphor to describe Town
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This reinforces the theme of decay and weariness in Exposition. | Effect 5 for Metaphor | This makes readers feel Town's decline and exhaustion. |
-| Effect 4 for Metaphor | This reveals Town as characterized by deterioration and fatigue. | Effect 6 for Metaphor |
+| Creates reader alignment with narrator's critical perspective on deluded parents | Effect 4 for Third-Person Omniscient | Effect 6 for Third-Person Omniscient |
+| Reveals the universal nature of parental self-deception through authoritative commentary | Establishes theme that adults systematically fail to see children clearly | Effect 5 for Third-Person Omniscient |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -152,33 +152,33 @@ In Chapter 1, the author uses metaphor to describe Town
 
 ---
 
-## DEVICE 2: Simile
+## DEVICE 2: Hyperbole
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Explicit comparison between unlike things using 'like' or 'as'
+**Definition:** Deliberate exaggeration used for emphasis or comedic effect
 
-**Model Example:** her hand was wide as a bed slat and twice as hard
+**Model Example:** the most disgusting little blister you could ever imagine
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Simile
+**Correct Answer:** Hyperbole
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Calpurnia
+Chapter 1, opening paragraphs describing the subject
 
 **Sample Student Response:**
-In Chapter 1, the author uses simile to describe Calpurnia
+In Chapter 1, the author uses hyperbole to describe the subject
 
-**Teaching Note:** Guide students to see how simile reveals Calpurnia as stern discipline in Exposition
+**Teaching Note:** Guide students to see how hyperbole reveals the subject as the extremity of parental delusion in Exposition
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** B
+**Correct Answer:** D
 
 **Rationale:** {{DEVICE_2_OPTION_RATIONALE}}
 
@@ -199,7 +199,7 @@ In Chapter 1, the author uses simile to describe Calpurnia
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Calpurnia as 'her hand was wide as a bed slat and t...'"
+"shown through the description of the subject as 'the most disgusting little blister yo...'"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text
@@ -214,8 +214,8 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This makes readers feel Calpurnia's strict authority. | Effect 6 for Simile | Effect 4 for Simile |
-| This reveals Calpurnia as characterized by harsh control. | Effect 5 for Simile | This reinforces the theme of stern discipline in Exposition. |
+| Effect 5 for Hyperbole | Reveals how completely parents can lose objective judgment about their children | Creates humor that makes readers laugh at parental absurdity |
+| Effect 4 for Hyperbole | Effect 6 for Hyperbole | Reinforces theme that adult perspectives on children are fundamentally flawed |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -245,33 +245,33 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 ---
 
-## DEVICE 3 (HIGH TIER ONLY): Personification
+## DEVICE 3 (HIGH TIER ONLY): Simile
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Attribution of human characteristics to non-human entities
+**Definition:** A comparison between two unlike things using 'like' or 'as'
 
-**Model Example:** the courthouse sagged in the square
+**Model Example:** Fiona has the same glacial beauty as an iceberg, but unlike the iceberg she has absolutely nothing below
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Personification
+**Correct Answer:** Simile
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Courthouse
+Chapter 1, opening paragraphs describing Fiona
 
 **Sample Student Response:**
-In Chapter 1, the author uses personification to describe Courthouse
+In Chapter 1, the author uses simile to describe Fiona
 
-**Teaching Note:** Guide students to see how personification reveals Courthouse as weariness and decline in Exposition
+**Teaching Note:** Guide students to see how simile reveals Fiona as the narrator's hypothetical revenge on deluded parents in Exposition
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** D
+**Correct Answer:** B
 
 **Rationale:** {{DEVICE_3_OPTION_RATIONALE}}
 
@@ -288,7 +288,7 @@ In Chapter 1, the author uses personification to describe Courthouse
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Courthouse as 'the courthouse sagged in the square'"
+"shown through the description of Fiona as 'Fiona has the same glacial beauty as ...'"
 
 ---
 
@@ -298,8 +298,8 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This makes readers feel Courthouse's exhaustion and decay. | Effect 6 for Personification | This reveals Courthouse as characterized by fatigue and deterioration. |
-| Effect 4 for Personification | Effect 5 for Personification | This reinforces the theme of weariness and decline in Exposition. |
+| Shows how academic language can be weaponized to deflate parental pride | Creates vivid mental images that make the satirical criticism memorable and amusing | Establishes the idea that truth-telling can be a form of rebellion against social delusion |
+| Effect 4 for Simile | Effect 6 for Simile | Effect 5 for Simile |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -333,16 +333,16 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 ### ACTIVITY 1: TOPIC STATEMENT
 
-**Device 1: Metaphor**
-- **Correct Answer:** The author's use of Metaphor
+**Device 1: Third-Person Omniscient**
+- **Correct Answer:** The author's use of Third-Person Omniscient
 - **Where to find:** {{DEVICE_1_LOCATION_PROMPT}}
 
-**Device 2: Simile**
-- **Correct Answer:** The author's use of Simile
+**Device 2: Hyperbole**
+- **Correct Answer:** The author's use of Hyperbole
 - **Where to find:** {{DEVICE_2_LOCATION_PROMPT}}
 
-**Device 3 (High Tier): Personification**
-- **Correct Answer:** The author's use of Personification
+**Device 3 (High Tier): Simile**
+- **Correct Answer:** The author's use of Simile
 - **Where to find:** {{DEVICE_3_LOCATION_PROMPT}}
 
 **Teaching Note:** Ensure all students complete topic frames before moving to Activity 2.
@@ -352,9 +352,9 @@ In Chapter 1, the author uses personification to describe Courthouse
 ### ACTIVITY 2: MATCH OBJECTS
 
 **Correct Matches:**
-- **Device 1:** Metaphor → **Object A:** {{DEVICE_1_OBJECT}}
-- **Device 2:** Simile → **Object B:** {{DEVICE_2_OBJECT}}
-- **Device 3 (High Tier):** Personification → **Object C:** {{DEVICE_3_OBJECT}}
+- **Device 1:** Third-Person Omniscient → **Object A:** {{DEVICE_1_OBJECT}}
+- **Device 2:** Hyperbole → **Object B:** {{DEVICE_2_OBJECT}}
+- **Device 3 (High Tier):** Simile → **Object C:** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Objects describe WHAT the device does, not WHY (that's the effect).
 
@@ -364,11 +364,11 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 **Suggested Verbs (accept reasonable alternatives):**
 
-**Device 1:** The author's use of Metaphor **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
+**Device 1:** The author's use of Third-Person Omniscient **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
 
-**Device 2:** The author's use of Simile **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
+**Device 2:** The author's use of Hyperbole **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
 
-**Device 3 (High Tier):** The author's use of Personification **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
+**Device 3 (High Tier):** The author's use of Simile **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Accept multiple verbs as long as they accurately connect Topic to Object. Most common acceptable verbs: uses, demonstrates, reveals, creates, employs.
 

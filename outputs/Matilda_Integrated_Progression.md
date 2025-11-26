@@ -1,9 +1,9 @@
-# TO KILL A MOCKINGBIRD INTEGRATED MACRO-MICRO PROGRESSION
+# MATILDA INTEGRATED MACRO-MICRO PROGRESSION
 ## 5-Week Literary Analysis Curriculum
 
-**Text:** To Kill a Mockingbird by Harper Lee  
+**Text:** Matilda by Roald Dahl  
 **Version:** 5.1 (Chapter-Aware)  
-**Date:** November 25, 2025  
+**Date:** November 26, 2025  
 **Structure:** Macro alignment elements taught through executing micro devices
 
 ---
@@ -20,11 +20,11 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 
 | Week | Macro Focus | Teaching Approach | Devices | Scaffolding |
 |------|-------------|-------------------|---------|-------------|
-| 1 | Exposition | How do devices establish characters and setting in exposition? | Metaphor, Simile, Personification, +1 more | High - Teacher models everything |
-| 2 | Rising Action | How do devices build tension in rising action? | Dialect, Onomatopoeia | Medium-High - Co-construction with students |
-| 3 | Structure/Climax | How do devices create the story's climactic turning point? | Foreshadowing, Juxtaposition, Stream of Consciousness, +1 more | Medium - Students lead with support |
-| 4 | Voice/Falling Action | How do devices manage perspective in falling action? | Situational Irony | Medium-Low - Independent work with feedback |
-| 5 | Resolution | How do devices bring rhetorical closure in resolution? | Paradox | Low - Independent synthesis and analysis |
+| 1 | Exposition | How do devices establish characters and setting in exposition? | Hyperbole, Simile, Imagery | High - Teacher models everything |
+| 2 | Rising Action | How do devices build tension in rising action? | Dialogue, Direct Characterization, Repetition, +1 more | Medium-High - Co-construction with students |
+| 3 | Structure/Climax | How do devices create the story's climactic turning point? | Symbolism, Motif, Foreshadowing, +1 more | Medium - Students lead with support |
+| 4 | Voice/Falling Action | How do devices manage perspective in falling action? | Dramatic Irony, Suspense, Verbal Irony, +1 more | Medium-Low - Independent work with feedback |
+| 5 | Resolution | How do devices bring rhetorical closure in resolution? | Third-Person Omniscient, Linear Chronology, Stream of Consciousness, +1 more | Low - Independent synthesis and analysis |
 
 ---
 
@@ -41,10 +41,9 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 4. Explain what each device accomplishes
 5. Begin simple TVODE construction
 
-**Devices (4):**
-- **Metaphor**: 
+**Devices (3):**
+- **Hyperbole**: 
 - **Simile**: 
-- **Personification**: 
 - **Imagery**: 
 
 **Macro Variables:**
@@ -67,9 +66,11 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 4. Analyze device-macro connection in text
 5. Practice macro-micro TVODE construction
 
-**Devices (2):**
-- **Dialect**: 
-- **Onomatopoeia**: 
+**Devices (4):**
+- **Dialogue**: 
+- **Direct Characterization**: 
+- **Repetition**: 
+- **Scene**: 
 
 ---
 
@@ -87,16 +88,16 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 5. Build complex structural TVODE
 
 **Devices (4):**
+- **Symbolism**: 
+- **Motif**: 
 - **Foreshadowing**: 
 - **Juxtaposition**: 
-- **Stream of Consciousness**: 
-- **Repetition**: 
 
 **Macro Variables:**
-- plot_architecture: ARIST
+- plot_architecture: MONO
 - chronology: LIN
-- causation: TIGHT
-- pacing_dominance: SCENE
+- causation: STRONG
+- pacing_dominance: 
 
 ---
 
@@ -113,12 +114,15 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 4. Compare macro-micro relationships across weeks
 5. Create voice-focused analysis TVODE
 
-**Devices (1):**
-- **Situational Irony**: 
+**Devices (4):**
+- **Dramatic Irony**: 
+- **Suspense**: 
+- **Verbal Irony**: 
+- **Summary**: 
 
 **Macro Variables:**
-- pov: FP
-- focalization: INT
+- pov: TPO
+- focalization: ZERO
 - reliability: REL
 - temporal_distance: RETRO
 
@@ -137,8 +141,11 @@ This curriculum teaches **macro alignment elements** (Exposition, Structure, Voi
 4. Demonstrate understanding of complete narrative arc
 5. Create independent comprehensive analysis TVODE
 
-**Devices (1):**
-- **Paradox**: 
+**Devices (4):**
+- **Third-Person Omniscient**: 
+- **Linear Chronology**: 
+- **Stream of Consciousness**: 
+- **Internal Monologue**: 
 
 ---
 

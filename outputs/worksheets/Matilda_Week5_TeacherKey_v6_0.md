@@ -6,11 +6,11 @@
 
 ## METADATA SECTION
 
-**Text Title:** To Kill a Mockingbird  
-**Author:** Harper Lee  
+**Text Title:** Matilda  
+**Author:** Roald Dahl  
 **Edition:** 2003 edition  
-**Week Number:** 1  
-**Week Focus:** Exposition  
+**Week Number:** 5  
+**Week Focus:** Resolution  
 **Year Level:** 9-10  
 **Proficiency Tier:** Standard  
 
@@ -41,7 +41,7 @@
 ### ENTRY ACTIVITY: COMPREHENSION CHECK
 
 **Activity 1: Key Words**
-Expected responses will vary but should include terms related to Exposition.
+Expected responses will vary but should include terms related to Resolution.
 
 **Activity 2: Narrative Summary**
 Students should identify major events in chronological order. Check for basic comprehension before proceeding to device analysis.
@@ -50,33 +50,33 @@ Students should identify major events in chronological order. Check for basic co
 
 ---
 
-## DEVICE 1: Metaphor
+## DEVICE 1: Third-Person Omniscient
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Implicit comparison between unlike things without using 'like' or 'as'
+**Definition:** Narrator who knows everything about all characters and can access any character's thoughts
 
-**Model Example:** tired old town
+**Model Example:** It's a funny thing about mothers and fathers
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Metaphor
+**Correct Answer:** Third-Person Omniscient
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Town
+{{DEVICE_1_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses metaphor to describe Town
+{{DEVICE_1_SAMPLE_RESPONSE}}
 
-**Teaching Note:** Guide students to see how metaphor reveals Town as decay and weariness in Exposition
+**Teaching Note:** {{DEVICE_1_TEACHING_NOTE}}
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** A
+**Correct Answer:** B
 
 **Rationale:** {{DEVICE_1_OPTION_RATIONALE}}
 
@@ -88,11 +88,11 @@ In Chapter 1, the author uses metaphor to describe Town
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-C, 2-A, 3-B
+**Correct Answer:** 1-B, 2-C, 3-A
 
 (e.g., "1-C, 2-A, 3-B" — varies per generated worksheet)
 
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** {{DEVICE_1_SEQUENCE_EXPLANATION}}
 
 **Teaching Note:** If students struggle, guide them to look at the chronology of how the device unfolds in the text.
 
@@ -101,7 +101,7 @@ In Chapter 1, the author uses metaphor to describe Town
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Town as 'tired old town'"
+"shown through direct commentary: 'It's a funny thing about mothers and fathers. Even when their own child is the most disgusting little blister you could ever imagine, they still think that he or she is wonderful.'"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text (not vague)
@@ -121,8 +121,8 @@ In Chapter 1, the author uses metaphor to describe Town
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This reinforces the theme of decay and weariness in Exposition. | Effect 5 for Metaphor | This makes readers feel Town's decline and exhaustion. |
-| Effect 4 for Metaphor | This reveals Town as characterized by deterioration and fatigue. | Effect 6 for Metaphor |
+| {{DEVICE_1_FELT_EFFECT_1}} | {{DEVICE_1_UNDERSTOOD_EFFECT_1}} | {{DEVICE_1_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_1_FELT_EFFECT_2}} | {{DEVICE_1_UNDERSTOOD_EFFECT_2}} | {{DEVICE_1_BIGIDEA_EFFECT_2}} |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -152,27 +152,27 @@ In Chapter 1, the author uses metaphor to describe Town
 
 ---
 
-## DEVICE 2: Simile
+## DEVICE 2: Internal Monologue
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Explicit comparison between unlike things using 'like' or 'as'
+**Definition:** Direct presentation of a character's inner thoughts and mental processes
 
-**Model Example:** her hand was wide as a bed slat and twice as hard
+**Model Example:** Miss Honey wondered what on earth was going on in the mind of this child
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Simile
+**Correct Answer:** Internal Monologue
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Calpurnia
+{{DEVICE_2_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses simile to describe Calpurnia
+{{DEVICE_2_SAMPLE_RESPONSE}}
 
-**Teaching Note:** Guide students to see how simile reveals Calpurnia as stern discipline in Exposition
+**Teaching Note:** {{DEVICE_2_TEACHING_NOTE}}
 
 ---
 
@@ -190,16 +190,16 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-B, 2-A, 3-C
+**Correct Answer:** 1-B, 2-C, 3-A
 
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** {{DEVICE_2_SEQUENCE_EXPLANATION}}
 
 ---
 
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Calpurnia as 'her hand was wide as a bed slat and t...'"
+"shown through Miss Honey's private concern: 'Miss Honey wondered what on earth was going on in the mind of this child'"
 
 **Evaluation Criteria:**
 - ✓ Specific reference to text
@@ -214,8 +214,8 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This makes readers feel Calpurnia's strict authority. | Effect 6 for Simile | Effect 4 for Simile |
-| This reveals Calpurnia as characterized by harsh control. | Effect 5 for Simile | This reinforces the theme of stern discipline in Exposition. |
+| {{DEVICE_2_FELT_EFFECT_1}} | {{DEVICE_2_UNDERSTOOD_EFFECT_1}} | {{DEVICE_2_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_2_FELT_EFFECT_2}} | {{DEVICE_2_UNDERSTOOD_EFFECT_2}} | {{DEVICE_2_BIGIDEA_EFFECT_2}} |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -245,33 +245,33 @@ In Chapter 1, the author uses simile to describe Calpurnia
 
 ---
 
-## DEVICE 3 (HIGH TIER ONLY): Personification
+## DEVICE 3 (HIGH TIER ONLY): First-Person Narration
 
 ### Step 1: DEFINITION (Recognition)
 
-**Definition:** Attribution of human characteristics to non-human entities
+**Definition:** Story told from the perspective of a character using 'I' pronouns
 
-**Model Example:** the courthouse sagged in the square
+**Model Example:** 'We're off,' Mr Wormwood said
 
 ---
 
 ### Step 2: FIND THE TOPIC (Matching)
 
-**Correct Answer:** Personification
+**Correct Answer:** First-Person Narration
 
 **Text Locations:**
-Chapter 1, opening paragraphs describing Courthouse
+{{DEVICE_3_EXAMPLE_LOCATIONS_FULL}}
 
 **Sample Student Response:**
-In Chapter 1, the author uses personification to describe Courthouse
+{{DEVICE_3_SAMPLE_RESPONSE}}
 
-**Teaching Note:** Guide students to see how personification reveals Courthouse as weariness and decline in Exposition
+**Teaching Note:** {{DEVICE_3_TEACHING_NOTE}}
 
 ---
 
 ### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**Correct Answer:** D
+**Correct Answer:** B
 
 **Rationale:** {{DEVICE_3_OPTION_RATIONALE}}
 
@@ -279,16 +279,16 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 ### Step 4: ANALYZE IT (Sequencing)
 
-**Correct Answer:** 1-A, 2-C, 3-B
+**Correct Answer:** 1-B, 2-C, 3-A
 
-**Explanation:** Students see how the effect builds up during reading: first encountering the text, then the device transfers meaning, then the effect is established
+**Explanation:** {{DEVICE_3_SEQUENCE_EXPLANATION}}
 
 ---
 
 ### Step 5: WRITE THE DETAIL (Textual Evidence)
 
 **Sample Student Response:**
-"shown through the description of Courthouse as 'the courthouse sagged in the square'"
+"shown through his blunt announcement: 'We're off,' Mr Wormwood said"
 
 ---
 
@@ -298,8 +298,8 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
-| This makes readers feel Courthouse's exhaustion and decay. | Effect 6 for Personification | This reveals Courthouse as characterized by fatigue and deterioration. |
-| Effect 4 for Personification | Effect 5 for Personification | This reinforces the theme of weariness and decline in Exposition. |
+| {{DEVICE_3_FELT_EFFECT_1}} | {{DEVICE_3_UNDERSTOOD_EFFECT_1}} | {{DEVICE_3_BIGIDEA_EFFECT_1}} |
+| {{DEVICE_3_FELT_EFFECT_2}} | {{DEVICE_3_UNDERSTOOD_EFFECT_2}} | {{DEVICE_3_BIGIDEA_EFFECT_2}} |
 
 **Signal Words to Highlight:**
 - "What I Felt" effects contain: [list feeling words present]
@@ -333,16 +333,16 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 ### ACTIVITY 1: TOPIC STATEMENT
 
-**Device 1: Metaphor**
-- **Correct Answer:** The author's use of Metaphor
+**Device 1: Third-Person Omniscient**
+- **Correct Answer:** The author's use of Third-Person Omniscient
 - **Where to find:** {{DEVICE_1_LOCATION_PROMPT}}
 
-**Device 2: Simile**
-- **Correct Answer:** The author's use of Simile
+**Device 2: Internal Monologue**
+- **Correct Answer:** The author's use of Internal Monologue
 - **Where to find:** {{DEVICE_2_LOCATION_PROMPT}}
 
-**Device 3 (High Tier): Personification**
-- **Correct Answer:** The author's use of Personification
+**Device 3 (High Tier): First-Person Narration**
+- **Correct Answer:** The author's use of First-Person Narration
 - **Where to find:** {{DEVICE_3_LOCATION_PROMPT}}
 
 **Teaching Note:** Ensure all students complete topic frames before moving to Activity 2.
@@ -352,9 +352,9 @@ In Chapter 1, the author uses personification to describe Courthouse
 ### ACTIVITY 2: MATCH OBJECTS
 
 **Correct Matches:**
-- **Device 1:** Metaphor → **Object A:** {{DEVICE_1_OBJECT}}
-- **Device 2:** Simile → **Object B:** {{DEVICE_2_OBJECT}}
-- **Device 3 (High Tier):** Personification → **Object C:** {{DEVICE_3_OBJECT}}
+- **Device 1:** Third-Person Omniscient → **Object A:** {{DEVICE_1_OBJECT}}
+- **Device 2:** Internal Monologue → **Object B:** {{DEVICE_2_OBJECT}}
+- **Device 3 (High Tier):** First-Person Narration → **Object C:** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Objects describe WHAT the device does, not WHY (that's the effect).
 
@@ -364,11 +364,11 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 **Suggested Verbs (accept reasonable alternatives):**
 
-**Device 1:** The author's use of Metaphor **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
+**Device 1:** The author's use of Third-Person Omniscient **{{DEVICE_1_VERB}}** {{DEVICE_1_OBJECT}}
 
-**Device 2:** The author's use of Simile **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
+**Device 2:** The author's use of Internal Monologue **{{DEVICE_2_VERB}}** {{DEVICE_2_OBJECT}}
 
-**Device 3 (High Tier):** The author's use of Personification **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
+**Device 3 (High Tier):** The author's use of First-Person Narration **{{DEVICE_3_VERB}}** {{DEVICE_3_OBJECT}}
 
 **Teaching Note:** Accept multiple verbs as long as they accurately connect Topic to Object. Most common acceptable verbs: uses, demonstrates, reveals, creates, employs.
 
@@ -392,7 +392,7 @@ In Chapter 1, the author uses personification to describe Courthouse
 
 **Device 1 Model Response:**
 
-See TVODE Construction Worksheet for complete model paragraph
+{{DEVICE_1_MODEL_PARAGRAPH}}
 
 **Evaluation Criteria:**
 - ✓ Begins with T+V+O sentence
@@ -410,7 +410,7 @@ See TVODE Construction Worksheet for complete model paragraph
 
 **Device 2 Model Response:**
 
-See TVODE Construction Worksheet for complete model paragraph
+{{DEVICE_2_MODEL_PARAGRAPH}}
 
 **Evaluation Criteria:** Same as Device 1
 
@@ -418,7 +418,7 @@ See TVODE Construction Worksheet for complete model paragraph
 
 **Device 3 Model Response (High Tier):**
 
-See TVODE Construction Worksheet for complete model paragraph
+{{DEVICE_3_MODEL_PARAGRAPH}}
 
 **Evaluation Criteria:** Same as Device 1
 

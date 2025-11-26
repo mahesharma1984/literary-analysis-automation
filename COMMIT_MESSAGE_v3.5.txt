@@ -1,0 +1,33 @@
+feat: Integrate Book Structure Alignment Protocol v1.1 → Kernel v3.5
+
+- Add Stage 0: Book Structure Alignment Protocol (v1.1)
+  - Structure detection (NUM/NAME/NEST/UNMARK/HYBRID)
+  - Conventional distribution formula with climax refinement
+  - Validation step with content verification
+  - Outputs structure_detection and chapter_alignment
+
+- Update create_kernel.py:
+  - Add Stage 0 before Stage 1
+  - Use validated chapter alignment in Stage 1
+  - Normalize chapter_range format (remove "Chapters " prefix)
+  - Update kernel version to 3.5
+  - Add structure_alignment_protocol metadata field
+  - Reduce Stage 1 token usage (targeted chapter samples)
+
+- Update TKAM kernel to v3.5:
+  - Add structure_detection section
+  - Add chapter_alignment section with percentages
+  - Add chapter_range to extracts (numeric format)
+  - Preserve all existing data
+
+- Add protocol documentation:
+  - Book_Structure_Alignment_Protocol_v1.md (v1.1)
+  - Integration summary and test results
+
+- Update documentation:
+  - README.md: Added Stage 0 workflow, updated examples
+  - QUICKSTART.md: Updated for v3.5
+  - CHANGELOG.md: Added v3.5 entry
+  - DEVELOPER_GUIDE.md: Updated kernel version references
+
+Breaking changes: None (backward compatible with narrative_position_mapping)

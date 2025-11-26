@@ -6,8 +6,8 @@
 
 ## METADATA SECTION
 
-**Text Title:** To Kill a Mockingbird  
-**Author:** Harper Lee  
+**Text Title:** Matilda  
+**Author:** Roald Dahl  
 **Edition:** 2003 edition  
 **Extract Focus (NRP Device):** Exposition  
 **Year Level:** 9-10  
@@ -18,18 +18,60 @@
 - **Activities per Device:** [4 for EAL | 5 for Standard | 6 for High]
 
 ---
+## PART A: THESIS ALIGNMENT
+
+**Purpose:** Understand how this week's focus connects to the text's overall meaning
+
+### The Text's Overall Thesis
+
+Text Selection: *Matilda* (1988) by Roald Dahl represents a sophisticated children's novel that operates on multiple interpretive levels, making it an ideal candidate for comprehensive literary analysis.
+
+**Key Elements:**
+
+- **Narrative Voice:** The progression from intellectual isolation to community integration provides the framework for the power-reversal theme
+- **Structure:** Her development isn't merely personal growth but represents a fundamental challenge to societal assumptions about childhood capability
+- **Rhetorical Strategy:** Alignment Pattern
+
+Text Selection: *Matilda* (1988) by Roald Dahl represents a sophisticated children's novel that operates on multiple interpretive levels, making it an ideal candidate for compreh...
+
+### This Week's Role in the Thesis
+
+**Chapter Function:** Exposition
+
+**Dramatic Purpose:** These opening chapters introduce the main characters, setting, and initial circumstances. This establishes the foundation for the central conflict and themes that will drive the entire narrative.
+
+**Thematic Connection:**
+
+- Devices in this section work together to establish the exposition function
+- The exposition section connects to the text's central themes through device usage
+- These devices build meaning that supports the overall narrative purpose
+
+**What to Notice:**
+
+1. Literary devices like Third-Person Omniscient, Hyperbole work together to establish characters, setting, and initial circumstances
+2. Devices maintain narrative coherence while fulfilling the exposition function
+3. Devices build meaning that connects to the text's overall exploration of its central themes
+
+
+---
 
 ## INSTRUCTIONS FOR STUDENTS
 
-This worksheet guides you through analyzing literary devices in *To Kill a Mockingbird*.
+This worksheet guides you through analyzing literary devices in *Matilda*.
 
-**Edition Note:** Page numbers refer to the 2003 edition edition. If you're using a different edition, chapter numbers will match but page numbers may vary slightly.
+**Edition Note:** Page numbers refer to the Penguin Classics 2003 edition. If you're using a different edition, chapter numbers will match but page numbers may vary slightly.
+
+**Reading Assignment:** Chapters 1-3  
+**Activity Focus:** Chapter 1
 
 **How to use this worksheet:**
-1. Read Chapters 1-3 (focus on Chapter 1 for activities)
-2. Find examples of each device
-3. Complete the activities in order
-4. Use the examples to understand how devices work
+
+1. Read the Thesis Alignment section to understand the big picture
+2. Read Chapters 1-3 (focus on Chapter 1 for activities)
+3. Find examples of each device
+4. Complete the activities in order
+5. Use the examples to understand how devices work
+
 
 ---
 
@@ -57,24 +99,24 @@ Create a timeline to outline the events in the various scenes of the extract
 
 ---
 
-### DEVICE 1: Metaphor
+### DEVICE 1: Third-Person Omniscient
 
 #### Step 1: DEFINITION (Recognition)
 
-**Metaphor is:**
+**Third-Person Omniscient is:**
 
-Implicit comparison between unlike things without using 'like' or 'as'
+A narrative voice that knows the thoughts, feelings, and motivations of all characters and can comment on the story's events
 
-**Example from model:** tired old town
+**Example from model:** It's a funny thing about mothers and fathers. Even when their own child is the most disgusting little blister
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Metaphor** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **Third-Person Omniscient** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Town
+Chapter 1, opening paragraphs describing It
 
 **My Example:**
 
@@ -91,12 +133,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Metaphor DO in this text? What is its purpose or function?**
+**What does Third-Person Omniscient DO in this text? What is its purpose or function?**
 
-**A)** Shows Town as decay and weariness  
-**B)** Uses Town as a symbol representing larger themes  
-**C)** Directly states that Town is decay and weariness without comparison  
-**D)** Creates musical rhythm in the description of Town
+**A)** Establishes symbolic meaning  
+**B)** Shows literal description without literary technique  
+**C)** Shows parental delusion and society's tolerance of it  
+**D)** Creates vivid sensory imagery
 
 **Your Answer:** ______
 
@@ -108,11 +150,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Metaphor is used in the text.**
+**Put these details in order to show HOW Third-Person Omniscient is used in the text.**
 
-**A)** This establishes Town as defined by decay and weariness in Exposition  
-**B)** Reader encounters "tired old town" in Chapter 1  
-**C)** Metaphor transfers decay and weariness from compared element to Town
+**A)** Third-Person Omniscient emphasizes parental delusion and society's tolerance of it in the description  
+**B)** This establishes It through parental delusion and society's tolerance of it in Exposition  
+**C)** Reader encounters "It's a funny thing about mothers and fathers. Even when thei..." in Chapter 1
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -150,12 +192,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This reinforces the theme of decay and weariness in Exposition.
-2. Effect 4 for Metaphor
-3. Effect 5 for Metaphor
-4. This reveals Town as characterized by deterioration and fatigue.
-5. This makes readers feel Town's decline and exhaustion.
-6. Effect 6 for Metaphor
+1. Creates reader alignment with narrator's critical perspective on deluded parents
+2. Reveals the universal nature of parental self-deception through authoritative commentary
+3. Effect 4 for Third-Person Omniscient
+4. Establishes theme that adults systematically fail to see children clearly
+5. Effect 6 for Third-Person Omniscient
+6. Effect 5 for Third-Person Omniscient
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
@@ -214,24 +256,24 @@ ________________________________________________________________________________
 
 ---
 
-### DEVICE 2: Simile
+### DEVICE 2: Hyperbole
 
 #### Step 1: DEFINITION (Recognition)
 
-**Simile is:**
+**Hyperbole is:**
 
-Explicit comparison between unlike things using 'like' or 'as'
+Deliberate exaggeration used for emphasis or comedic effect
 
-**Example from model:** her hand was wide as a bed slat and twice as hard
+**Example from model:** the most disgusting little blister you could ever imagine
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Simile** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **Hyperbole** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Calpurnia
+Chapter 1, opening paragraphs describing the subject
 
 **My Example:**
 
@@ -248,12 +290,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Simile DO in this text? What is its purpose or function?**
+**What does Hyperbole DO in this text? What is its purpose or function?**
 
-**A)** Creates musical rhythm in the description of Calpurnia  
-**B)** Shows Calpurnia as stern discipline  
-**C)** Uses Calpurnia as a symbol representing larger themes  
-**D)** Directly states that Calpurnia is stern discipline without comparison
+**A)** Describes the subject accurately without exaggeration  
+**B)** Uses the subject as symbol representing themes  
+**C)** Compares the subject to something else through metaphor  
+**D)** Shows the extremity of parental delusion
 
 **Your Answer:** ______
 
@@ -263,11 +305,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Simile is used in the text.**
+**Put these details in order to show HOW Hyperbole is used in the text.**
 
-**A)** Simile transfers stern discipline from compared element to Calpurnia  
-**B)** Reader encounters "her hand was wide as a bed slat and twice as hard" in Chapter 1  
-**C)** This establishes Calpurnia as defined by stern discipline in Exposition
+**A)** Hyperbole amplifies the extremity of parental delusion beyond literal reality  
+**B)** Reader encounters exaggerated claim: "the most disgusting little blister you could ever imagine" in Chapter 1  
+**C)** This emphasizes the subject's the extremity of parental delusion through deliberate distortion in Exposition
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -303,12 +345,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This makes readers feel Calpurnia's strict authority.
-2. This reveals Calpurnia as characterized by harsh control.
-3. Effect 6 for Simile
-4. Effect 5 for Simile
-5. Effect 4 for Simile
-6. This reinforces the theme of stern discipline in Exposition.
+1. Effect 5 for Hyperbole
+2. Effect 4 for Hyperbole
+3. Reveals how completely parents can lose objective judgment about their children
+4. Effect 6 for Hyperbole
+5. Creates humor that makes readers laugh at parental absurdity
+6. Reinforces theme that adult perspectives on children are fundamentally flawed
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
@@ -367,24 +409,24 @@ ________________________________________________________________________________
 
 ---
 
-### DEVICE 3 (HIGH TIER ONLY): Personification
+### DEVICE 3 (HIGH TIER ONLY): Simile
 
 #### Step 1: DEFINITION (Recognition)
 
-**Personification is:**
+**Simile is:**
 
-Attribution of human characteristics to non-human entities
+A comparison between two unlike things using 'like' or 'as'
 
-**Example from model:** the courthouse sagged in the square
+**Example from model:** Fiona has the same glacial beauty as an iceberg, but unlike the iceberg she has absolutely nothing below
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Personification** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **Simile** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Courthouse
+Chapter 1, opening paragraphs describing Fiona
 
 **My Example:**
 
@@ -396,12 +438,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Personification DO in this text? What is its purpose or function?**
+**What does Simile DO in this text? What is its purpose or function?**
 
-**A)** Describes only the physical appearance of Courthouse  
-**B)** Uses Courthouse as a symbol without giving it human traits  
-**C)** Compares Courthouse to something else through metaphor  
-**D)** Shows Courthouse as weariness and decline
+**A)** Uses Fiona as a symbol representing larger themes  
+**B)** Shows the narrator's hypothetical revenge on deluded parents  
+**C)** Creates musical rhythm in the description of Fiona  
+**D)** Directly states that Fiona is the narrator's hypothetical revenge on deluded parents without comparison
 
 **Your Answer:** ______
 
@@ -409,11 +451,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Personification is used in the text.**
+**Put these details in order to show HOW Simile is used in the text.**
 
-**A)** Reader sees Courthouse described as "the courthouse sagged in the square" in Chapter 1  
-**B)** This creates impression of Courthouse as weariness and decline during Exposition  
-**C)** Personification attributes human weariness and decline to non-human Courthouse
+**A)** Reader encounters "Fiona has the same glacial beauty as an iceberg, but unlike ..." in Chapter 1  
+**B)** This establishes Fiona as defined by the narrator's hypothetical revenge on deluded parents in Exposition  
+**C)** Simile transfers the narrator's hypothetical revenge on deluded parents from compared element to Fiona
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -447,12 +489,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This makes readers feel Courthouse's exhaustion and decay.
-2. Effect 4 for Personification
-3. Effect 6 for Personification
-4. Effect 5 for Personification
-5. This reveals Courthouse as characterized by fatigue and deterioration.
-6. This reinforces the theme of weariness and decline in Exposition.
+1. Shows how academic language can be weaponized to deflate parental pride
+2. Effect 4 for Simile
+3. Creates vivid mental images that make the satirical criticism memorable and amusing
+4. Effect 6 for Simile
+5. Establishes the idea that truth-telling can be a form of rebellion against social delusion
+6. Effect 5 for Simile
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|

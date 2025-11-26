@@ -22,7 +22,7 @@
 - **Backward Compatibility**: Stage 1A/1B updated to use new fields with fallback logic
 
 ### 3. Checkpoint/Resume System
-- **Stage Checkpointing**: Saves progress after each stage (stage0, stage1, stage2a, stage2b)
+- **Stage Checkpointing**: Saves progress after each stage (kernel_stage0, kernel_stage1, kernel_stage2a, kernel_stage2b)
 - **Automatic Resume**: Pipeline resumes from last checkpoint on restart
 - **Force Restart Options**: `--from-stage` and `--fresh` flags for controlled restarts
 - **Checkpoint Naming**: Uses `kernel_stage*` prefix to avoid conflicts with pipeline stages
@@ -36,6 +36,11 @@
 - **Chapter Count Detection**: Removed manual `total_chapters` parameter, now auto-detected in Stage 0
 - **Structure Detection**: Enhanced Stage 0 to detect book structure and total chapters
 - **Validation**: Ensures total_units detected before proceeding
+
+### 6. JSON Sanitization
+- **Comprehensive Cleaning**: Handles unescaped quotes, newlines, tabs in JSON strings
+- **Quote Fixing**: Automatic repair of malformed quote_snippet fields
+- **Error Recovery**: Better handling of JSON parsing errors
 
 ---
 
@@ -56,6 +61,7 @@
 - Auto-detects total chapters from book structure
 - Extracts `total_units` from Stage 0 result
 - Checkpoint support for resume capability
+- Enhanced prompt to detect structure without requiring chapter count
 
 #### Stage 1 (Freytag Extraction)
 - Removed "text" field from output (prevents content filter issues)
@@ -74,6 +80,7 @@
 - **Tier validation**: Checks alignment and reports issues
 - **pedagogical_tier field**: Added to each device
 - **JSON sanitization**: Comprehensive cleaning for unescaped quotes
+- **Critical Tier 5 instruction**: Explicitly requires resolution examples
 
 #### API Call Improvements
 - **Retry logic**: Automatic retry on rate limit errors (3 attempts, 60s delay)
@@ -88,63 +95,28 @@
 
 #### Command-Line Interface
 - **argparse integration**: Replaced sys.argv with argparse
-- **--from-stage flag**: Force restart from specific stage
+- **--from-stage flag**: Force restart from specific stage (kernel_stage0, kernel_stage1, kernel_stage2a, kernel_stage2b)
 - **--fresh flag**: Clear all checkpoints and start fresh
 - **Better help text**: Updated examples and descriptions
-
-### run_stage1a.py
-
-#### Updates for Structured Analysis
-- **extract_tvode_components()**: Now uses `worksheet_context.subject` and `worksheet_context.specific_function`
-- **Device assignment**: Passes through `worksheet_context` and `effects` fields
-- **Backward compatibility**: Falls back to old extraction logic for old kernels
-
-### run_stage1b.py
-
-#### Updates for Structured Analysis
-- **generate_effects_for_device()**: Checks for pre-generated `effects` field first
-- **Uses worksheet_context.subject**: If available, uses it instead of extracting
-- **Backward compatibility**: Falls back to old generation logic for old kernels
-
----
-
-## 🔧 Technical Improvements
-
-### Error Handling
-- JSON sanitization for unescaped quotes in quote_snippet fields
-- Rate limit retry with exponential backoff
-- Checkpoint validation (skips invalid checkpoints)
-- Comprehensive validation warnings
-
-### Code Quality
-- Added type hints where appropriate
-- Improved docstrings
-- Better error messages
-- Debug file saving for troubleshooting
-
-### Performance
-- Checkpoint system reduces redundant API calls
-- Rate limit delays prevent API throttling
-- Automatic retry reduces manual intervention
 
 ---
 
 ## 📊 Device Tier Mapping
 
 ### Tier 1 → Exposition (10 devices)
-Concrete/Sensory devices: Imagery, Simile, Hyperbole, Metaphor, Onomatopoeia, Personification, Alliteration, Assonance, Consonance, Sensory Detail
+**Concrete/Sensory devices**: Imagery, Simile, Hyperbole, Metaphor, Onomatopoeia, Personification, Alliteration, Assonance, Consonance, Sensory Detail
 
 ### Tier 2 → Rising Action (20 devices)
-Structural/Pattern devices: Dialogue, Repetition, Direct/Indirect Characterization, Ellipsis, Scene, Summary, Pause, Parallelism, Anaphora, Epistrophe, Polysyndeton, Asyndeton, Linear Chronology, Episodic Structure, Flashback, Analepsis, Flashforward, Prolepsis, In Medias Res
+**Structural/Pattern devices**: Dialogue, Repetition, Direct/Indirect Characterization, Ellipsis, Scene, Summary, Pause, Parallelism, Anaphora, Epistrophe, Polysyndeton, Asyndeton, Linear Chronology, Episodic Structure, Flashback, Analepsis, Flashforward, Prolepsis, In Medias Res
 
 ### Tier 3 → Climax (13 devices)
-Abstract/Symbolic devices: Symbolism, Motif, Foreshadowing, Juxtaposition, Allusion, Allegory, Paradox, Oxymoron, Chiasmus, Circular Structure, Spiral Structure, Understatement, Litotes
+**Abstract/Symbolic devices**: Symbolism, Motif, Foreshadowing, Juxtaposition, Allusion, Allegory, Paradox, Oxymoron, Chiasmus, Circular Structure, Spiral Structure, Understatement, Litotes
 
 ### Tier 4 → Falling Action (10 devices)
-Authorial Intent/Irony devices: Verbal Irony, Dramatic Irony, Situational Irony, Structural Irony, Suspense, Satire, Tone, Rhetorical Question, Apostrophe, Ethos Establishment
+**Authorial Intent/Irony devices**: Verbal Irony, Dramatic Irony, Situational Irony, Structural Irony, Suspense, Satire, Tone, Rhetorical Question, Apostrophe, Ethos Establishment
 
 ### Tier 5 → Resolution (16 devices)
-Narrative Frame/Voice devices: Third-Person Omniscient, Third-Person Limited, First-Person, First-Person Narration, Second-Person Narration, Internal Monologue, Stream of Consciousness, Unreliable Narrator, Free Indirect Discourse, Frame Narrative, Non-Linear Chronology, Metafiction, Breaking Fourth Wall, Unreliable Chronology, Narrator, Point of View
+**Narrative Frame/Voice devices**: Third-Person Omniscient, Third-Person Limited, First-Person, First-Person Narration, Second-Person Narration, Internal Monologue, Stream of Consciousness, Unreliable Narrator, Free Indirect Discourse, Frame Narrative, Non-Linear Chronology, Metafiction, Breaking Fourth Wall, Unreliable Chronology, Narrator, Point of View
 
 ---
 
@@ -202,9 +174,7 @@ python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition" 
 
 ## 📚 Files Modified
 
-- `create_kernel.py` - Major updates (checkpoints, tiers, structured analysis)
-- `run_stage1a.py` - Updated to use structured analysis fields
-- `run_stage1b.py` - Updated to use structured analysis fields
+- `create_kernel.py` - Major updates (checkpoints, tiers, structured analysis, rate limits, auto-detection)
 
 ---
 
@@ -225,14 +195,6 @@ python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition" 
 
 ---
 
-## 🔗 Related Documentation
-
-- See `docs/DEVELOPER_GUIDE.md` for development guidelines
-- See `docs/CHANGELOG.md` for version history
-- See `VERSION.txt` for current system version
-
----
-
 ## ✅ Verification Checklist
 
 - [x] Tier mapping comprehensive (50+ devices)
@@ -240,16 +202,59 @@ python create_kernel.py books/Matilda.pdf "Matilda" "Roald Dahl" "2003 edition" 
 - [x] Rate limit protection added
 - [x] Structured analysis fields added
 - [x] Backward compatibility maintained
-- [x] Stage 1A/1B updated to use new fields
 - [x] Kernel version updated to 4.0
 - [x] All validation logic in place
+- [x] JSON sanitization implemented
+- [x] Tier 5 relocation working
+- [x] Device deduplication working
 - [x] No linter errors
 
 ---
 
 ## 📝 Commit Details
 
+**Commit**: 7d1bbaa
 **Type**: Feature Enhancement
 **Scope**: Kernel Creation Pipeline
 **Impact**: High - Major improvements to reliability and functionality
 **Backward Compatible**: Yes (with fallback logic)
+**Status**: ✅ Committed and pushed to origin/main
+
+---
+
+## 🔍 Key Code Changes Summary
+
+### New Constants
+- `DEVICE_TIER_MAP`: 50+ device mappings across 5 tiers
+- `TIER5_VOICE_DEVICES`: Set of Tier 5 devices for relocation
+- `TIER_TO_FREYTAG`: Maps tiers to Freytag sections
+
+### New Methods
+- `_validate_tier_alignment()`: Validates device tier alignment
+- `_relocate_tier5_devices()`: Relocates Tier 5 devices to resolution
+- `_deduplicate_devices()`: Removes duplicate devices
+- `_get_checkpoint_path()`: Generates checkpoint file paths
+- `_save_checkpoint()`: Saves stage output
+- `_load_checkpoint()`: Loads checkpoint if exists
+- `_clear_checkpoints_from()`: Clears checkpoints from stage onward
+
+### Modified Methods
+- `__init__()`: Removed total_chapters parameter
+- `stage0_structure_alignment()`: Auto-detects chapters, checkpoint support
+- `stage1_extract_freytag()`: Removed text field, checkpoint support
+- `stage2a_tag_macro()`: Checkpoint support
+- `stage2b_tag_devices()`: Tier enforcement, structured analysis, checkpoint support
+- `_call_claude()`: Added retry logic for rate limits
+- `run()`: Added rate limit delays between stages
+- `main()`: Added argparse with --from-stage and --fresh flags
+
+---
+
+## 📊 Statistics
+
+- **Lines Added**: ~500+
+- **New Methods**: 7
+- **Devices Mapped**: 50+
+- **API Calls**: Still 5 (no increase)
+- **Checkpoint Files**: 4 per book
+- **Expected Match Rate**: 90%+ tier alignment

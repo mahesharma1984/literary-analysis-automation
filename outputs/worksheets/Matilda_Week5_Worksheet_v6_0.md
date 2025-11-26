@@ -1,4 +1,4 @@
-# LITERARY ANALYSIS WORKSHEET - Device Recognition v2.2
+# LITERARY ANALYSIS WORKSHEET - Device Recognition v6.0
 
 **Aligned to LEM Stage 1 Logic: Comprehension → Device Recognition → TVODE Preparation**
 
@@ -6,10 +6,10 @@
 
 ## METADATA SECTION
 
-**Text Title:** To Kill a Mockingbird  
-**Author:** Harper Lee  
+**Text Title:** Matilda  
+**Author:** Roald Dahl  
 **Edition:** 2003 edition  
-**Extract Focus (NRP Device):** Exposition  
+**Extract Focus (NRP Device):** Resolution  
 **Year Level:** 9-10  
 **Proficiency Tier:** Standard  
 
@@ -18,18 +18,62 @@
 - **Activities per Device:** [4 for EAL | 5 for Standard | 6 for High]
 
 ---
+## PART A: THESIS ALIGNMENT
+
+**Purpose:** Understand how this week's focus connects to the text's overall meaning
+
+### The Text's Overall Thesis
+
+Text Selection: "Matilda" represents a paradigmatic example of children's literature that operates on multiple developmental levels simultaneously. The novel follows five-year-old Matilda Wormwood, a brilliant child born to neglectful parents, who discovers her telekinetic powers while navigating hostile environments at home and school.
+
+**Key Elements:**
+
+- **Narrative Voice:** Narrative Voice and Tone Management
+Device Function: Dahl's narrator shifts between adult sophistication and child-like directness, creating complicity with young readers while maintaining analytic...
+- **Structure:** structures that suppress children's potential
+- **Rhetorical Strategy:** Alignment Pattern
+
+Text Selection: "Matilda" represents a paradigmatic example of children's literature that operates on multiple developmental levels simultaneously
+
+### This Week's Role in the Thesis
+
+**Chapter Function:** Resolution
+
+**Dramatic Purpose:** Resolution Patterns
+Device Function: The novel's resolution provides both personal vindication for Matilda and systemic change (Miss Trunchbull's departure, family restructuring), balancing individual and collective transformation. Alignment Support: The resolution pattern transforms the empowerm...
+
+**Thematic Connection:**
+
+- Devices in this section work together to establish the resolution function
+- The resolution section connects to the text's central themes through device usage
+- These devices build meaning that supports the overall narrative purpose
+
+**What to Notice:**
+
+1. Literary devices like Third-Person Omniscient, Internal Monologue work together to bring closure and complete thematic exploration
+2. Devices maintain narrative coherence while fulfilling the resolution function
+3. Devices build meaning that connects to the text's overall exploration of its central themes
+
+
+---
 
 ## INSTRUCTIONS FOR STUDENTS
 
-This worksheet guides you through analyzing literary devices in *To Kill a Mockingbird*.
+This worksheet guides you through analyzing literary devices in *Matilda*.
 
-**Edition Note:** Page numbers refer to the 2003 edition edition. If you're using a different edition, chapter numbers will match but page numbers may vary slightly.
+**Edition Note:** Page numbers refer to the Penguin Classics 2003 edition. If you're using a different edition, chapter numbers will match but page numbers may vary slightly.
+
+**Reading Assignment:** Chapters 21  
+**Activity Focus:** Chapter 21
 
 **How to use this worksheet:**
-1. Read Chapters 1-3 (focus on Chapter 1 for activities)
-2. Find examples of each device
-3. Complete the activities in order
-4. Use the examples to understand how devices work
+
+1. Read the Thesis Alignment section to understand the big picture
+2. Read Chapters 21 (focus on Chapter 21 for activities)
+3. Find examples of each device
+4. Complete the activities in order
+5. Use the examples to understand how devices work
+
 
 ---
 
@@ -39,7 +83,7 @@ This worksheet guides you through analyzing literary devices in *To Kill a Mocki
 
 ### Activity 1: Key Words
 
-Underline words/phrases in the extract that relate to Exposition.
+Underline words/phrases in the extract that relate to Resolution.
 
 ### Activity 2: Narrative Summary
 
@@ -57,24 +101,24 @@ Create a timeline to outline the events in the various scenes of the extract
 
 ---
 
-### DEVICE 1: Metaphor
+### DEVICE 1: Third-Person Omniscient
 
 #### Step 1: DEFINITION (Recognition)
 
-**Metaphor is:**
+**Third-Person Omniscient is:**
 
-Implicit comparison between unlike things without using 'like' or 'as'
+Narrator who knows everything about all characters and can access any character's thoughts
 
-**Example from model:** tired old town
+**Example from model:** It's a funny thing about mothers and fathers
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Metaphor** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **Third-Person Omniscient** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Town
+Chapter 1, the opening paragraphs where the narrator introduces the Wormwood family
 
 **My Example:**
 
@@ -91,12 +135,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Metaphor DO in this text? What is its purpose or function?**
+**What does Third-Person Omniscient DO in this text? What is its purpose or function?**
 
-**A)** Shows Town as decay and weariness  
-**B)** Uses Town as a symbol representing larger themes  
-**C)** Directly states that Town is decay and weariness without comparison  
-**D)** Creates musical rhythm in the description of Town
+**A)** Shows Matilda's thoughts and feelings about her parents' cruel treatment  
+**B)** Reveals universal truths about how parents and teachers often fail children  
+**C)** Describes the Wormwood family's daily routines and television watching habits  
+**D)** Explains why some children like Matilda develop extraordinary mental powers
 
 **Your Answer:** ______
 
@@ -108,11 +152,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Metaphor is used in the text.**
+**Put these details in order to show HOW Third-Person Omniscient is used in the text.**
 
-**A)** This establishes Town as defined by decay and weariness in Exposition  
-**B)** Reader encounters "tired old town" in Chapter 1  
-**C)** Metaphor transfers decay and weariness from compared element to Town
+**A)** Reader encounters the narrator's direct commentary: 'It's a funny thing about mothers and fathers' in Chapter 1's opening  
+**B)** The omniscient perspective transforms this into a universal observation about parental blindness to their children's worth  
+**C)** Reader accepts the narrator as a wise guide who understands both child and adult perspectives throughout the story
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -150,12 +194,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This reinforces the theme of decay and weariness in Exposition.
-2. Effect 4 for Metaphor
-3. Effect 5 for Metaphor
-4. This reveals Town as characterized by deterioration and fatigue.
-5. This makes readers feel Town's decline and exhaustion.
-6. Effect 6 for Metaphor
+1. Creates trust in narrator as someone who understands the adult world from child's perspective
+2. Reveals universal patterns in how adults treat children across different contexts
+3. Establishes narrative authority to critique adult-child power dynamics throughout the story
+4. 
+5. 
+6. 
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
@@ -214,24 +258,24 @@ ________________________________________________________________________________
 
 ---
 
-### DEVICE 2: Simile
+### DEVICE 2: Internal Monologue
 
 #### Step 1: DEFINITION (Recognition)
 
-**Simile is:**
+**Internal Monologue is:**
 
-Explicit comparison between unlike things using 'like' or 'as'
+Direct presentation of a character's inner thoughts and mental processes
 
-**Example from model:** her hand was wide as a bed slat and twice as hard
+**Example from model:** Miss Honey wondered what on earth was going on in the mind of this child
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Simile** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **Internal Monologue** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Calpurnia
+Chapter 18, when Miss Honey watches Matilda after their conversation about confronting Trunchbull
 
 **My Example:**
 
@@ -248,12 +292,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Simile DO in this text? What is its purpose or function?**
+**What does Internal Monologue DO in this text? What is its purpose or function?**
 
-**A)** Creates musical rhythm in the description of Calpurnia  
-**B)** Shows Calpurnia as stern discipline  
-**C)** Uses Calpurnia as a symbol representing larger themes  
-**D)** Directly states that Calpurnia is stern discipline without comparison
+**A)** Shows Miss Honey's fear that Matilda will use powers against Trunchbull  
+**B)** Reveals Miss Honey's protective concern when she cannot understand Matilda's intentions  
+**C)** Demonstrates Miss Honey's jealousy of Matilda's extraordinary telekinetic abilities and intelligence  
+**D)** Illustrates Miss Honey's frustration with Matilda's secretive behavior during their conversation
 
 **Your Answer:** ______
 
@@ -263,11 +307,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Simile is used in the text.**
+**Put these details in order to show HOW Internal Monologue is used in the text.**
 
-**A)** Simile transfers stern discipline from compared element to Calpurnia  
-**B)** Reader encounters "her hand was wide as a bed slat and twice as hard" in Chapter 1  
-**C)** This establishes Calpurnia as defined by stern discipline in Exposition
+**A)** Reader encounters Miss Honey observing Matilda's determined behavior in Chapter 18  
+**B)** Internal monologue reveals Miss Honey's private thoughts about Matilda's mysterious intentions  
+**C)** Reader understands Miss Honey's protective concern and her helplessness as caring adult
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -303,12 +347,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This makes readers feel Calpurnia's strict authority.
-2. This reveals Calpurnia as characterized by harsh control.
-3. Effect 6 for Simile
-4. Effect 5 for Simile
-5. Effect 4 for Simile
-6. This reinforces the theme of stern discipline in Exposition.
+1. Creates sympathy for Miss Honey's position as a caring adult who cannot protect Matilda from her own determination
+2. Shows the complexity of adult-child relationships when children possess extraordinary capabilities
+3. Reinforces the theme of how difficult it is for adults to guide children who surpass normal limitations
+4. 
+5. 
+6. 
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
@@ -367,24 +411,24 @@ ________________________________________________________________________________
 
 ---
 
-### DEVICE 3 (HIGH TIER ONLY): Personification
+### DEVICE 3 (HIGH TIER ONLY): First-Person Narration
 
 #### Step 1: DEFINITION (Recognition)
 
-**Personification is:**
+**First-Person Narration is:**
 
-Attribution of human characteristics to non-human entities
+Story told from the perspective of a character using 'I' pronouns
 
-**Example from model:** the courthouse sagged in the square
+**Example from model:** 'We're off,' Mr Wormwood said
 
 ---
 
 #### Step 2: FIND THE TOPIC (Matching)
 
-**Your Turn:** Find an example of **Personification** in *To Kill a Mockingbird*.
+**Your Turn:** Find an example of **First-Person Narration** in *Matilda*.
 
 **Where to look:**
-Chapter 1, opening paragraphs describing Courthouse
+Chapter 21, when Mr. Wormwood announces the family's sudden departure to escape legal troubles
 
 **My Example:**
 
@@ -396,12 +440,12 @@ ________________________________________________________________________________
 
 #### Step 3: IDENTIFY THE OBJECT (Multiple Choice)
 
-**What does Personification DO in this text? What is its purpose or function?**
+**What does First-Person Narration DO in this text? What is its purpose or function?**
 
-**A)** Describes only the physical appearance of Courthouse  
-**B)** Uses Courthouse as a symbol without giving it human traits  
-**C)** Compares Courthouse to something else through metaphor  
-**D)** Shows Courthouse as weariness and decline
+**A)** Shows Matilda's emotional reaction to her father's sudden announcement about leaving  
+**B)** Reveals Mr. Wormwood's panic and his disregard for his daughter's feelings  
+**C)** Creates dramatic tension by withholding information about why the family must leave  
+**D)** Demonstrates how adults communicate important decisions without considering children's perspectives
 
 **Your Answer:** ______
 
@@ -409,11 +453,11 @@ ________________________________________________________________________________
 
 #### Step 4: ANALYZE IT (Sequencing)
 
-**Put these details in order to show HOW Personification is used in the text.**
+**Put these details in order to show HOW First-Person Narration is used in the text.**
 
-**A)** Reader sees Courthouse described as "the courthouse sagged in the square" in Chapter 1  
-**B)** This creates impression of Courthouse as weariness and decline during Exposition  
-**C)** Personification attributes human weariness and decline to non-human Courthouse
+**A)** Reader encounters Mr. Wormwood's abrupt two-word declaration in Chapter 21 as the family crisis unfolds  
+**B)** The direct speech format processes this moment as an immediate, unfiltered glimpse into his mindset  
+**C)** Creates understanding of his selfish priorities while highlighting Matilda's powerless position in family decisions
 
 **Your Answer:** 1-___ , 2-___ , 3-___
 
@@ -447,12 +491,12 @@ Read these effects and sort them into the three categories below.
 - **Big Idea** → "theme," "message," "the author is saying"
 
 **Effects to Sort:**
-1. This makes readers feel Courthouse's exhaustion and decay.
-2. Effect 4 for Personification
-3. Effect 6 for Personification
-4. Effect 5 for Personification
-5. This reveals Courthouse as characterized by fatigue and deterioration.
-6. This reinforces the theme of weariness and decline in Exposition.
+1. Creates immediate urgency and stress that mirrors the family's chaotic situation
+2. Reveals Mr. Wormwood's selfishness and lack of concern for Matilda's feelings
+3. Reinforces the theme of adults making decisions that disregard children's needs and attachments
+4. 
+5. 
+6. 
 
 | What I Felt | What I Understood | Big Idea Connection |
 |-------------|-------------------|---------------------|
@@ -525,4 +569,4 @@ ________________________________________________________________________________
 
 ---
 
-**END OF WORKSHEET v2.2**
+**END OF WORKSHEET v6.0**
