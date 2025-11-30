@@ -42,7 +42,7 @@ class Config:
     OUTPUTS_DIR = Path("outputs")
     
     # Protocol files
-    STRUCTURE_ALIGNMENT = "Book_Structure_Alignment_Protocol_v1.md"
+    STRUCTURE_ALIGNMENT = "Book_Structure_Alignment_Protocol_v2.md"
     KERNEL_VALIDATION = "Kernel_Validation_Protocol_v3_4.md"
     KERNEL_ENHANCEMENT = "Kernel_Protocol_Enhancement_v3_3.md"
     ARTIFACT_1 = "Artifact_1_-_Device_Taxonomy_by_Alignment_Function"
@@ -469,38 +469,112 @@ class KernelCreator:
         
         return "\n\n".join(samples)
     
-    def _extract_text_from_chapter_range(self, chapter_range: str, primary_chapter: int, word_count: int = 400) -> str:
-        """Extract representative text from a chapter range
+    def _extract_text_from_chapter_range(self, chapter_range: str, primary_chapter: int, word_count: int = None) -> str:
+        """Extract full chapter text for primary chapter.
+        
+        Changed from 400-word sample to full chapter to prevent hallucination.
+        See ISSUE_001 for details.
         
         Args:
-            chapter_range: Chapter range string (e.g., "1-3", "15", "8-14")
-            primary_chapter: The most representative chapter in the range
-            word_count: Approximate words to extract (default: 400)
+            chapter_range: Chapter range string (unused, kept for compatibility)
+            primary_chapter: The primary chapter to extract
+            word_count: Ignored (kept for backward compatibility)
             
         Returns:
-            String of extracted text from the book
+            String of full chapter text
         """
         total_words = len(self.book_words)
         words_per_chapter = total_words / self.total_chapters
         
-        # Calculate word position for primary chapter
-        # Center the extract around the primary chapter
-        primary_start_word = int((primary_chapter - 1) * words_per_chapter)
-        primary_end_word = int(primary_chapter * words_per_chapter)
-        primary_middle = (primary_start_word + primary_end_word) // 2
+        # Calculate chapter boundaries
+        chapter_start = int((primary_chapter - 1) * words_per_chapter)
+        chapter_end = int(primary_chapter * words_per_chapter)
         
-        # Extract word_count words centered on primary chapter middle
-        extract_start = max(0, primary_middle - (word_count // 2))
-        extract_end = min(total_words, primary_middle + (word_count // 2))
-        
-        # Ensure we get at least word_count words if possible
-        if extract_end - extract_start < word_count and extract_end < total_words:
-            extract_end = min(total_words, extract_start + word_count)
-        if extract_end - extract_start < word_count and extract_start > 0:
-            extract_start = max(0, extract_end - word_count)
-        
-        extracted_text = ' '.join(self.book_words[extract_start:extract_end])
+        # Extract full chapter
+        extracted_text = ' '.join(self.book_words[chapter_start:chapter_end])
         return extracted_text
+    
+    def _extract_devices_from_section(self, section: str, chapter_range: str, 
+                                       primary_chapter: int, chapter_text: str) -> list:
+        """Extract devices from a single section's full chapter.
+        
+        ISSUE_001 fix: Process one section at a time with full chapter text
+        to prevent hallucination of quotes.
+        ISSUE_003 fix: Include device taxonomy in prompt to prevent invented device names.
+        """
+        
+        # Get device taxonomy
+        device_taxonomy = self.protocols.get('artifact_1', '')
+        
+        prompt = f"""You are analyzing Chapter {primary_chapter} of {self.title} for the {section.upper()} section.
+
+CHAPTER TEXT:
+{chapter_text}
+
+DEVICE TAXONOMY (you MUST choose devices from this list):
+{device_taxonomy}
+
+TASK: Identify 6-8 literary devices from the taxonomy above that appear in this chapter and demonstrate {section} narrative function.
+
+For each device, provide:
+- name: Device name (MUST be from the taxonomy above - e.g., "Metaphor", "Foreshadowing", "Dramatic Irony")
+- anchor_phrase: EXACT 5-10 word quote from the chapter above
+- location_percent: Where in chapter (0-100%)
+- scene: Brief scene description
+- effect: What this device accomplishes
+
+CRITICAL CONSTRAINTS:
+1. Device name MUST match exactly one from the taxonomy (not invented names)
+2. anchor_phrase MUST be exact text from the chapter above
+3. Do NOT use your training knowledge of this book
+4. Do NOT paraphrase or invent quotes
+5. If you cannot find a good example, skip that device
+
+Valid device names include:
+- Metaphor, Simile, Personification, Symbolism
+- Foreshadowing, Flashback, Dramatic Irony, Verbal Irony, Situational Irony
+- First-Person Narration, Third-Person Limited, Unreliable Narrator
+- Imagery, Dialogue, Juxtaposition, Motif
+- Alliteration, Parallelism, Hyperbole, Understatement
+
+Return ONLY a JSON array:
+[
+  {{
+    "name": "Foreshadowing",
+    "anchor_phrase": "exact words from chapter",
+    "location_percent": 35,
+    "scene": "brief scene description", 
+    "effect": "what device accomplishes"
+  }}
+]"""
+
+        system_prompt = "You are a literary analysis expert. Only quote exact text from the provided chapter. Never hallucinate quotes."
+        
+        result = self._call_claude(prompt, system_prompt)
+        
+        if result:
+            try:
+                # Clean JSON if wrapped in markdown
+                result = result.strip()
+                if result.startswith("```"):
+                    result = result.split("```")[1]
+                    if result.startswith("json"):
+                        result = result[4:]
+                
+                devices = json.loads(result)
+                
+                # Add section metadata
+                for d in devices:
+                    d['assigned_section'] = section
+                    d['chapter'] = primary_chapter
+                    d['chapter_range'] = chapter_range
+                    
+                return devices
+                
+            except json.JSONDecodeError as e:
+                print(f"  Failed to parse devices for {section}: {e}")
+                return []
+        return []
     
     def stage0_structure_alignment(self):
         """Stage 0: Book Structure Alignment Protocol v1.1"""
@@ -877,62 +951,7 @@ DO NOT extract or reproduce any text passages from the book.
             )
             extracts_text += f"\n### {section.upper()}\n{section_text}\n"
         
-        prompt = f"""You are performing Stage 2A of the Kernel Validation Protocol v3.4.
-
-TASK: Analyze the 5 Freytag extracts and tag all 84 macro alignment variables:
-- Narrative variables (voice, structure, etc.)
-- Rhetorical variables (alignment type, mechanisms, etc.)
-
-BOOK METADATA:
-- Title: {self.title}
-- Author: {self.author}
-
-PROTOCOL TO FOLLOW:
-{self.protocols['kernel_validation']}
-
-TAGGING PROTOCOL:
-{self.protocols['artifact_2']}
-
-FREYTAG EXTRACTS:
-{extracts_text}
-
-OUTPUT FORMAT:
-Provide a JSON object with this structure:
-{{
-  "narrative": {{
-    "voice": {{
-      "pov": "CODE",
-      "pov_description": "explanation",
-      "focalization": "CODE",
-      "focalization_description": "explanation",
-      "reliability": "CODE",
-      "temporal_distance": "CODE",
-      "mode_dominance": "CODE",
-      "character_revelation": "CODE"
-    }},
-    "structure": {{
-      "plot_architecture": "CODE",
-      "plot_architecture_description": "explanation",
-      "chronology": "CODE",
-      "causation": "CODE",
-      "pacing_dominance": "CODE"
-    }}
-  }},
-  "rhetoric": {{
-    "alignment_type": "CODE",
-    "alignment_type_description": "explanation",
-    "dominant_mechanism": "CODE",
-    "secondary_mechanism": "CODE",
-    "alignment_strength": "STRONG/MODERATE/WEAK"
-  }},
-  "device_mediation": {{
-    "score": 0.0,
-    "description": "how devices mediate alignment"
-  }}
-}}
-
-CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
-"""
+        prompt = f"""You are performing Stage 2A of the Kernel Validation Protocol v3.4.\n\nTASK: Analyze the 5 Freytag extracts and tag all 84 macro alignment variables:\n- Narrative variables (voice, structure, etc.)\n- Rhetorical variables (alignment type, mechanisms, etc.)\n\nBOOK METADATA:\n- Title: {self.title}\n- Author: {self.author}\n\nPROTOCOL TO FOLLOW:\n{self.protocols['kernel_validation']}\n\nTAGGING PROTOCOL:\n{self.protocols['artifact_2']}\n\nFREYTAG EXTRACTS:\n{extracts_text}\n\nOUTPUT FORMAT:\nProvide a JSON object with this structure:\n{{"narrative": {{"voice": {{"pov": "CODE", ...}}, "structure": {{...}}}}, "rhetoric": {{...}}, "device_mediation": {{...}}}}\n\nCRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.\n"""
         
         system_prompt = "You are a literary analysis expert tagging macro alignment variables according to Kernel Validation Protocol v3.4."
         
@@ -945,7 +964,7 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
             macro_json = json.loads(result)
             result_formatted = json.dumps(macro_json, indent=2)
         except json.JSONDecodeError as e:
-            print(f"\nâŒ Error: Invalid JSON response from Claude")
+            print(f"\n❌ Error: Invalid JSON response from Claude")
             print(f"Error details: {e}")
             return False
         
@@ -957,7 +976,7 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         return False
     
     def stage2b_tag_devices(self):
-        """Stage 2B: Tag 8-12 micro devices with examples"""
+        """Stage 2B: Tag micro devices with examples.\n        \n        ISSUE_001 fix: Process one section at a time with full chapter\n        instead of single call with 400-word samples.\n        """
         # Check for existing checkpoint
         cached = self._load_checkpoint('kernel_stage2b')
         if cached:
@@ -969,429 +988,66 @@ CRITICAL: Output ONLY valid JSON. Use the exact codes from the protocol.
         print("="*80)
         
         if not self.stage1_extracts:
-            print("âŒ Error: Stage 1 extracts not available")
+            print("❌ Error: Stage 1 extracts not available")
             return False
         
-        # Extract text from book using chapter ranges
-        extracts_text = ""
+        all_devices = []
+        
         for section, data in self.stage1_extracts.get('extracts', {}).items():
             chapter_range = data.get('chapter_range', '')
             primary_chapter = data.get('primary_chapter', 1)
             
-            # Extract text from this section
-            section_text = self._extract_text_from_chapter_range(
+            print(f"  Processing {section} (Chapter {primary_chapter})...")
+            
+            # Extract FULL chapter text
+            chapter_text = self._extract_text_from_chapter_range(
                 chapter_range, 
-                primary_chapter, 
-                word_count=400
+                primary_chapter
             )
-            extracts_text += f"\n### {section.upper()}\n{section_text}\n"
-        
-        prompt = f"""You are performing Stage 2B of the Kernel Protocol Enhancement v3.3.
-
-TASK: Identify micro literary devices FOR EACH NARRATIVE SECTION with quoted examples.
-
-CRITICAL CONSTRAINT - VALID DEVICES ONLY:
-
-You must ONLY use devices from the Device Taxonomy (Artifact 1). Do NOT invent new device names.
-
-Valid devices include:
-
-- Narrative Structure: Linear Chronology, Non-Linear Chronology, Frame Narrative, In Medias Res, Circular Structure, Episodic Structure, Climactic Structure
-
-- Narrative Voice: First-Person Narration, Third-Person Omniscient, Third-Person Limited, Unreliable Narrator, Free Indirect Discourse, Stream of Consciousness, Internal Monologue
-
-- Dialogue/Speech: Dialogue, Dialect
-
-- Temporal: Foreshadowing, Flashback, Flashforward
-
-- Pacing: Scene, Summary, Pause, Ellipsis
-
-- Figurative Language: Metaphor, Simile, Personification, Hyperbole, Understatement, Imagery, Euphemism, Allusion
-
-- Symbolic: Symbolism, Allegory, Motif
-
-- Irony (MUST specify type): Verbal Irony, Situational Irony, Dramatic Irony, Structural Irony
-
-- Sound/Rhythm: Alliteration, Rhythm, Onomatopoeia
-
-- Structural Repetition: Parallelism, Anaphora, Epistrophe, Chiasmus, Repetition
-
-- Contrast: Juxtaposition, Paradox, Oxymoron, Foil
-
-- Character: Direct Characterization, Indirect Characterization
-
-- Atmosphere: Pathetic Fallacy, Setting as Symbol
-
-- Tension: Suspense, Cliffhanger, Red Herring
-
-- Rhetorical: Apostrophe, Rhetorical Question, Pathos
-
-NAMING RULES:
-
-- Use base names only (e.g., "Motif" not "Hope Motif")
-
-- Always specify irony type (e.g., "Dramatic Irony" not "Irony")
-
-- Match taxonomy names exactly
-
-- Do NOT invent new device names
-
-If a section has limited device variety, the SAME device may appear in multiple sections with DIFFERENT examples. For instance, Symbolism can appear in exposition AND resolution if both sections contain symbolic elements.
-
-SECTION REQUIREMENTS:
-
-You must identify 3-4 devices PER FREYTAG SECTION with examples from that section's chapters:
-
-- Exposition: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['exposition']['chapter_range']}
-
-- Rising Action: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['rising_action']['chapter_range']}
-
-- Climax: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['climax']['chapter_range']}
-
-- Falling Action: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['falling_action']['chapter_range']}
-
-- Resolution: 3-4 devices with examples from chapters {self.stage1_extracts['extracts']['resolution']['chapter_range']}
-
-Total: 15-20 devices across all sections.
-
-DEVICE SELECTION CRITERIA:
-
-For each section, choose devices that BEST demonstrate the macro-micro alignment for that narrative stage:
-
-- Exposition devices: How character/setting are established
-
-- Rising Action devices: How tension builds
-
-- Climax devices: How the turning point is created
-
-- Falling Action devices: How consequences unfold
-
-- Resolution devices: How closure is achieved
-
-TIER-BASED EXAMPLE LOCATION:
-
-When finding examples for each device, locate them in the Freytag section that matches their pedagogical tier:
-
-- Tier 1 devices (Imagery, Simile, Hyperbole, Metaphor): find in EXPOSITION chapters
-- Tier 2 devices (Dialogue, Repetition, Direct Characterization): find in RISING ACTION chapters
-- Tier 3 devices (Symbolism, Motif, Foreshadowing, Juxtaposition): find in CLIMAX chapters
-- Tier 4 devices (Verbal Irony, Dramatic Irony, Suspense): find in FALLING ACTION chapters
-- Tier 5 devices (Third-Person Omniscient, Third-Person Limited, First-Person, First-Person Narration, Internal Monologue, Stream of Consciousness, Unreliable Narrator, Free Indirect Discourse, Frame Narrative, Narrator, Point of View): find in RESOLUTION chapters
-
-CRITICAL FOR TIER 5: Voice/narrative devices exist throughout the text, but you MUST find examples from RESOLUTION chapters specifically. These devices frame the entire narrative, so find where they are most evident in the story's conclusion. Do NOT use exposition examples for Tier 5 devices.
-
-This ensures pedagogical progression from concrete to abstract, matching device complexity to narrative development.
-
-BOOK METADATA:
-
-- Title: {self.title}
-
-- Author: {self.author}
-
-- Edition: {self.edition}
-
-DEVICE TAXONOMY (Use ONLY these devices):
-
-{self.protocols['artifact_1']}
-
-FREYTAG EXTRACTS:
-
-{extracts_text}
-
-CRITICAL: STRUCTURED DEVICE ANALYSIS REQUIRED
-
-For EACH device you identify, you must provide:
-
-1. **worksheet_context** - Contextual data for worksheet generation:
-
-   a) **subject**: What does this device operate on in THIS specific text?
-      - NOT a generic object like "characters" or "setting"
-      - BUT a specific concept/theme/element from THIS book
-      - Examples: "parental delusion", "Matilda's intellectual isolation", "Miss Trunchbull's tyranny"
-      - Extract from the actual scenes/quotes where the device appears
-
-   b) **scene_description**: Brief description of where this device appears
-      - Will be used in worksheet "Where to look" prompts
-      - Should reference specific scene/moment
-      - Examples: "opening commentary on parents' blind admiration", "description of Miss Trunchbull's office", "Matilda's first library visit"
-
-   c) **specific_function**: What does this device DO in this text?
-      - NOT the generic definition of the device
-      - BUT its specific purpose/role in THIS narrative
-      - Start with action verbs: "establishes", "reveals", "creates", "emphasizes", "contrasts"
-      - Examples: "establishes narrator's satirical perspective on parental bias", "creates immediate threat through vivid sensory detail"
-
-2. **effects** - Three concrete effects (one per category):
-
-   a) **reader_response** (category): How does this device affect what readers FEEL or EXPERIENCE?
-      - Focus on emotional/sensory/experiential impact
-      - Examples: "Makes readers recognize the absurdity of parental bias", "Creates visceral discomfort at institutional cruelty"
-
-   b) **meaning_creation** (category): How does this device build UNDERSTANDING or reveal IDEAS?
-      - Focus on what readers learn/understand/perceive
-      - Examples: "Reveals how universal parental delusion blinds judgment", "Shows the systematic nature of educational abuse"
-
-   c) **thematic_impact** (category): How does this device connect to the text's BIGGER MESSAGE or THEME?
-      - Focus on thematic significance and broader meaning
-      - Examples: "Establishes theme of adults systematically failing children", "Reinforces message about intellectual empowerment"
-
-ANALYSIS QUALITY REQUIREMENTS:
-
-- All analysis must be TEXT-SPECIFIC (not generic device descriptions)
-- Subject must be a concrete concept/element from THIS book
-- Function must describe THIS device's role in THIS narrative
-- Effects must be substantive (not vague like "creates meaning" or "affects reader")
-- Draw from actual examples in the text
-- Be pedagogically clear (students will read these)
-
-OUTPUT FORMAT:
-
-Provide a JSON array of devices. Each device must be from the taxonomy above AND include structured analysis:
-
-[
-
-  {{
-
-    "name": "Device Name (MUST match taxonomy exactly)",
-
-    "layer": "CODE (N/B/R)",
-
-    "function": "CODE (Re/Me/Te)",
-
-    "engagement": "CODE (T/V/F)",
-
-    "classification": "Layer|Function|Engagement",
-
-    "definition": "student-facing definition",
-
-    "student_facing_type": "Figurative Language/Sound Device/Narrative Technique/etc.",
-
-    "pedagogical_function": "what it does for reader/theme",
-
-    "position_code": "DIST/CLUST-BEG/CLUST-MID/CLUST-END",
-
-    "assigned_section": "exposition/rising_action/climax/falling_action/resolution",
-
-    "worksheet_context": {{
-      "subject": "What this device operates on in THIS text (e.g., 'parental delusion', 'Matilda's genius', 'institutional cruelty')",
-      "scene_description": "Brief scene description for worksheet 'Where to look' prompts (e.g., 'opening commentary on parents' blind admiration')",
-      "specific_function": "What this device SPECIFICALLY does in this text (NOT generic definition - e.g., 'establishes narrator's satirical perspective on parental bias')"
-    }},
-
-    "effects": [
-      {{
-        "text": "Specific reader response effect (e.g., 'Makes readers recognize the absurdity of parental bias')",
-        "category": "reader_response"
-      }},
-      {{
-        "text": "Specific meaning creation effect (e.g., 'Reveals how universal parental delusion blinds judgment')",
-        "category": "meaning_creation"
-      }},
-      {{
-        "text": "Specific thematic impact effect (e.g., 'Establishes theme of adults systematically failing children')",
-        "category": "thematic_impact"
-      }}
-    ],
-
-    "examples": [
-
-      {{
-
-        "freytag_section": "must match assigned_section",
-
-        "scene": "brief scene identifier",
-
-        "chapter": X,
-
-        "page_range": "X-Y",
-
-        "quote_snippet": "20-100 character exact quote from text"
-
-      }}
-
-    ]
-
-  }}
-
-]
-
-CRITICAL RULES:
-
-1. Output ONLY valid JSON array
-
-2. Device names MUST match the taxonomy exactly - no invented names
-
-3. Every device must have assigned_section field
-
-4. Examples must come from the assigned section's chapters only
-
-5. Include 2-3 examples per device from that section
-
-6. ALL 5 sections must have 3-4 devices each
-
-7. Use base device names (not "Hope Motif", just "Motif")
-
-8. Always specify irony type (Verbal/Situational/Dramatic/Structural)
-
-9. EVERY device must have complete worksheet_context with subject, scene_description, and specific_function
-
-10. EVERY device must have 3 effects (one per category: reader_response, meaning_creation, thematic_impact)
-
-11. All analysis fields must be TEXT-SPECIFIC (not generic device descriptions)
-
-12. Subject must reference actual concepts/themes/elements from THIS book
-
-"""
-        
-        system_prompt = "You are a literary analysis expert identifying and cataloging micro literary devices with structured pedagogical analysis according to Kernel Protocol Enhancement v3.3. For each device, provide text-specific contextual analysis including subject, function, and concrete effects."
-        
-        result = self._call_claude(prompt, system_prompt)
-        
-        # Clean and validate
-        result = result.replace('```json\n', '').replace('```\n', '').replace('```', '').strip()
-        
-        # Comprehensive JSON sanitization
-        def clean_json_string(match):
-            content = match.group(1)
-            content = content.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
-            content = re.sub(r'(?<!\\)"', '\\"', content)  # escape unescaped quotes
-            return f'"{content}"'
-        
-        result = re.sub(r'"((?:[^"\\]|\\.)*?)"', clean_json_string, result)
-        
-        try:
-            devices_json = json.loads(result)
-            result_formatted = json.dumps(devices_json, indent=2)
-        except json.JSONDecodeError as e:
-            print(f"\nâŒ Error: Invalid JSON response from Claude")
-            print(f"Error details: {e}")
-            # Save problematic response for debugging
-            debug_path = Config.OUTPUTS_DIR / "stage2b_debug_response.json"
-            with open(debug_path, 'w', encoding='utf-8') as f:
-                f.write(result)
-            print(f"Debug: Saved problematic response to {debug_path}")
-            print(f"Response length: {len(result)} characters")
-            print(f"First 500 characters: {result[:500]}")
-            return False
-        
-        # Validate minimum requirements
-        device_count = len(devices_json)
-        if device_count < 15:
-            print(f"\nâš ï¸  Warning: Only {device_count} devices found (minimum 15 required, target: 20)")
-        
-        # Validate section distribution
-        section_counts = {
-            "exposition": 0,
-            "rising_action": 0,
-            "climax": 0,
-            "falling_action": 0,
-            "resolution": 0
-        }
-        
-        missing_assigned_section = []
-        for device in devices_json:
-            assigned_section = device.get("assigned_section")
-            if not assigned_section:
-                missing_assigned_section.append(device.get("name", "Unknown"))
-            elif assigned_section in section_counts:
-                section_counts[assigned_section] += 1
-        
-        if missing_assigned_section:
-            print(f"\n⚠️  Warning: {len(missing_assigned_section)} device(s) missing 'assigned_section' field")
-        
-        # Validate structured analysis fields
-        missing_worksheet_context = []
-        missing_effects = []
-        incomplete_worksheet_context = []
-        incomplete_effects = []
-        
-        for device in devices_json:
-            device_name = device.get("name", "Unknown")
             
-            # Check worksheet_context
-            worksheet_context = device.get("worksheet_context")
-            if not worksheet_context:
-                missing_worksheet_context.append(device_name)
-            else:
-                required_fields = ["subject", "scene_description", "specific_function"]
-                missing_fields = [field for field in required_fields if not worksheet_context.get(field)]
-                if missing_fields:
-                    incomplete_worksheet_context.append(f"{device_name}: missing {', '.join(missing_fields)}")
+            # Call API for this section
+            devices = self._extract_devices_from_section(
+                section, 
+                chapter_range, 
+                primary_chapter,
+                chapter_text
+            )
             
-            # Check effects
-            effects = device.get("effects")
-            if not effects:
-                missing_effects.append(device_name)
+            if devices:
+                all_devices.extend(devices)
+                print(f"    Found {len(devices)} devices")
             else:
-                if len(effects) < 3:
-                    incomplete_effects.append(f"{device_name}: only {len(effects)} effect(s) (need 3)")
-                else:
-                    categories = [e.get("category") for e in effects]
-                    required_categories = ["reader_response", "meaning_creation", "thematic_impact"]
-                    missing_categories = [cat for cat in required_categories if cat not in categories]
-                    if missing_categories:
-                        incomplete_effects.append(f"{device_name}: missing categories {', '.join(missing_categories)}")
+                print(f"    ⚠ No devices found for {section}")
         
-        if missing_worksheet_context:
-            print(f"\n⚠️  Warning: {len(missing_worksheet_context)} device(s) missing 'worksheet_context' field")
-        if incomplete_worksheet_context:
-            print(f"\n⚠️  Warning: Incomplete worksheet_context:")
-            for info in incomplete_worksheet_context:
-                print(f"  - {info}")
-        if missing_effects:
-            print(f"\n⚠️  Warning: {len(missing_effects)} device(s) missing 'effects' field")
-        if incomplete_effects:
-            print(f"\n⚠️  Warning: Incomplete effects:")
-            for info in incomplete_effects:
-                print(f"  - {info}")
+        # Store results
+        self.stage2b_devices = all_devices
         
-        # Check section distribution
-        sections_with_few_devices = []
-        for section, count in section_counts.items():
-            if count < 3:
-                sections_with_few_devices.append(f"{section}: {count} devices (need 3-4)")
-        
-        if sections_with_few_devices:
-            print(f"\n⚠️  Warning: Some sections have insufficient devices:")
-            for section_info in sections_with_few_devices:
-                print(f"  - {section_info}")
-        
-        print(f"\n✓ Device distribution by section:")
-        for section, count in section_counts.items():
-            print(f"  - {section}: {count} devices")
+        print(f"  Total devices: {len(all_devices)}")
         
         # Relocate Tier 5 devices to resolution (they're pervasive but should be taught last)
-        devices_json = self._relocate_tier5_devices(devices_json)
+        all_devices = self._relocate_tier5_devices(all_devices)
         
         # Remove duplicate devices, keeping tier-appropriate ones
-        devices_json = self._deduplicate_devices(devices_json)
+        all_devices = self._deduplicate_devices(all_devices)
         
         # Filter out POV devices that contradict the text's actual POV
-        macro_pov = self.stage2a_macro.get('narrative', {}).get('voice', {}).get('pov', 'TPO')
-        devices_json = self._filter_contradictory_pov_devices(devices_json, macro_pov)
-        
-        # Validate tier alignment
-        misaligned = self._validate_tier_alignment(devices_json)
-        if misaligned:
-            print(f"\n⚠️  Warning: {len(misaligned)} device example(s) not in tier-appropriate section:")
-            for item in misaligned[:5]:
-                print(f"  - {item['device']} (Tier {item['tier']}): expected {item['expected']}, found in {item['actual']}")
-            if len(misaligned) > 5:
-                print(f"  ... and {len(misaligned) - 5} more")
+        if self.stage2a_macro:
+            macro_pov = self.stage2a_macro.get('narrative', {}).get('voice', {}).get('pov', 'TPO')
+            all_devices = self._filter_contradictory_pov_devices(all_devices, macro_pov)
         
         # Add pedagogical_tier to each device
-        for device in devices_json:
+        for device in all_devices:
             device_name = device.get("name", "")
             device["pedagogical_tier"] = DEVICE_TIER_MAP.get(device_name, 0)
         
-        # Update result_formatted with pedagogical_tier added
-        result_formatted = json.dumps(devices_json, indent=2)
-
+        # Update stored devices
+        self.stage2b_devices = all_devices
+        result_formatted = json.dumps(all_devices, indent=2)
+        
         # Review
         if self._review_and_approve("Stage 2B: Micro Devices", result_formatted):
-            self.stage2b_devices = devices_json
             self._save_checkpoint('kernel_stage2b', self.stage2b_devices)
-            return True
+            return len(all_devices) > 0
         return False
     
     def assemble_kernel(self):

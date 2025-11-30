@@ -13,6 +13,33 @@ from pathlib import Path
 from datetime import datetime
 
 
+def normalize_device_examples(device):
+    """Convert new kernel format to expected examples array format.
+    
+    New kernels have: anchor_phrase, scene, chapter, effect as direct fields
+    Old kernels have: examples array with quote_snippet, scene, chapter
+    
+    Returns examples array in old format for compatibility.
+    """
+    # If device already has examples array with content, use it (old format)
+    existing_examples = device.get("examples", [])
+    if existing_examples and len(existing_examples) > 0:
+        return existing_examples
+    
+    # Convert new format to examples array
+    if device.get("anchor_phrase"):
+        return [{
+            "quote_snippet": device.get("anchor_phrase", ""),
+            "scene": device.get("scene", ""),
+            "chapter": device.get("chapter"),
+            "effect": device.get("effect", ""),
+            "location_percent": device.get("location_percent")
+        }]
+    
+    # No examples available
+    return []
+
+
 def parse_chapter_range(range_str):
     """Convert chapter range string to list of chapter numbers
     
@@ -41,7 +68,7 @@ def find_device_chapters(device):
     """
     chapters = set()
     
-    for example in device.get("examples", []):
+    for example in normalize_device_examples(device):
         chapter = example.get("chapter")
         if chapter:
             chapters.add(int(chapter))
@@ -99,8 +126,8 @@ def assign_devices_by_location(kernel):
                 "layer": device.get("layer", ""),
                 "function": device.get("function", ""),
                 "definition": device.get("definition", device.get("student_facing_definition", "")),
-                "examples": device.get("examples", []),
-                "appears_in_chapters": [ex.get("chapter") for ex in device.get("examples", []) if ex.get("chapter")],
+                "examples": normalize_device_examples(device),
+                "appears_in_chapters": [ex.get("chapter") for ex in normalize_device_examples(device) if ex.get("chapter")],
                 "section_chapters": narrative_ranges.get(assigned_section, []),
                 "tvode_components": extract_tvode_components(device),
                 "worksheet_context": device.get("worksheet_context"),  # Pass through if available
@@ -128,7 +155,7 @@ def assign_devices_by_location(kernel):
                     "layer": device.get("layer", ""),
                     "function": device.get("function", ""),
                     "definition": device.get("definition", device.get("student_facing_definition", "")),
-                    "examples": device.get("examples", []),
+                    "examples": normalize_device_examples(device),
                     "appears_in_chapters": sorted(list(device_chapters)),
                     "section_chapters": section_chapters,
                     "tvode_components": extract_tvode_components(device),
@@ -149,7 +176,7 @@ def extract_tvode_components(device):
     """
     
     name = device.get("name", "Unknown Device")
-    examples = device.get("examples", [])
+    examples = normalize_device_examples(device)
     
     # NEW: Check for structured worksheet_context (new kernels)
     worksheet_context = device.get("worksheet_context")

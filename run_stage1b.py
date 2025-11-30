@@ -257,7 +257,7 @@ def generate_effects_for_device(device, macro_focus):
     
     # FALLBACK: Old logic for backward compatibility (old kernels)
     # Get first example
-    examples = device.get('examples', [])
+    examples = device.get('examples') or []
     if not examples:
         return [
             {"text": "This creates an emotional response in readers.", "category": "reader_response"},
@@ -266,8 +266,8 @@ def generate_effects_for_device(device, macro_focus):
         ]
     
     example = examples[0]
-    text = example.get('text', '')
-    explanation = example.get('explanation', '')
+    text = example.get('quote_snippet', example.get('text', ''))
+    explanation = example.get('effect', example.get('explanation', ''))
     
     # Try to use worksheet_context.subject if available, otherwise extract
     worksheet_context = device.get('worksheet_context', {})
@@ -346,7 +346,7 @@ def generate_worksheet_content(device, macro_focus, text_title, client):
     device_name = device.get("name", "Unknown Device")
     examples = device.get("examples", [])
     tvode = device.get("tvode_components", {})
-    effects = device.get("effects", [])
+    effects = device.get("effects") or []
     
     # Get example text and chapter info
     example_text = ""
@@ -622,7 +622,7 @@ def create_week_package(week_data, week_num, client=None):
             print(f"    Generating worksheet content for: {device_package['name']}")
             try:
                 worksheet_content = generate_worksheet_content(
-                    device, 
+                    device_package,  # Changed: use device_package which has effects
                     package['macro_focus'],
                     package['text_title'],
                     client
